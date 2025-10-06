@@ -55,7 +55,7 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
         networkingWindow: [],
         dayOfWeek: [],
         experience: '',
-        communication: '',
+        communication: [],
         interests: [],
         challenges: [],
         additionalInfo: ''

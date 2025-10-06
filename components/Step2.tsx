@@ -67,7 +67,7 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
         networkingWindow: [],
         dayOfWeek: [],
         experience: '',
-        communication: '',
+        communication: [],
         interests: [],
         challenges: [],
         additionalInfo: ''
@@ -121,7 +121,7 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
         networkingWindow: [],
         dayOfWeek: [],
         experience: '',
-        communication: '',
+        communication: [],
         interests: [],
         challenges: [],
         additionalInfo: ''

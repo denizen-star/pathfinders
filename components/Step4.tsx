@@ -41,9 +41,7 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
         <p className="text-2xl font-semibold text-pathfinders-blue mb-2">
           Thank you!
         </p>
-        <p className="text-xl text-gray-600">
-          Your information has been successfully submitted.
-        </p>
+
       </div>
 
       {/* Review Information Section */}
@@ -160,10 +158,10 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
             • We'll analyze your responses and identify potential matches
           </p>
           <p>
-            • You'll receive an email summary of your potential connections within 48 hours
+            • You'll receive an email summary of your potential networking events within a week - You will vote your preferences on the events
           </p>
           <p>
-            • If selected, we'll contact you within 2 weeks for a 15-minute networking event
+            • If selected, we'll contact you to schedule you for a 15-minute networking event
           </p>
           <p>
             • Only 20 participants will be selected for our first event
