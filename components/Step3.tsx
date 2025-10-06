@@ -17,6 +17,11 @@ interface Step3Props {
 export default function Step3({ formData, updateFormData, nextStep, prevStep, skipToSummary, sessionId, deviceInfo }: Step3Props) {
   const [currentCategory, setCurrentCategory] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  // Scroll to top when component loads
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
   const [answers, setAnswers] = useState<Partial<FormData>>({
     industry: formData.industry || '',
     educationLevel: formData.educationLevel || '',
@@ -609,18 +614,18 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
         }
       `}</style>
-      <div className="text-center mb-6">
-        <div className="flex justify-center mb-4">
+      <div className="text-center mb-8">
+        <div className="flex justify-center mb-6">
           <img 
             src="/logo.jpeg" 
             alt="Pathfinders Logo" 
-            className="h-12 w-auto"
+            className="h-20 w-auto max-w-full object-contain"
           />
         </div>
-        <h1 className="text-2xl font-bold text-pathfinders-blue mb-2">
+        <h1 className="text-3xl font-bold text-pathfinders-blue mb-3">
           Quick Questionnaire
         </h1>
-        <p className="text-sm text-gray-600">
+        <p className="text-lg text-gray-600">
           Category {currentCategory + 1} of {categories.length}: {currentCategoryData.title}
         </p>
       </div>

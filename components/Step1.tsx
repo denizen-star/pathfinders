@@ -82,18 +82,18 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
-      <div className="text-center mb-6">
-        <div className="flex justify-center mb-4">
+      <div className="text-center mb-8">
+        <div className="flex justify-center mb-6">
           <img 
             src="/logo.jpeg" 
             alt="Pathfinders Logo" 
-            className="h-16 w-auto"
+            className="h-24 w-auto max-w-full object-contain"
           />
         </div>
-        <h1 className="text-2xl font-bold text-pathfinders-blue mb-2">
+        <h1 className="text-3xl font-bold text-pathfinders-blue mb-3">
           Welcome to Pathfinders
         </h1>
-        <p className="text-gray-600 text-sm">
+        <p className="text-gray-600 text-lg">
           Connect. Create. Grow.
         </p>
       </div>
