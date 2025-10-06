@@ -488,51 +488,51 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                   return colorMap[questionId] || 'bg-blue-100 border-blue-300 text-blue-800'
                 }
                 
-                // Icons for different option types
+                // Monochromatic icon system using simple symbols
                 const getOptionIcon = (option: string) => {
                   const iconMap: { [key: string]: string } = {
                     // Career/Business icons
-                    'Career Advancement': '🚀', 'Business Development': '💼', 'Job Opportunities': '💼',
-                    'Investment Opportunities': '💰', 'Secure Funding': '💳', 'Market Expansion': '📈',
-                    'Strategic Partnerships': '🤝', 'Gain Clients': '👥', 'Find Co-founder': '👫',
+                    'Career Advancement': '↗', 'Business Development': '■', 'Job Opportunities': '◼',
+                    'Investment Opportunities': '$', 'Secure Funding': '¢', 'Market Expansion': '↗',
+                    'Strategic Partnerships': '⟷', 'Gain Clients': '◯', 'Find Co-founder': '◐',
                     
                     // Networking/Community icons
-                    'Build Community': '🏘️', 'Establish Network': '🌐', 'Cultural Integration': '🌍',
-                    'Find Mentor': '🧙‍♂️', 'Professional Development': '📚', 'Skill Development': '🎯',
+                    'Build Community': '◉', 'Establish Network': '◯', 'Cultural Integration': '◊',
+                    'Find Mentor': '▲', 'Professional Development': '▢', 'Skill Development': '●',
                     
                     // Creative/Collaboration icons
-                    'Collaborate on Projects': '🛠️', 'Creative Collaboration': '🎨', 'Thought Leadership': '💡',
+                    'Collaborate on Projects': '◈', 'Creative Collaboration': '◇', 'Thought Leadership': '◆',
                     
                     // Connection type icons
-                    'C-Suite Exec': '👑', 'Career Coach': '🎯', 'Co-founder': '👫', 'Community Leader': '🌟',
-                    'Creative Professional': '🎨', 'Domain Expert': '🔬', 'Industry Influencer': '📢',
-                    'Investor/VC': '💰', 'Manager/Leader': '👔', 'Mentor': '🧙‍♂️', 'Peer Professional': '👥',
-                    'Potential Client': '🤝', 'Strategic Partner': '🤝', 'Thought Leader': '💡',
+                    'C-Suite Exec': '▲', 'Career Coach': '●', 'Co-founder': '◐', 'Community Leader': '★',
+                    'Creative Professional': '◇', 'Domain Expert': '◆', 'Industry Influencer': '▶',
+                    'Investor/VC': '$', 'Manager/Leader': '■', 'Mentor': '▲', 'Peer Professional': '◯',
+                    'Potential Client': '◐', 'Strategic Partner': '⟷', 'Thought Leader': '◆',
                     
                     // Interest icons
-                    'Technology Innovation': '💻', 'Business Strategy': '📊', 'Creative Arts': '🎨',
-                    'Data Science': '📈', 'Sustainability': '🌱', 'Leadership': '👑', 'Entrepreneurship': '🚀',
-                    'Research': '🔬', 'Design': '🎨', 'Finance': '💰', 'Healthcare': '🏥', 'Education': '📚', 'Social Impact': '🌍',
+                    'Technology Innovation': '◻', 'Business Strategy': '▣', 'Creative Arts': '◇',
+                    'Data Science': '▢', 'Sustainability': '◊', 'Leadership': '▲', 'Entrepreneurship': '↗',
+                    'Research': '◆', 'Design': '◇', 'Finance': '$', 'Healthcare': '◉', 'Education': '▢', 'Social Impact': '◊',
                     
                     // Challenge icons
-                    'Finding the right opportunities': '🔍', 'Building a network': '🌐', 'Skill development': '📚',
-                    'Work-life balance': '⚖️', 'Industry transition': '🔄', 'Leadership growth': '📈',
-                    'Finding mentors': '🧙‍♂️', 'Building confidence': '💪',
+                    'Finding the right opportunities': '◐', 'Building a network': '◯', 'Skill development': '▢',
+                    'Work-life balance': '◊', 'Industry transition': '◈', 'Leadership growth': '↗',
+                    'Finding mentors': '▲', 'Building confidence': '●',
                     
                     // Environment icons
-                    'Collaborative Space': '🤝', 'Creative Space': '🎨', 'Hybrid': '🔄', 'Private Office': '🏢',
-                    'Quiet/Focused': '🤫', 'Social/Dynamic': '💬', 'Structured Environment': '📋',
+                    'Collaborative Space': '◐', 'Creative Space': '◇', 'Hybrid': '◈', 'Private Office': '■',
+                    'Quiet/Focused': '●', 'Social/Dynamic': '◯', 'Structured Environment': '▣',
                     
                     // Collaboration icons
-                    'Collaborative Workshops': '👥', 'Creative Brainstorms': '💡', 'Cultural Exchange Sessions': '🌍',
-                    'Dynamic Sessions': '⚡', 'Flexible Collaboration': '🔄', 'Impromptu Brainstorms': '💭',
-                    'Planned Collaboration': '📅', 'Social Collaboration': '🎉', 'Strategic Sessions': '🎯', 'Structured Meetings': '📋',
+                    'Collaborative Workshops': '◯', 'Creative Brainstorms': '◆', 'Cultural Exchange Sessions': '◊',
+                    'Dynamic Sessions': '▶', 'Flexible Collaboration': '◈', 'Impromptu Brainstorms': '◇',
+                    'Planned Collaboration': '▢', 'Social Collaboration': '◉', 'Strategic Sessions': '●', 'Structured Meetings': '▣',
                     
                     // Time icons
-                    'Early Morning': '🌅', 'Lunch': '🍽️', 'Post-Work': '🌆', 'Evening': '🌙', 'Late Evening': '🌃',
+                    'Early Morning': '◐', 'Lunch': '◯', 'Post-Work': '◊', 'Evening': '●', 'Late Evening': '◆',
                     
                     // Day icons
-                    'Monday': '📅', 'Tuesday': '📅', 'Wednesday': '📅', 'Thursday': '📅', 'Friday': '📅'
+                    'Monday': 'M', 'Tuesday': 'T', 'Wednesday': 'W', 'Thursday': 'T', 'Friday': 'F'
                   }
                   return iconMap[option] || '•'
                 }
@@ -544,15 +544,15 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                     onClick={() => handleMultiSelect(question.id, option, question.maxSelections || Infinity)}
                     disabled={!canSelect && !isSelected}
                     className={`
-                      flex items-center space-x-2 px-4 py-3 rounded-full border-2 transition-all duration-200 
+                      flex items-center space-x-3 px-4 py-3 rounded-full border-2 transition-all duration-200 
                       ${getOptionColor(question.id, option, isSelected)}
                       ${canSelect || isSelected ? 'cursor-pointer hover:scale-105' : 'opacity-50 cursor-not-allowed'}
                       ${isSelected ? 'ring-2 ring-offset-1' : ''}
                     `}
                   >
-                    <span className="text-lg">{getOptionIcon(option)}</span>
-                    <span className="text-sm font-medium truncate">{option}</span>
-                    {isSelected && <span className="text-lg ml-auto">✓</span>}
+                    <span className="text-xl font-medium w-6 text-center">{getOptionIcon(option)}</span>
+                    <span className="text-sm font-medium truncate flex-1">{option}</span>
+                    {isSelected && <span className="text-lg ml-auto font-bold">✓</span>}
                   </button>
                 )
               })}
