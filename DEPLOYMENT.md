@@ -1,8 +1,8 @@
 # Deployment Guide - Pathfinders
 
-This guide will help you deploy your Pathfinders funnel to `pathfinders.kervinapps.com` using Vercel.
+This guide will help you deploy your Pathfinders funnel to `pathfinders.kervinapps.com` using Netlify.
 
-## 🚀 Quick Deploy to Vercel
+## 🚀 Quick Deploy to Netlify
 
 ### Step 1: Prepare Your Repository
 
@@ -20,45 +20,44 @@ This guide will help you deploy your Pathfinders funnel to `pathfinders.kervinap
    git push -u origin main
    ```
 
-### Step 2: Deploy to Vercel
+### Step 2: Deploy to Netlify
 
-1. **Install Vercel CLI**:
+1. **Install Netlify CLI**:
    ```bash
-   npm i -g vercel
+   npm i -g netlify-cli
    ```
 
-2. **Login to Vercel**:
+2. **Login to Netlify**:
    ```bash
-   vercel login
+   netlify login
    ```
 
 3. **Deploy**:
    ```bash
-   vercel --prod
+   netlify deploy --prod
    ```
 
 4. **Follow the prompts**:
-   - Link to existing project? No
-   - Project name: `pathfinders`
+   - Create new site? Yes
+   - Site name: `pathfinders` (or leave blank for auto-generated)
    - Directory: `./` (current directory)
-   - Override settings? No
 
 ### Step 3: Configure Custom Domain
 
-1. **Go to Vercel Dashboard**:
-   - Visit [vercel.com/dashboard](https://vercel.com/dashboard)
+1. **Go to Netlify Dashboard**:
+   - Visit [app.netlify.com](https://app.netlify.com)
    - Select your `pathfinders` project
 
 2. **Add Custom Domain**:
-   - Go to Settings → Domains
-   - Add domain: `pathfinders.kervinapps.com`
+   - Go to Site Settings → Domain Management
+   - Add custom domain: `pathfinders.kervinapps.com`
    - Follow DNS configuration instructions
 
 3. **Configure DNS** (at your domain provider):
    ```
    Type: CNAME
    Name: pathfinders
-   Value: cname.vercel-dns.com
+   Value: [your-site-name].netlify.app
    ```
 
 ### Step 4: Verify Deployment
@@ -69,16 +68,17 @@ This guide will help you deploy your Pathfinders funnel to `pathfinders.kervinap
 
 ## 🔄 Automatic Deployments
 
-Once connected to GitHub, Vercel will automatically deploy:
+Once connected to GitHub, Netlify will automatically deploy:
 - **Main branch pushes** → Production deployment
-- **Pull requests** → Preview deployments
+- **Pull requests** → Deploy previews
 
 ## 📊 Monitoring & Analytics
 
-### Vercel Analytics
+### Netlify Analytics
 - Built-in performance monitoring
 - Real-time user analytics
 - Core Web Vitals tracking
+- Form submission tracking
 
 ### Application Analytics
 - Admin dashboard at `/admin`
@@ -92,7 +92,7 @@ Once connected to GitHub, Vercel will automatically deploy:
 - **Framework**: Next.js
 - **Node.js Version**: 18.x
 - **Build Command**: `npm run build`
-- **Output Directory**: `.next`
+- **Publish Directory**: `.next`
 
 ### No Environment Variables Required
 The application runs without additional environment variables. All configuration is built-in.
@@ -105,12 +105,12 @@ The application runs without additional environment variables. All configuration
 - Automatic logout on token expiration
 
 ### Data Storage
-- JSON files stored in Vercel's serverless functions
+- JSON files stored in Netlify's serverless functions
 - No database required
 - Automatic backups through Git
 
 ### HTTPS
-- Automatic SSL certificates via Vercel
+- Automatic SSL certificates via Netlify
 - Secure data transmission
 - HSTS headers enabled
 
@@ -129,8 +129,8 @@ The application runs without additional environment variables. All configuration
 
 2. **Domain Not Working**:
    - Check DNS propagation (can take 24-48 hours)
-   - Verify CNAME record points to `cname.vercel-dns.com`
-   - Check Vercel domain settings
+   - Verify CNAME record points to your Netlify site URL
+   - Check Netlify domain settings
 
 3. **Admin Access Issues**:
    - Clear browser cache and localStorage
@@ -164,8 +164,8 @@ The application runs without additional environment variables. All configuration
 
 ### Regular Updates
 1. **Code Changes**: Push to GitHub → Automatic deployment
-2. **Dependencies**: Update package.json → Vercel rebuilds
-3. **Domain Changes**: Update in Vercel dashboard
+2. **Dependencies**: Update package.json → Netlify rebuilds
+3. **Domain Changes**: Update in Netlify dashboard
 
 ### Backup Strategy
 - **Code**: Git repository (GitHub)
@@ -174,7 +174,7 @@ The application runs without additional environment variables. All configuration
 
 ## 📞 Support
 
-- **Vercel Issues**: [Vercel Support](https://vercel.com/support)
+- **Netlify Issues**: [Netlify Support](https://www.netlify.com/support/)
 - **Application Issues**: [GitHub Issues](https://github.com/denizen-star/pathfinders/issues)
 - **Domain Issues**: Contact your domain provider
 
