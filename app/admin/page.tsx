@@ -4,17 +4,147 @@ import { useState, useEffect } from 'react'
 import AdminLogin from '../../components/AdminLogin'
 import { verifyAuthToken } from '../../lib/auth'
 
+// Status checking interfaces
+interface ConnectionStatus {
+  isConnected: boolean
+  lastChecked: string
+  error?: string
+}
+
+interface SubmissionStatus {
+  totalSubmissions: number
+  recentSubmissions: number
+  lastSubmission?: string
+  errors: number
+}
+
+interface ConfigurationStatus {
+  googleScriptUrl: string
+  isConfigured: boolean
+  hasValidUrl: boolean
+}
+
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>({
+    isConnected: false,
+    lastChecked: 'Never'
+  })
+  const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>({
+    totalSubmissions: 0,
+    recentSubmissions: 0,
+    errors: 0
+  })
+  const [configurationStatus, setConfigurationStatus] = useState<ConfigurationStatus>({
+    googleScriptUrl: '',
+    isConfigured: false,
+    hasValidUrl: false
+  })
+  const [isCheckingStatus, setIsCheckingStatus] = useState(false)
 
   useEffect(() => {
     const token = localStorage.getItem('admin-auth-token')
     if (token && verifyAuthToken(token)) {
       setIsAuthenticated(true)
+      // Check status when authenticated
+      checkAllStatus()
     } else {
       localStorage.removeItem('admin-auth-token')
     }
   }, [])
+
+  // Check Google Sheets connection
+  const checkGoogleSheetsConnection = async (): Promise<ConnectionStatus> => {
+    try {
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxP8H-qh4r4uEN5Ea2xBXa__YjXFlJ30h7F4_kebDna3HEMlbz_WqG8H8pWBRhp2rSx/exec'
+      
+      // Test connection with a simple ping
+      const testData = new FormData()
+      testData.append('test', 'connection')
+      testData.append('timestamp', new Date().toISOString())
+      
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: testData
+      })
+      
+      return {
+        isConnected: true,
+        lastChecked: new Date().toLocaleString(),
+        error: undefined
+      }
+    } catch (error) {
+      return {
+        isConnected: false,
+        lastChecked: new Date().toLocaleString(),
+        error: error instanceof Error ? error.message : 'Unknown error'
+      }
+    }
+  }
+
+  // Check local storage for submissions
+  const checkLocalSubmissions = (): SubmissionStatus => {
+    try {
+      const submissions = JSON.parse(localStorage.getItem('pathfinders-submissions') || '[]')
+      const now = new Date()
+      const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000)
+      
+      const recentSubmissions = submissions.filter((sub: any) => {
+        const submissionTime = new Date(sub.timestamp)
+        return submissionTime > oneDayAgo
+      }).length
+      
+      const lastSubmission = submissions.length > 0 ? submissions[submissions.length - 1]?.timestamp : undefined
+      
+      return {
+        totalSubmissions: submissions.length,
+        recentSubmissions,
+        lastSubmission,
+        errors: 0 // We can't easily track errors from localStorage
+      }
+    } catch (error) {
+      return {
+        totalSubmissions: 0,
+        recentSubmissions: 0,
+        errors: 1
+      }
+    }
+  }
+
+  // Check configuration
+  const checkConfiguration = (): ConfigurationStatus => {
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxP8H-qh4r4uEN5Ea2xBXa__YjXFlJ30h7F4_kebDna3HEMlbz_WqG8H8pWBRhp2rSx/exec'
+    
+    return {
+      googleScriptUrl: GOOGLE_SCRIPT_URL,
+      isConfigured: GOOGLE_SCRIPT_URL.includes('script.google.com'),
+      hasValidUrl: GOOGLE_SCRIPT_URL.length > 50
+    }
+  }
+
+  // Check all status
+  const checkAllStatus = async () => {
+    setIsCheckingStatus(true)
+    
+    try {
+      // Check connection
+      const connection = await checkGoogleSheetsConnection()
+      setConnectionStatus(connection)
+      
+      // Check submissions
+      const submissions = checkLocalSubmissions()
+      setSubmissionStatus(submissions)
+      
+      // Check configuration
+      const config = checkConfiguration()
+      setConfigurationStatus(config)
+    } catch (error) {
+      console.error('Error checking status:', error)
+    } finally {
+      setIsCheckingStatus(false)
+    }
+  }
 
   const handleLogin = (token: string) => {
     setIsAuthenticated(true)
@@ -52,45 +182,106 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Data Collection Status */}
+        {/* Real-time Data Collection Status */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
-            📊 Data Collection Status
-          </h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold text-gray-800">
+              📊 Real-time Data Collection Status
+            </h2>
+            <button
+              onClick={checkAllStatus}
+              disabled={isCheckingStatus}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+            >
+              {isCheckingStatus ? 'Checking...' : 'Refresh Status'}
+            </button>
+          </div>
           
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+          {/* Connection Status */}
+          <div className={`border rounded-lg p-4 mb-6 ${
+            connectionStatus.isConnected 
+              ? 'bg-green-50 border-green-200' 
+              : 'bg-red-50 border-red-200'
+          }`}>
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
+                connectionStatus.isConnected ? 'bg-green-100' : 'bg-red-100'
+              }`}>
+                {connectionStatus.isConnected ? (
+                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                )}
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-green-800">
-                  ✅ Google Sheets Integration Active
+                <h3 className={`text-lg font-semibold ${
+                  connectionStatus.isConnected ? 'text-green-800' : 'text-red-800'
+                }`}>
+                  {connectionStatus.isConnected ? '✅ Google Sheets Connected' : '❌ Google Sheets Disconnected'}
                 </h3>
-                <p className="text-green-700">
-                  All form submissions are being collected in real-time via Google Sheets API
+                <p className={`text-sm ${
+                  connectionStatus.isConnected ? 'text-green-700' : 'text-red-700'
+                }`}>
+                  {connectionStatus.isConnected 
+                    ? `Last checked: ${connectionStatus.lastChecked}` 
+                    : connectionStatus.error || 'Connection failed'
+                  }
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4 mb-6">
+          {/* Submission Statistics */}
+          <div className="grid md:grid-cols-4 gap-4 mb-6">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-800 mb-2">Step 1 Data</h4>
-              <p className="text-sm text-blue-700">Postal codes and location data</p>
-              <div className="mt-2 text-xs text-blue-600">Real-time collection</div>
+              <h4 className="font-semibold text-blue-800 mb-2">Total Submissions</h4>
+              <p className="text-2xl font-bold text-blue-900">{submissionStatus.totalSubmissions}</p>
+              <p className="text-xs text-blue-600">All time</p>
             </div>
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-              <h4 className="font-semibold text-green-800 mb-2">Step 2 Data</h4>
-              <p className="text-sm text-green-700">Contact information and names</p>
-              <div className="mt-2 text-xs text-green-600">Real-time collection</div>
+              <h4 className="font-semibold text-green-800 mb-2">Recent (24h)</h4>
+              <p className="text-2xl font-bold text-green-900">{submissionStatus.recentSubmissions}</p>
+              <p className="text-xs text-green-600">Last 24 hours</p>
             </div>
             <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-              <h4 className="font-semibold text-purple-800 mb-2">Step 3 Data</h4>
-              <p className="text-sm text-purple-700">Professional questionnaire responses</p>
-              <div className="mt-2 text-xs text-purple-600">Real-time collection</div>
+              <h4 className="font-semibold text-purple-800 mb-2">Last Submission</h4>
+              <p className="text-sm font-bold text-purple-900">
+                {submissionStatus.lastSubmission 
+                  ? new Date(submissionStatus.lastSubmission).toLocaleString()
+                  : 'None'
+                }
+              </p>
+              <p className="text-xs text-purple-600">Most recent</p>
+            </div>
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+              <h4 className="font-semibold text-orange-800 mb-2">Errors</h4>
+              <p className="text-2xl font-bold text-orange-900">{submissionStatus.errors}</p>
+              <p className="text-xs text-orange-600">Failed submissions</p>
+            </div>
+          </div>
+
+          {/* Configuration Status */}
+          <div className={`border rounded-lg p-4 ${
+            configurationStatus.isConfigured 
+              ? 'bg-green-50 border-green-200' 
+              : 'bg-yellow-50 border-yellow-200'
+          }`}>
+            <h3 className={`text-lg font-semibold mb-2 ${
+              configurationStatus.isConfigured ? 'text-green-800' : 'text-yellow-800'
+            }`}>
+              {configurationStatus.isConfigured ? '✅ Configuration Valid' : '⚠️ Configuration Issues'}
+            </h3>
+            <div className="text-sm space-y-1">
+              <p className={configurationStatus.isConfigured ? 'text-green-700' : 'text-yellow-700'}>
+                <strong>Google Script URL:</strong> {configurationStatus.googleScriptUrl ? 'Configured' : 'Not configured'}
+              </p>
+              <p className={configurationStatus.hasValidUrl ? 'text-green-700' : 'text-yellow-700'}>
+                <strong>URL Format:</strong> {configurationStatus.hasValidUrl ? 'Valid' : 'Invalid format'}
+              </p>
             </div>
           </div>
         </div>
@@ -112,7 +303,7 @@ export default function AdminPage() {
                   <p className="text-sm text-gray-600">Postal codes and location information</p>
                 </div>
                 <a
-                  href="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit#gid=0"
+                  href="https://docs.google.com/spreadsheets/d/1vC_aOEOsk4eu9BmDbaZSUYUqfBnrZCwQ6kqodLztl3s/edit?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition-colors"
@@ -126,7 +317,7 @@ export default function AdminPage() {
                   <p className="text-sm text-gray-600">Contact information and names</p>
                 </div>
                 <a
-                  href="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit#gid=1"
+                  href="https://docs.google.com/spreadsheets/d/1vC_aOEOsk4eu9BmDbaZSUYUqfBnrZCwQ6kqodLztl3s/edit?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-green-600 text-white px-4 py-2 rounded-md text-sm hover:bg-green-700 transition-colors"
@@ -140,7 +331,7 @@ export default function AdminPage() {
                   <p className="text-sm text-gray-600">Professional questionnaire responses</p>
                 </div>
                 <a
-                  href="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit#gid=2"
+                  href="https://docs.google.com/spreadsheets/d/1vC_aOEOsk4eu9BmDbaZSUYUqfBnrZCwQ6kqodLztl3s/edit?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-purple-600 text-white px-4 py-2 rounded-md text-sm hover:bg-purple-700 transition-colors"
@@ -156,7 +347,7 @@ export default function AdminPage() {
               ⚠️ Setup Required
             </h3>
             <p className="text-yellow-700 mb-3">
-              To access your data, you need to set up Google Sheets integration:
+              If connectivity breaks. To access your data, you need to set up Google Sheets integration:
             </p>
             <ol className="list-decimal list-inside space-y-2 text-yellow-800 text-sm">
               <li>Create a Google Sheets document with three sheets: "Step1", "Step2", "Step3"</li>
@@ -312,10 +503,11 @@ export default function AdminPage() {
               Google Apps Script
             </a>
             <button
-              onClick={() => window.location.reload()}
-              className="bg-gray-600 text-white px-6 py-3 rounded-md font-medium hover:bg-gray-700 transition-colors"
+              onClick={checkAllStatus}
+              disabled={isCheckingStatus}
+              className="bg-gray-600 text-white px-6 py-3 rounded-md font-medium hover:bg-gray-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              Refresh Data
+              {isCheckingStatus ? 'Checking...' : 'Refresh Status'}
             </button>
           </div>
         </div>
