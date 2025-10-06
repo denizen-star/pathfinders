@@ -1,7 +1,7 @@
 {
   "name": "pathfinders",
   "version": "1.0.0",
-  "description": "Professional networking data collection funnel for Pathfinders",
+  "description": "Professional networking data collection funnel for Pathfinders - Production Ready",
   "private": true,
   "scripts": {
     "dev": "next dev",

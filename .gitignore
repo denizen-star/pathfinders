@@ -50,15 +50,12 @@ next-env.d.ts
 # OS
 Thumbs.db
 
-# Data collection files (keep structure but ignore actual data)
-/data-collection/step1/*.json
-/data-collection/step2/*.json
-/data-collection/step3/*.json
-/data-collection/step3-progress/*.json
-!/data-collection/step1/.gitkeep
-!/data-collection/step2/.gitkeep
-!/data-collection/step3/.gitkeep
-!/data-collection/step3-progress/.gitkeep
+# Production environment files
+.env.production
+.env.production.local
+
+# Development data collection files (removed in production)
+/data-collection/
 
 # Submissions (keep structure but ignore actual data)
 /submissions/*.json
