@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FormData } from '../app/page'
 import { submitToGoogleSheets, storeSubmissionLocally, SubmissionData } from '../lib/googleSheets'
 
@@ -19,6 +19,11 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
   const [email, setEmail] = useState(formData.email || '')
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  // Scroll to top when component loads
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -150,13 +155,6 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
       <div className="text-center mb-8">
-        <div className="flex justify-center mb-6">
-          <img 
-            src="/logo.jpeg" 
-            alt="Pathfinders Logo" 
-            className="h-20 w-auto max-w-full object-contain"
-          />
-        </div>
         <h1 className="text-3xl font-bold text-pathfinders-blue mb-3">
           Let's Get to Know You
         </h1>

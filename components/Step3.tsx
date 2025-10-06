@@ -615,13 +615,6 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         }
       `}</style>
       <div className="text-center mb-8">
-        <div className="flex justify-center mb-6">
-          <img 
-            src="/logo.jpeg" 
-            alt="Pathfinders Logo" 
-            className="h-20 w-auto max-w-full object-contain"
-          />
-        </div>
         <h1 className="text-3xl font-bold text-pathfinders-blue mb-3">
           Quick Questionnaire
         </h1>
