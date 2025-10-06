@@ -22,6 +22,11 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
+
+  // Scroll to top when category changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [currentCategory])
   const [answers, setAnswers] = useState<Partial<FormData>>({
     industry: formData.industry || '',
     educationLevel: formData.educationLevel || '',
