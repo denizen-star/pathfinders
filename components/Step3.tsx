@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { FormData } from '@/app/page'
+import { submitToGoogleSheets, storeSubmissionLocally, SubmissionData } from '@/lib/googleSheets'
 
 interface Step3Props {
   formData: Partial<FormData>
@@ -15,6 +16,7 @@ interface Step3Props {
 
 export default function Step3({ formData, updateFormData, nextStep, prevStep, skipToSummary, sessionId, deviceInfo }: Step3Props) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [answers, setAnswers] = useState<Partial<FormData>>({
     industry: formData.industry || '',
     educationLevel: formData.educationLevel || '',
@@ -174,13 +176,56 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
 
   // Progress saving removed - all data collected at the end via Netlify Forms
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
     } else {
-      // Final submission - submit to Netlify form
-      updateFormData(answers)
-      nextStep()
+      // Final submission - submit to Google Sheets
+      setIsSubmitting(true)
+      
+      try {
+        // Prepare Step 3 data for Google Sheets
+        const step3Data: SubmissionData = {
+          timestamp: new Date().toISOString(),
+          sessionId,
+          deviceInfo,
+          postalCode: formData.postalCode || '',
+          name: formData.name || '',
+          email: formData.email || '',
+          industry: answers.industry || '',
+          educationLevel: answers.educationLevel || '',
+          jobFunctionLevel: answers.jobFunctionLevel || '',
+          companySize: answers.companySize || '',
+          primaryGoal: answers.primaryGoal || [],
+          connectionTypes: answers.connectionTypes || [],
+          workEnvironment: answers.workEnvironment || [],
+          collaborationPreferences: answers.collaborationPreferences || [],
+          networkingWindow: answers.networkingWindow || [],
+          dayOfWeek: answers.dayOfWeek || [],
+          experience: answers.experience || '',
+          communication: answers.communication || '',
+          interests: answers.interests || [],
+          challenges: answers.challenges || [],
+          additionalInfo: answers.additionalInfo || ''
+        }
+        
+        // Submit to Google Sheets (Step 3 - Finish)
+        const success = await submitToGoogleSheets(step3Data, 'Step3', 'Finish')
+        if (!success) {
+          storeSubmissionLocally(step3Data)
+        }
+        
+        // Update form data and proceed to next step
+        updateFormData(answers)
+        nextStep()
+      } catch (error) {
+        console.error('Error submitting Step 3 data:', error)
+        // Still proceed to next step even if submission fails
+        updateFormData(answers)
+        nextStep()
+      } finally {
+        setIsSubmitting(false)
+      }
     }
   }
 
@@ -189,6 +234,54 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
       setCurrentQuestion(currentQuestion - 1)
     } else {
       prevStep()
+    }
+  }
+
+  const handleSkip = async () => {
+    setIsSubmitting(true)
+    
+    try {
+      // Prepare Step 3 data for Google Sheets (Skip action)
+      const step3Data: SubmissionData = {
+        timestamp: new Date().toISOString(),
+        sessionId,
+        deviceInfo,
+        postalCode: formData.postalCode || '',
+        name: formData.name || '',
+        email: formData.email || '',
+        industry: answers.industry || '',
+        educationLevel: answers.educationLevel || '',
+        jobFunctionLevel: answers.jobFunctionLevel || '',
+        companySize: answers.companySize || '',
+        primaryGoal: answers.primaryGoal || [],
+        connectionTypes: answers.connectionTypes || [],
+        workEnvironment: answers.workEnvironment || [],
+        collaborationPreferences: answers.collaborationPreferences || [],
+        networkingWindow: answers.networkingWindow || [],
+        dayOfWeek: answers.dayOfWeek || [],
+        experience: answers.experience || '',
+        communication: answers.communication || '',
+        interests: answers.interests || [],
+        challenges: answers.challenges || [],
+        additionalInfo: answers.additionalInfo || ''
+      }
+      
+      // Submit to Google Sheets (Step 3 - Skip)
+      const success = await submitToGoogleSheets(step3Data, 'Step3', 'Skip')
+      if (!success) {
+        storeSubmissionLocally(step3Data)
+      }
+      
+      // Update form data and skip to summary
+      updateFormData(answers)
+      skipToSummary()
+    } catch (error) {
+      console.error('Error submitting Step 3 skip data:', error)
+      // Still skip to summary even if submission fails
+      updateFormData(answers)
+      skipToSummary()
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -329,24 +422,26 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         <button
           type="button"
           onClick={handlePrevious}
-          className="flex-1 bg-gray-300 text-gray-700 py-3 px-4 rounded-md font-medium hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
+          disabled={isSubmitting}
+          className="flex-1 bg-gray-300 text-gray-700 py-3 px-4 rounded-md font-medium hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors disabled:bg-gray-200 disabled:cursor-not-allowed"
         >
           {currentQuestion === 0 ? 'Back' : 'Previous'}
         </button>
         <button
           type="button"
-          onClick={skipToSummary}
-          className="flex-1 bg-pathfinders-orange text-white py-3 px-4 rounded-md font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-colors"
+          onClick={handleSkip}
+          disabled={isSubmitting}
+          className="flex-1 bg-pathfinders-orange text-white py-3 px-4 rounded-md font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
-          Skip
+          {isSubmitting ? 'Saving...' : 'Skip'}
         </button>
         <button
           type="button"
           onClick={handleNext}
-          disabled={!isAnswerValid()}
+          disabled={!isAnswerValid() || isSubmitting}
           className="flex-1 bg-pathfinders-blue text-white py-3 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
-          {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
+          {isSubmitting ? 'Saving...' : (currentQuestion === questions.length - 1 ? 'Finish' : 'Next')}
         </button>
       </div>
 
