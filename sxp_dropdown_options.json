@@ -1,0 +1,122 @@
+{
+  "industries": [
+    "Arts",
+    "Business",
+    "Civil Service",
+    "Creative Arts",
+    "Education",
+    "Executive",
+    "Finance",
+    "Government",
+    "Healthcare",
+    "Law",
+    "Marketing",
+    "Medicine",
+    "NGO",
+    "Professional",
+    "Public Sector",
+    "Retail",
+    "Science",
+    "Service",
+    "Student",
+    "Tech",
+    "Trade"
+  ],
+  "education_levels": [
+    "Bachelor's",
+    "Graduate",
+    "High School",
+    "Professional",
+    "Some College"
+  ],
+  "job_function_levels": [
+    "Junior IC",
+    "Mid-level IC",
+    "Senior IC",
+    "Manager",
+    "Senior Manager",
+    "Director",
+    "VP",
+    "C-Suite",
+    "Founder"
+  ],
+  "company_sizes": [
+    "1-10",
+    "11-50",
+    "50-200",
+    "200-500",
+    "500+"
+  ],
+  "primary_goals": [
+    "Build Community",
+    "Business Development",
+    "Career Advancement",
+    "Career Transition",
+    "Collaborate on Projects",
+    "Creative Collaboration",
+    "Cultural Integration",
+    "Establish Network",
+    "Find Co-founder",
+    "Find Mentor",
+    "Gain Clients",
+    "Investment Opportunities",
+    "Job Opportunities",
+    "Market Expansion",
+    "Professional Development",
+    "Secure Funding",
+    "Skill Development",
+    "Strategic Partnerships",
+    "Thought Leadership"
+  ],
+  "connection_types": [
+    "C-Suite Exec",
+    "Career Coach",
+    "Co-founder",
+    "Community Leader",
+    "Creative Professional",
+    "Domain Expert",
+    "Industry Influencer",
+    "Investor/VC",
+    "Manager/Leader",
+    "Mentor",
+    "Peer Professional",
+    "Potential Client",
+    "Strategic Partner",
+    "Thought Leader"
+  ],
+  "work_environments": [
+    "Collaborative Space",
+    "Creative Space",
+    "Hybrid",
+    "Private Office",
+    "Quiet/Focused",
+    "Social/Dynamic",
+    "Structured Environment"
+  ],
+  "collaboration_preferences": [
+    "Collaborative Workshops",
+    "Creative Brainstorms",
+    "Cultural Exchange Sessions",
+    "Dynamic Sessions",
+    "Flexible Collaboration",
+    "Impromptu Brainstorms",
+    "Planned Collaboration",
+    "Social Collaboration",
+    "Strategic Sessions",
+    "Structured Meetings"
+  ],
+  "networking_windows": [
+    "Early Morning",
+    "Lunch",
+    "Post-Work",
+    "Evening",
+    "Late Evening"
+  ],
+  "days_of_week": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday"
+  ]
+}

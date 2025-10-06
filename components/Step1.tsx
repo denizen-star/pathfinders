@@ -1,0 +1,143 @@
+'use client'
+
+import { useState } from 'react'
+import { FormData } from '@/app/page'
+
+interface Step1Props {
+  formData: Partial<FormData>
+  updateFormData: (data: Partial<FormData>) => void
+  nextStep: () => void
+  sessionId: string
+  deviceInfo: any
+}
+
+export default function Step1({ formData, updateFormData, nextStep, sessionId, deviceInfo }: Step1Props) {
+  const [postalCode, setPostalCode] = useState(formData.postalCode || '')
+  const [error, setError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Basic validation for Canadian postal code FSA format (3 characters: letter-number-letter)
+    const postalCodeRegex = /^[A-Za-z]\d[A-Za-z]$/
+    
+    if (!postalCode.trim()) {
+      setError('Please enter your postal code')
+      return
+    }
+    
+    if (!postalCodeRegex.test(postalCode.trim())) {
+      setError('Please enter a valid Canadian postal code (e.g., K1A, M5V)')
+      return
+    }
+    
+    setIsSubmitting(true)
+    
+    try {
+      // Save step 1 data
+      const step1Data = {
+        sessionId,
+        deviceInfo,
+        postalCode: postalCode.trim().toUpperCase()
+      }
+      
+      const response = await fetch('/api/step1', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(step1Data),
+      })
+      
+      const result = await response.json()
+      
+      if (result.success) {
+        updateFormData({ postalCode: postalCode.trim().toUpperCase() })
+        nextStep()
+      } else {
+        throw new Error(result.error || 'Failed to save data')
+      }
+    } catch (error) {
+      console.error('Error saving step 1 data:', error)
+      setError('There was an error saving your information. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return (
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="text-center mb-6">
+        <h1 className="text-2xl font-bold text-pathfinders-blue mb-2">
+          Welcome to Pathfinders
+        </h1>
+        <p className="text-gray-600 text-sm">
+          Connect. Create. Grow.
+        </p>
+      </div>
+
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-3">
+          Join Our Networking Experiment
+        </h2>
+        <div className="text-sm text-gray-600 space-y-2">
+          <p>
+            We're testing a simple assumption: can we create meaningful professional connections 
+            by matching people based on their background and goals?
+          </p>
+          <p>
+            This is a small experiment limited to our co-working space community. 
+            We're looking for just 20 people to participate in our first networking event.
+          </p>
+          <p className="font-medium text-pathfinders-blue">
+            Your information will never be used for marketing purposes.
+          </p>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-2">
+            Canadian Postal Code (FSA)*
+          </label>
+          <input
+            type="text"
+            id="postalCode"
+            value={postalCode}
+            onChange={(e) => {
+              setPostalCode(e.target.value.toUpperCase())
+              setError('')
+            }}
+            placeholder="e.g., K1A, M5V, L5B"
+            maxLength={3}
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pathfinders-blue ${
+              error ? 'border-red-500' : 'border-gray-300'
+            }`}
+          />
+          {error && (
+            <p className="text-red-500 text-sm mt-1">{error}</p>
+          )}
+          <p className="text-xs text-gray-500 mt-1">
+            We only need the first 3 characters (Forward Sortation Area)
+          </p>
+        </div>
+
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-pathfinders-blue text-white py-3 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? 'Saving...' : 'Continue'}
+        </button>
+      </form>
+
+      <div className="mt-6 text-xs text-gray-500 text-center">
+        <p>
+          By continuing, you agree that this is an experimental networking project 
+          and your data will only be used for matching purposes.
+        </p>
+      </div>
+    </div>
+  )
+}
