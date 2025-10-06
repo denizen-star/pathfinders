@@ -115,6 +115,9 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
           <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-2">
             Canadian Postal Code (FSA)*
           </label>
+          <p className="text-sm text-gray-600 mb-2">
+            Enter 3 first digits of your Postal code "FSA" eg. M6J 2Y7 you will enter M6J
+          </p>
           <input
             type="text"
             id="postalCode"
@@ -123,7 +126,7 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
               setPostalCode(e.target.value.toUpperCase())
               setError('')
             }}
-            placeholder="e.g., K1A, M5V, L5B"
+            placeholder="e.g., M6J"
             maxLength={3}
             className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-pathfinders-blue ${
               error ? 'border-red-500' : 'border-gray-300'
