@@ -649,10 +649,17 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
         }
       `}</style>
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-pathfinders-blue mb-3">
-          Quick Questionnaire
-        </h1>
+      <div className="text-left mb-8">
+        <div className="flex items-center gap-3 mb-3">
+          <img 
+            src="/logo-p.png" 
+            alt="Pathfinders Logo" 
+            className="w-10 h-10"
+          />
+          <h1 className="text-3xl font-bold text-pathfinders-blue">
+            rofile refinement
+          </h1>
+        </div>
         <p className="text-lg text-gray-600">
           Category {currentCategory + 1} of {categories.length}: {currentCategoryData.title}
         </p>
@@ -664,7 +671,15 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         </h2>
         <div className="text-sm text-gray-600 mb-4">
           <p>
-            Unlock curated, relevant networking opportunities! The 15 questions are the key to building your profile. Using your anonymized traits and your general location (FSA), our model will work to match you with 1–2 highly compatible peers for a voluntary 15-minute introductory networking event within the next one to two weeks. Say goodbye to awkward, random mingling; we're focused on quality connections that align with your interests and professional style.
+            Unlock curated, relevant networking opportunities! 
+          </p>
+          <p>These 15 questions are key to building better connections. 
+            Using your anonymized traits and your general location (FSA), 
+            our model will work to match you with compatible peers for a 
+            voluntary 15-minute introductory networking event within the next one to two weeks. 
+            </p>
+            <p>
+            Say goodbye to awkward, random mingling; we're focused on quality connections that align with your interests and professional style.
           </p>
         </div>
 
