@@ -417,40 +417,146 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         )}
 
         {question.type === 'multi-select' && (
-          <div className="space-y-2">
-            {question.maxSelections && (
-              <p className="text-xs text-gray-500 mb-2">
-                Select up to {question.maxSelections} option{question.maxSelections > 1 ? 's' : ''}
-                {Array.isArray(currentAnswer) && currentAnswer.length > 0 && (
-                  <span className="ml-2 font-medium">
-                    ({currentAnswer.length}/{question.maxSelections} selected)
+          <div className="space-y-4">
+            {/* Selection Counter - Prominent Display */}
+            <div className="bg-gray-50 rounded-lg p-3 border">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm font-medium text-gray-700">
+                    {Array.isArray(currentAnswer) ? currentAnswer.length : 0}
+                    {question.maxSelections ? ` of ${question.maxSelections}` : ''} selected
                   </span>
+                  {question.maxSelections && (
+                    <div className="w-16 bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="bg-pathfinders-blue h-2 rounded-full transition-all duration-300"
+                        style={{ 
+                          width: `${Math.min(((Array.isArray(currentAnswer) ? currentAnswer.length : 0) / question.maxSelections) * 100, 100)}%` 
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+                {Array.isArray(currentAnswer) && currentAnswer.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => handleAnswer(question.id, [])}
+                    className="text-xs text-gray-500 hover:text-gray-700 underline"
+                  >
+                    Clear all
+                  </button>
                 )}
-              </p>
-            )}
-            {question.options?.map((option: string) => {
-              const isSelected = Array.isArray(currentAnswer) && currentAnswer.includes(option)
-              const canSelect = !isSelected && (!question.maxSelections || (Array.isArray(currentAnswer) && currentAnswer.length < question.maxSelections))
-              
-              return (
-                <label 
-                  key={option} 
-                  className={`flex items-center p-2 rounded-md transition-colors ${
-                    isSelected ? 'bg-blue-50 border border-blue-200' : 
-                    canSelect ? 'hover:bg-gray-50' : 'opacity-50 cursor-not-allowed'
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={isSelected}
-                    onChange={() => handleMultiSelect(question.id, option, question.maxSelections || Infinity)}
+              </div>
+              {question.maxSelections && Array.isArray(currentAnswer) && currentAnswer.length >= question.maxSelections * 0.8 && (
+                <div className="mt-2 text-xs text-orange-600 font-medium">
+                  {currentAnswer.length >= question.maxSelections ? 
+                    "Maximum selections reached" : 
+                    "Approaching selection limit"
+                  }
+                </div>
+              )}
+            </div>
+
+            {/* Grid Layout for Options */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {question.options?.map((option: string, index: number) => {
+                const isSelected = Array.isArray(currentAnswer) && currentAnswer.includes(option)
+                const canSelect = !isSelected && (!question.maxSelections || (Array.isArray(currentAnswer) && currentAnswer.length < question.maxSelections))
+                
+                // Color coding based on question type and option
+                const getOptionColor = (questionId: string, option: string, isSelected: boolean) => {
+                  if (!isSelected) return 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                  
+                  const colorMap: { [key: string]: string } = {
+                    // Primary Goals - Blue tones
+                    'primaryGoal': 'bg-blue-100 border-blue-300 text-blue-800',
+                    // Connection Types - Green tones  
+                    'connectionTypes': 'bg-green-100 border-green-300 text-green-800',
+                    // Interests - Purple tones
+                    'interests': 'bg-purple-100 border-purple-300 text-purple-800',
+                    // Challenges - Orange tones
+                    'challenges': 'bg-orange-100 border-orange-300 text-orange-800',
+                    // Work Environment - Teal tones
+                    'workEnvironment': 'bg-teal-100 border-teal-300 text-teal-800',
+                    // Collaboration Preferences - Indigo tones
+                    'collaborationPreferences': 'bg-indigo-100 border-indigo-300 text-indigo-800',
+                    // Networking Window - Pink tones
+                    'networkingWindow': 'bg-pink-100 border-pink-300 text-pink-800',
+                    // Day of Week - Yellow tones
+                    'dayOfWeek': 'bg-yellow-100 border-yellow-300 text-yellow-800'
+                  }
+                  return colorMap[questionId] || 'bg-blue-100 border-blue-300 text-blue-800'
+                }
+                
+                // Icons for different option types
+                const getOptionIcon = (option: string) => {
+                  const iconMap: { [key: string]: string } = {
+                    // Career/Business icons
+                    'Career Advancement': '🚀', 'Business Development': '💼', 'Job Opportunities': '💼',
+                    'Investment Opportunities': '💰', 'Secure Funding': '💳', 'Market Expansion': '📈',
+                    'Strategic Partnerships': '🤝', 'Gain Clients': '👥', 'Find Co-founder': '👫',
+                    
+                    // Networking/Community icons
+                    'Build Community': '🏘️', 'Establish Network': '🌐', 'Cultural Integration': '🌍',
+                    'Find Mentor': '🧙‍♂️', 'Professional Development': '📚', 'Skill Development': '🎯',
+                    
+                    // Creative/Collaboration icons
+                    'Collaborate on Projects': '🛠️', 'Creative Collaboration': '🎨', 'Thought Leadership': '💡',
+                    
+                    // Connection type icons
+                    'C-Suite Exec': '👑', 'Career Coach': '🎯', 'Co-founder': '👫', 'Community Leader': '🌟',
+                    'Creative Professional': '🎨', 'Domain Expert': '🔬', 'Industry Influencer': '📢',
+                    'Investor/VC': '💰', 'Manager/Leader': '👔', 'Mentor': '🧙‍♂️', 'Peer Professional': '👥',
+                    'Potential Client': '🤝', 'Strategic Partner': '🤝', 'Thought Leader': '💡',
+                    
+                    // Interest icons
+                    'Technology Innovation': '💻', 'Business Strategy': '📊', 'Creative Arts': '🎨',
+                    'Data Science': '📈', 'Sustainability': '🌱', 'Leadership': '👑', 'Entrepreneurship': '🚀',
+                    'Research': '🔬', 'Design': '🎨', 'Finance': '💰', 'Healthcare': '🏥', 'Education': '📚', 'Social Impact': '🌍',
+                    
+                    // Challenge icons
+                    'Finding the right opportunities': '🔍', 'Building a network': '🌐', 'Skill development': '📚',
+                    'Work-life balance': '⚖️', 'Industry transition': '🔄', 'Leadership growth': '📈',
+                    'Finding mentors': '🧙‍♂️', 'Building confidence': '💪',
+                    
+                    // Environment icons
+                    'Collaborative Space': '🤝', 'Creative Space': '🎨', 'Hybrid': '🔄', 'Private Office': '🏢',
+                    'Quiet/Focused': '🤫', 'Social/Dynamic': '💬', 'Structured Environment': '📋',
+                    
+                    // Collaboration icons
+                    'Collaborative Workshops': '👥', 'Creative Brainstorms': '💡', 'Cultural Exchange Sessions': '🌍',
+                    'Dynamic Sessions': '⚡', 'Flexible Collaboration': '🔄', 'Impromptu Brainstorms': '💭',
+                    'Planned Collaboration': '📅', 'Social Collaboration': '🎉', 'Strategic Sessions': '🎯', 'Structured Meetings': '📋',
+                    
+                    // Time icons
+                    'Early Morning': '🌅', 'Lunch': '🍽️', 'Post-Work': '🌆', 'Evening': '🌙', 'Late Evening': '🌃',
+                    
+                    // Day icons
+                    'Monday': '📅', 'Tuesday': '📅', 'Wednesday': '📅', 'Thursday': '📅', 'Friday': '📅'
+                  }
+                  return iconMap[option] || '•'
+                }
+                
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => handleMultiSelect(question.id, option, question.maxSelections || Infinity)}
                     disabled={!canSelect && !isSelected}
-                    className="mr-3 text-pathfinders-blue focus:ring-pathfinders-blue"
-                  />
-                  <span className="text-sm">{option}</span>
-                </label>
-              )
-            })}
+                    className={`
+                      flex items-center space-x-2 px-4 py-3 rounded-full border-2 transition-all duration-200 
+                      ${getOptionColor(question.id, option, isSelected)}
+                      ${canSelect || isSelected ? 'cursor-pointer hover:scale-105' : 'opacity-50 cursor-not-allowed'}
+                      ${isSelected ? 'ring-2 ring-offset-1' : ''}
+                    `}
+                  >
+                    <span className="text-lg">{getOptionIcon(option)}</span>
+                    <span className="text-sm font-medium truncate">{option}</span>
+                    {isSelected && <span className="text-lg ml-auto">✓</span>}
+                  </button>
+                )
+              })}
+            </div>
           </div>
         )}
 
