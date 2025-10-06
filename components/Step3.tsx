@@ -24,10 +24,10 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     companySize: formData.companySize || '50-200', // Default to middle option
     primaryGoal: formData.primaryGoal || [],
     connectionTypes: formData.connectionTypes || [],
-    workEnvironment: Array.isArray(formData.workEnvironment) ? formData.workEnvironment[0] || '' : formData.workEnvironment || '', // Changed to single selection
-    collaborationPreferences: Array.isArray(formData.collaborationPreferences) ? formData.collaborationPreferences[0] || '' : formData.collaborationPreferences || '', // Changed to single selection
-    networkingWindow: Array.isArray(formData.networkingWindow) ? formData.networkingWindow[0] || '' : formData.networkingWindow || '', // Changed to single selection
-    dayOfWeek: Array.isArray(formData.dayOfWeek) ? formData.dayOfWeek[0] || '' : formData.dayOfWeek || '', // Changed to single selection
+    workEnvironment: formData.workEnvironment || [],
+    collaborationPreferences: formData.collaborationPreferences || [],
+    networkingWindow: formData.networkingWindow || [],
+    dayOfWeek: formData.dayOfWeek || [],
     experience: formData.experience || '6-10 years', // Default to middle option
     communication: formData.communication || '',
     interests: formData.interests || [],
@@ -41,7 +41,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
       questions: [
         {
           id: 'industry',
-          type: 'dropdown',
+          type: 'single-select-pill',
           label: '1. What industry do you work in?',
           options: [
             'Arts', 'Business', 'Civil Service', 'Creative Arts', 'Education',
@@ -52,13 +52,13 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         },
         {
           id: 'educationLevel',
-          type: 'dropdown',
+          type: 'single-select-pill',
           label: '2. What is your education level?',
           options: ['Graduate', 'Bachelor\'s', 'Some College', 'Professional', 'High School']
         },
         {
           id: 'jobFunctionLevel',
-          type: 'dropdown',
+          type: 'single-select-pill',
           label: '3. What is your job function level?',
           options: [
             'Junior IC', 'Mid-level IC', 'Senior IC', 'Manager', 'Senior Manager',
@@ -145,8 +145,9 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
       questions: [
         {
           id: 'workEnvironment',
-          type: 'select',
+          type: 'multi-select',
           label: '10. What type of work environment do you prefer?',
+          maxSelections: 2,
           options: [
             'Collaborative Space', 'Creative Space', 'Hybrid', 'Private Office',
             'Quiet/Focused', 'Social/Dynamic', 'Structured Environment'
@@ -154,8 +155,9 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         },
         {
           id: 'collaborationPreferences',
-          type: 'select',
-          label: '11. What collaboration preferences do you have?',
+          type: 'multi-select',
+          label: '11. What collaboration preferences do you have? (Select all that apply)',
+          maxSelections: 3,
           options: [
             'Collaborative Workshops', 'Creative Brainstorms', 'Cultural Exchange Sessions',
             'Dynamic Sessions', 'Flexible Collaboration', 'Impromptu Brainstorms',
@@ -165,19 +167,19 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         },
         {
           id: 'communication',
-          type: 'select',
+          type: 'single-select-pill',
           label: '12. What is your preferred communication style?',
           options: ['Direct', 'Diplomatic', 'Analytical', 'Creative', 'Supportive']
         },
         {
           id: 'networkingWindow',
-          type: 'select',
+          type: 'multi-select',
           label: '13. What time window works best for networking?',
           options: ['Early Morning', 'Lunch', 'Post-Work', 'Evening', 'Late Evening']
         },
         {
           id: 'dayOfWeek',
-          type: 'select',
+          type: 'multi-select',
           label: '14. What day of the week works best for networking?',
           options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         }
@@ -206,7 +208,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
       if (question.type === 'multi-select') {
         return Array.isArray(answer) && answer.length > 0
       }
-      if (question.type === 'slider') {
+      if (question.type === 'slider' || question.type === 'single-select-pill') {
         return answer && answer !== ''
       }
       if (question.type === 'textarea') {
@@ -239,10 +241,10 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           companySize: answers.companySize || '',
           primaryGoal: answers.primaryGoal || [],
           connectionTypes: answers.connectionTypes || [],
-          workEnvironment: Array.isArray(answers.workEnvironment) ? answers.workEnvironment : [answers.workEnvironment || ''],
-          collaborationPreferences: Array.isArray(answers.collaborationPreferences) ? answers.collaborationPreferences : [answers.collaborationPreferences || ''],
-          networkingWindow: Array.isArray(answers.networkingWindow) ? answers.networkingWindow : [answers.networkingWindow || ''],
-          dayOfWeek: Array.isArray(answers.dayOfWeek) ? answers.dayOfWeek : [answers.dayOfWeek || ''],
+          workEnvironment: answers.workEnvironment || [],
+          collaborationPreferences: answers.collaborationPreferences || [],
+          networkingWindow: answers.networkingWindow || [],
+          dayOfWeek: answers.dayOfWeek || [],
           experience: answers.experience || '',
           communication: answers.communication || '',
           interests: answers.interests || [],
@@ -296,10 +298,10 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         companySize: answers.companySize || '',
         primaryGoal: answers.primaryGoal || [],
         connectionTypes: answers.connectionTypes || [],
-          workEnvironment: Array.isArray(answers.workEnvironment) ? answers.workEnvironment : [answers.workEnvironment || ''],
-          collaborationPreferences: Array.isArray(answers.collaborationPreferences) ? answers.collaborationPreferences : [answers.collaborationPreferences || ''],
-          networkingWindow: Array.isArray(answers.networkingWindow) ? answers.networkingWindow : [answers.networkingWindow || ''],
-          dayOfWeek: Array.isArray(answers.dayOfWeek) ? answers.dayOfWeek : [answers.dayOfWeek || ''],
+        workEnvironment: answers.workEnvironment || [],
+        collaborationPreferences: answers.collaborationPreferences || [],
+        networkingWindow: answers.networkingWindow || [],
+        dayOfWeek: answers.dayOfWeek || [],
         experience: answers.experience || '',
         communication: answers.communication || '',
         interests: answers.interests || [],
@@ -382,6 +384,44 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                 <span className="text-sm">{option}</span>
               </label>
             ))}
+          </div>
+        )}
+
+        {question.type === 'single-select-pill' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {question.options?.map((option: string) => {
+              const isSelected = currentAnswer === option
+              
+              // Color coding for single-select pills
+              const getPillColor = (questionId: string, isSelected: boolean) => {
+                if (!isSelected) return 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                
+                const colorMap: { [key: string]: string } = {
+                  'industry': 'bg-blue-100 border-blue-300 text-blue-800',
+                  'educationLevel': 'bg-green-100 border-green-300 text-green-800',
+                  'jobFunctionLevel': 'bg-purple-100 border-purple-300 text-purple-800',
+                  'communication': 'bg-orange-100 border-orange-300 text-orange-800'
+                }
+                return colorMap[questionId] || 'bg-blue-100 border-blue-300 text-blue-800'
+              }
+              
+              return (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => handleAnswer(question.id, option)}
+                  className={`
+                    flex items-center justify-between px-4 py-3 rounded-full border-2 transition-all duration-200 
+                    ${getPillColor(question.id, isSelected)}
+                    cursor-pointer hover:scale-105
+                    ${isSelected ? 'ring-2 ring-offset-1' : ''}
+                  `}
+                >
+                  <span className="text-sm font-medium">{option}</span>
+                  {isSelected && <span className="text-lg font-bold">✓</span>}
+                </button>
+              )
+            })}
           </div>
         )}
 
