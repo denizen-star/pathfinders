@@ -116,7 +116,8 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
             Canadian Postal Code (FSA)*
           </label>
           <p className="text-sm text-gray-600 mb-2">
-            Enter 3 first digits of your Postal code "FSA" eg. M6J 2Y7 you will enter M6J
+            Enter 3 first digits of your Postal Code or "FSA"<br />
+            (eg. M6J 2Y7 you will enter M6J)
           </p>
           <input
             type="text"
