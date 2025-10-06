@@ -163,7 +163,7 @@ export default function AdminPage() {
     const overallCompletionRate = completedStep1 > 0 ? ((completedStep3 / completedStep1) * 100).toFixed(1) : '0'
     
     // Question completion analysis
-    const questionCompletion = {}
+    const questionCompletion: { [key: number]: number } = {}
     step3Progress.forEach(progress => {
       if (!questionCompletion[progress.questionNumber]) {
         questionCompletion[progress.questionNumber] = 0
