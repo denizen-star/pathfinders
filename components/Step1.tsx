@@ -90,40 +90,34 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
             className="w-10 h-10"
           />
           <h1 className="text-3xl font-bold text-pathfinders-blue">
-            Pathfinders
+            athfinders
           </h1>
         </div>
         <p className="text-gray-600 text-lg">
-          Connect. Create. Grow.
+          Connect - Create - Grow.
         </p>
       </div>
 
       <div className="mb-6">
         <h2 className="text-lg font-semibold text-gray-800 mb-3">
-          Join Our Networking Experiment
+          Try Networking with Intelligence
         </h2>
         <div className="text-sm text-gray-600 space-y-2">
           <p>
-            We're testing a simple assumption: can we create meaningful professional connections 
-            by matching people based on their background and goals?
+            We believe we can create meaningful professional connections 
+            by matching people based on FSA, a few indicators, and the right activities
           </p>
-          <p>
-            This is a small experiment limited to our co-working space community. 
-            We're looking for just 20 people to participate in our first networking event.
-          </p>
-          <p className="font-medium text-pathfinders-blue">
-            Your information will never be used for marketing purposes.
-          </p>
+
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-2">
-            Canadian Postal Code (FSA)*
+          Enter 3 first digits of your Postal Code or "FSA"
           </label>
           <p className="text-sm text-gray-600 mb-2">
-            Enter 3 first digits of your Postal Code or "FSA"<br />
+          
             (eg. M6J 2Y7 you will enter M6J)
           </p>
           <input
@@ -147,7 +141,14 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
             We only need the first 3 characters (Forward Sortation Area)
           </p>
         </div>
+        <div className="text-sm text-gray-600 space-y-2">
+         <p>
+           
+            We're looking for just 20 people to participate in our first networking event.
+            This is a small experiment limited to our co-working space community. 
+          </p>
 
+        </div>
         <button
           type="submit"
           disabled={isSubmitting}
@@ -157,10 +158,21 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
         </button>
       </form>
 
-      <div className="mt-6 text-xs text-gray-500 text-center">
-        <p>
-          By continuing, you agree that this is an experimental networking project 
-          and your data will only be used for matching purposes.
+      <div className="mt-6 text-xs text-gray-500 text-left">
+       
+
+          <p className="font-medium text-pathfinders-blue">
+            Your information will never be used for marketing purposes.
+          </p>
+           <p>
+          By continuing, you'll help us understand the local co-working ecosystem and 
+          improve our model potential for accurate matches! We only collect the 
+          first three digits of your postal code (FSA) to understand the general 
+          geographic distribution of our co-working community. 
+          This anonymous data helps ensure any future suggested networking events 
+          are relevant to your needs, maximizing chances of deeper community connections 
+          with nearby peers.
+          
         </p>
       </div>
     </div>

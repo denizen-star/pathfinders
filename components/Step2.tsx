@@ -154,10 +154,17 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-pathfinders-blue mb-3">
-          Let's Get to Know You
-        </h1>
+      <div className="text-left mb-8">
+        <div className="flex items-center gap-3 mb-3">
+          <img 
+            src="/logo-p.png" 
+            alt="Pathfinders Logo" 
+            className="w-10 h-10"
+          />
+          <h1 className="text-3xl font-bold text-pathfinders-blue">
+            erspective
+          </h1>
+        </div>
       </div>
 
       <div className="mb-6">
