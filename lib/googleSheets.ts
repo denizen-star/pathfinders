@@ -25,13 +25,15 @@ export interface SubmissionData {
   deviceInfo: any
 }
 
-export const submitToGoogleSheets = async (data: SubmissionData): Promise<boolean> => {
+export const submitToGoogleSheets = async (data: SubmissionData, stepType: 'Step1' | 'Step2' | 'Step3' = 'Step3', action: string = ''): Promise<boolean> => {
   try {
     // Your Google Apps Script web app URL
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRMbioiyOr5PLNvHKMOK6z5pmCnjxgLb5o7lYKwxukikzYQygqnlbay_ijW8f6bonD/exec'
     
-    // Convert arrays to strings for Google Sheets
+    // Convert arrays to strings for Google Sheets and add stepType and action
     const formattedData = {
+      stepType,
+      action,
       ...data,
       primaryGoal: Array.isArray(data.primaryGoal) ? data.primaryGoal.join('; ') : data.primaryGoal,
       connectionTypes: Array.isArray(data.connectionTypes) ? data.connectionTypes.join('; ') : data.connectionTypes,
@@ -44,7 +46,7 @@ export const submitToGoogleSheets = async (data: SubmissionData): Promise<boolea
       deviceInfo: JSON.stringify(data.deviceInfo || {})
     }
     
-    console.log('Submitting to Google Sheets:', formattedData)
+    console.log(`Submitting ${stepType} data to Google Sheets:`, formattedData)
     
     // Use form data instead of JSON for better compatibility
     const formData = new FormData()
@@ -58,10 +60,10 @@ export const submitToGoogleSheets = async (data: SubmissionData): Promise<boolea
       body: formData
     })
     
-    console.log('Google Sheets submission completed')
+    console.log(`Google Sheets ${stepType} submission completed`)
     return true // Assume success with no-cors
   } catch (error) {
-    console.error('Error submitting to Google Sheets:', error)
+    console.error(`Error submitting ${stepType} data to Google Sheets:`, error)
     return false
   }
 }

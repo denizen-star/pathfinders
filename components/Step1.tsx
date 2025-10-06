@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { FormData } from '@/app/page'
+import { submitToGoogleSheets, storeSubmissionLocally, SubmissionData } from '@/lib/googleSheets'
 
 interface Step1Props {
   formData: Partial<FormData>
@@ -16,7 +17,7 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     // Basic validation for Canadian postal code FSA format (3 characters: letter-number-letter)
@@ -32,9 +33,51 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
       return
     }
     
-    // Save to form data and proceed (data will be collected at the end)
-    updateFormData({ postalCode: postalCode.trim().toUpperCase() })
-    nextStep()
+    setIsSubmitting(true)
+    
+    try {
+      // Prepare Step 1 data for Google Sheets
+      const step1Data: SubmissionData = {
+        timestamp: new Date().toISOString(),
+        sessionId,
+        deviceInfo,
+        postalCode: postalCode.trim().toUpperCase(),
+        name: '',
+        email: '',
+        industry: '',
+        educationLevel: '',
+        jobFunctionLevel: '',
+        companySize: '',
+        primaryGoal: [],
+        connectionTypes: [],
+        workEnvironment: [],
+        collaborationPreferences: [],
+        networkingWindow: [],
+        dayOfWeek: [],
+        experience: '',
+        communication: '',
+        interests: [],
+        challenges: [],
+        additionalInfo: ''
+      }
+      
+      // Submit to Google Sheets (Step 1)
+      const success = await submitToGoogleSheets(step1Data, 'Step1', 'Continue')
+      if (!success) {
+        storeSubmissionLocally(step1Data)
+      }
+      
+      // Save to form data and proceed
+      updateFormData({ postalCode: postalCode.trim().toUpperCase() })
+      nextStep()
+    } catch (error) {
+      console.error('Error submitting Step 1 data:', error)
+      // Still proceed to next step even if submission fails
+      updateFormData({ postalCode: postalCode.trim().toUpperCase() })
+      nextStep()
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -96,9 +139,10 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
 
         <button
           type="submit"
-          className="w-full bg-pathfinders-blue text-white py-3 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+          disabled={isSubmitting}
+          className="w-full bg-pathfinders-blue text-white py-3 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
-          Continue
+          {isSubmitting ? 'Saving...' : 'Continue'}
         </button>
       </form>
 
