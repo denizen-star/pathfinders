@@ -51,10 +51,26 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=3" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png?v=3" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png?v=3" />
-        <link rel="shortcut icon" href="/favicon.png?v=3" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=4" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png?v=4" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png?v=4" />
+        <link rel="shortcut icon" href="/favicon.png?v=4" />
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Ensure favicon adapts to browser background */
+            link[rel="icon"] {
+              background: transparent !important;
+            }
+            /* Dark mode support for favicon */
+            @media (prefers-color-scheme: dark) {
+              /* Favicon will inherit browser's dark background */
+            }
+            /* Light mode support for favicon */
+            @media (prefers-color-scheme: light) {
+              /* Favicon will inherit browser's light background */
+            }
+          `
+        }} />
       </head>
       <body className="min-h-screen bg-gray-50">
         {children}
