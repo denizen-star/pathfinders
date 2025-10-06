@@ -216,7 +216,7 @@ export default function AdminPage() {
         <div className="text-center">
           <p className="text-red-600 mb-4">{error}</p>
           <button 
-            onClick={fetchSubmissions}
+            onClick={fetchAllData}
             className="bg-pathfinders-blue text-white px-4 py-2 rounded-md"
           >
             Try Again
