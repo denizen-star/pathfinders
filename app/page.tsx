@@ -18,10 +18,10 @@ export interface FormData {
   companySize: string
   primaryGoal: string[]
   connectionTypes: string[]
-  workEnvironment: string[]
-  collaborationPreferences: string[]
-  networkingWindow: string[]
-  dayOfWeek: string[]
+  workEnvironment: string | string[]
+  collaborationPreferences: string | string[]
+  networkingWindow: string | string[]
+  dayOfWeek: string | string[]
   experience: string
   communication: string
   interests: string[]

@@ -24,10 +24,10 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     companySize: formData.companySize || '50-200', // Default to middle option
     primaryGoal: formData.primaryGoal || [],
     connectionTypes: formData.connectionTypes || [],
-    workEnvironment: formData.workEnvironment || [],
-    collaborationPreferences: formData.collaborationPreferences || [],
-    networkingWindow: formData.networkingWindow || [],
-    dayOfWeek: formData.dayOfWeek || [],
+    workEnvironment: Array.isArray(formData.workEnvironment) ? formData.workEnvironment[0] || '' : formData.workEnvironment || '', // Changed to single selection
+    collaborationPreferences: Array.isArray(formData.collaborationPreferences) ? formData.collaborationPreferences[0] || '' : formData.collaborationPreferences || '', // Changed to single selection
+    networkingWindow: Array.isArray(formData.networkingWindow) ? formData.networkingWindow[0] || '' : formData.networkingWindow || '', // Changed to single selection
+    dayOfWeek: Array.isArray(formData.dayOfWeek) ? formData.dayOfWeek[0] || '' : formData.dayOfWeek || '', // Changed to single selection
     experience: formData.experience || '6-10 years', // Default to middle option
     communication: formData.communication || '',
     interests: formData.interests || [],
@@ -145,9 +145,8 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
       questions: [
         {
           id: 'workEnvironment',
-          type: 'multi-select',
+          type: 'select',
           label: '10. What type of work environment do you prefer?',
-          maxSelections: 2,
           options: [
             'Collaborative Space', 'Creative Space', 'Hybrid', 'Private Office',
             'Quiet/Focused', 'Social/Dynamic', 'Structured Environment'
@@ -155,9 +154,8 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         },
         {
           id: 'collaborationPreferences',
-          type: 'multi-select',
-          label: '11. What collaboration preferences do you have? (Select all that apply)',
-          maxSelections: 3,
+          type: 'select',
+          label: '11. What collaboration preferences do you have?',
           options: [
             'Collaborative Workshops', 'Creative Brainstorms', 'Cultural Exchange Sessions',
             'Dynamic Sessions', 'Flexible Collaboration', 'Impromptu Brainstorms',
@@ -173,13 +171,13 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         },
         {
           id: 'networkingWindow',
-          type: 'multi-select',
+          type: 'select',
           label: '13. What time window works best for networking?',
           options: ['Early Morning', 'Lunch', 'Post-Work', 'Evening', 'Late Evening']
         },
         {
           id: 'dayOfWeek',
-          type: 'multi-select',
+          type: 'select',
           label: '14. What day of the week works best for networking?',
           options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         }
@@ -201,13 +199,19 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
   // Check if current category is complete
   const isCurrentCategoryComplete = () => {
     const currentCategoryQuestions = categories[currentCategory].questions
-    return currentCategoryQuestions.every(question => {
+    const allQuestions = isLastCategory ? [...currentCategoryQuestions, additionalQuestion] : currentCategoryQuestions
+    
+    return allQuestions.every(question => {
       const answer = answers[question.id as keyof FormData]
       if (question.type === 'multi-select') {
         return Array.isArray(answer) && answer.length > 0
       }
       if (question.type === 'slider') {
         return answer && answer !== ''
+      }
+      if (question.type === 'textarea') {
+        // Textarea is optional, so always return true
+        return true
       }
       return answer && answer !== ''
     })
@@ -235,10 +239,10 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           companySize: answers.companySize || '',
           primaryGoal: answers.primaryGoal || [],
           connectionTypes: answers.connectionTypes || [],
-          workEnvironment: answers.workEnvironment || [],
-          collaborationPreferences: answers.collaborationPreferences || [],
-          networkingWindow: answers.networkingWindow || [],
-          dayOfWeek: answers.dayOfWeek || [],
+          workEnvironment: Array.isArray(answers.workEnvironment) ? answers.workEnvironment : [answers.workEnvironment || ''],
+          collaborationPreferences: Array.isArray(answers.collaborationPreferences) ? answers.collaborationPreferences : [answers.collaborationPreferences || ''],
+          networkingWindow: Array.isArray(answers.networkingWindow) ? answers.networkingWindow : [answers.networkingWindow || ''],
+          dayOfWeek: Array.isArray(answers.dayOfWeek) ? answers.dayOfWeek : [answers.dayOfWeek || ''],
           experience: answers.experience || '',
           communication: answers.communication || '',
           interests: answers.interests || [],
@@ -292,10 +296,10 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         companySize: answers.companySize || '',
         primaryGoal: answers.primaryGoal || [],
         connectionTypes: answers.connectionTypes || [],
-        workEnvironment: answers.workEnvironment || [],
-        collaborationPreferences: answers.collaborationPreferences || [],
-        networkingWindow: answers.networkingWindow || [],
-        dayOfWeek: answers.dayOfWeek || [],
+          workEnvironment: Array.isArray(answers.workEnvironment) ? answers.workEnvironment : [answers.workEnvironment || ''],
+          collaborationPreferences: Array.isArray(answers.collaborationPreferences) ? answers.collaborationPreferences : [answers.collaborationPreferences || ''],
+          networkingWindow: Array.isArray(answers.networkingWindow) ? answers.networkingWindow : [answers.networkingWindow || ''],
+          dayOfWeek: Array.isArray(answers.dayOfWeek) ? answers.dayOfWeek : [answers.dayOfWeek || ''],
         experience: answers.experience || '',
         communication: answers.communication || '',
         interests: answers.interests || [],
@@ -582,6 +586,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
 
         <div className="space-y-4">
           {currentCategoryData.questions.map(renderQuestion)}
+          {isLastCategory && renderQuestion(additionalQuestion)}
         </div>
       </div>
 
