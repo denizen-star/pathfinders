@@ -6,10 +6,20 @@ function doPost(e) {
     // Get the active spreadsheet
     const sheet = SpreadsheetApp.getActiveSheet()
     
-    // Parse the incoming data
-    const data = JSON.parse(e.postData.contents)
+    // Get form data (handles both JSON and FormData)
+    let data = {}
+    if (e.postData && e.postData.contents) {
+      try {
+        data = JSON.parse(e.postData.contents)
+      } catch (jsonError) {
+        // If not JSON, treat as form data
+        data = e.parameter
+      }
+    } else if (e.parameter) {
+      data = e.parameter
+    }
     
-    // Prepare row data
+    // Prepare row data (data is already formatted as strings)
     const rowData = [
       data.timestamp || new Date().toISOString(),
       data.sessionId || '',
@@ -20,18 +30,18 @@ function doPost(e) {
       data.educationLevel || '',
       data.jobFunctionLevel || '',
       data.companySize || '',
-      Array.isArray(data.primaryGoal) ? data.primaryGoal.join('; ') : data.primaryGoal || '',
-      Array.isArray(data.connectionTypes) ? data.connectionTypes.join('; ') : data.connectionTypes || '',
-      Array.isArray(data.workEnvironment) ? data.workEnvironment.join('; ') : data.workEnvironment || '',
-      Array.isArray(data.collaborationPreferences) ? data.collaborationPreferences.join('; ') : data.collaborationPreferences || '',
-      Array.isArray(data.networkingWindow) ? data.networkingWindow.join('; ') : data.networkingWindow || '',
-      Array.isArray(data.dayOfWeek) ? data.dayOfWeek.join('; ') : data.dayOfWeek || '',
+      data.primaryGoal || '',
+      data.connectionTypes || '',
+      data.workEnvironment || '',
+      data.collaborationPreferences || '',
+      data.networkingWindow || '',
+      data.dayOfWeek || '',
       data.experience || '',
       data.communication || '',
-      Array.isArray(data.interests) ? data.interests.join('; ') : data.interests || '',
-      Array.isArray(data.challenges) ? data.challenges.join('; ') : data.challenges || '',
+      data.interests || '',
+      data.challenges || '',
       data.additionalInfo || '',
-      JSON.stringify(data.deviceInfo || {})
+      data.deviceInfo || ''
     ]
     
     // Add header row if this is the first submission
