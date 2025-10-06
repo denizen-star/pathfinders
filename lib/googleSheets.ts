@@ -28,7 +28,7 @@ export interface SubmissionData {
 export const submitToGoogleSheets = async (data: SubmissionData, stepType: 'Step1' | 'Step2' | 'Step3' = 'Step3', action: string = ''): Promise<boolean> => {
   try {
     // Your Google Apps Script web app URL
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRMbioiyOr5PLNvHKMOK6z5pmCnjxgLb5o7lYKwxukikzYQygqnlbay_ijW8f6bonD/exec'
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxP8H-qh4r4uEN5Ea2xBXa__YjXFlJ30h7F4_kebDna3HEMlbz_WqG8H8pWBRhp2rSx/exec'
     
     // Convert arrays to strings for Google Sheets and add stepType and action
     const formattedData = {
