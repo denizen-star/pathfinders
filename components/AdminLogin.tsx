@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { verifyPassword, getAuthToken } from '@/lib/auth'
+import { verifyPassword, getAuthToken } from '../lib/auth'
 
 interface AdminLoginProps {
   onLogin: (token: string) => void

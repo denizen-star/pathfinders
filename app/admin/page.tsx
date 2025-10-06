@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import AdminLogin from '@/components/AdminLogin'
-import { verifyAuthToken } from '@/lib/auth'
+import AdminLogin from '../../components/AdminLogin'
+import { verifyAuthToken } from '../../lib/auth'
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)

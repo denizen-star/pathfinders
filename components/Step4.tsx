@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { FormData } from '@/app/page'
+import { FormData } from '../app/page'
 
 interface Step4Props {
   formData: Partial<FormData>

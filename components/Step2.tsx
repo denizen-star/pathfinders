@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { FormData } from '@/app/page'
-import { submitToGoogleSheets, storeSubmissionLocally, SubmissionData } from '@/lib/googleSheets'
+import { FormData } from '../app/page'
+import { submitToGoogleSheets, storeSubmissionLocally, SubmissionData } from '../lib/googleSheets'
 
 interface Step2Props {
   formData: Partial<FormData>
