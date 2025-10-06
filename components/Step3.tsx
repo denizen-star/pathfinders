@@ -664,8 +664,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         </h2>
         <div className="text-sm text-gray-600 mb-4">
           <p>
-            If you complete this questionnaire, we'll contact you for a short 
-            15-minute networking event within the next 2 weeks based on our predictions.
+            Unlock curated, relevant networking opportunities! The 15 questions are the key to building your profile. Using your anonymized traits and your general location (FSA), our model will work to match you with 1–2 highly compatible peers for a voluntary 15-minute introductory networking event within the next one to two weeks. Say goodbye to awkward, random mingling; we're focused on quality connections that align with your interests and professional style.
           </p>
         </div>
 

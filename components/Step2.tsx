@@ -169,19 +169,17 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
 
       <div className="mb-6">
         <h2 className="text-lg font-semibold text-gray-800 mb-3">
-          Your Contact Information
+        Get a glimpse into your networking style!
         </h2>
         <div className="text-sm text-gray-600 space-y-2">
           <p>
-            With your email address, we'll send you a summary of potential matches 
-            we've identified based on your responses.
+            With your email address, you'll opt-in to receive a personalized summary next week. 
+            With exclusive, high-level analysis of the personality traits that your response 
+            suggest with our must broad model. This self-insight is the first step toward 
+            understanding how you can best connect with collegues.
           </p>
-          <p>
-            This helps us understand who you might connect well with in our networking events.
-          </p>
-          <p className="font-medium text-pathfinders-blue">
-            Your email will only be used for this experiment and match summaries.
-          </p>
+          
+
         </div>
       </div>
 
@@ -223,7 +221,11 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
         {error && (
           <p className="text-red-500 text-sm">{error}</p>
         )}
-
+        <div className="mt-6 text-xs text-gray-500 text-left">
+               <p className="font-medium text-pathfinders-blue">
+            Your email will only be used for this experiment and match summaries.
+          </p>
+          </div>
         <div className="flex space-x-2">
           <button
             type="button"
@@ -253,8 +255,7 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
 
       <div className="mt-6 text-xs text-gray-500 text-center">
         <p>
-          Your information is securely stored locally and will be used solely for 
-          matching purposes in our networking experiment.
+         ... All rights reserved....
         </p>
       </div>
     </div>
