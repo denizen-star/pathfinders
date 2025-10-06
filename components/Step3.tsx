@@ -172,33 +172,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     setAnswers(prev => ({ ...prev, [questionId]: value }))
   }
 
-  const saveStep3Data = async (questionNumber: number, questionData: any) => {
-    try {
-      const step3Data = {
-        sessionId,
-        deviceInfo,
-        questionNumber,
-        questionId: questionData.id,
-        questionLabel: questionData.label,
-        answer: answers[questionData.id as keyof FormData],
-        postalCode: formData.postalCode,
-        name: formData.name,
-        email: formData.email,
-        ...answers // Include all current answers
-      }
-      
-      await fetch('/api/step3-progress', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(step3Data),
-      })
-    } catch (error) {
-      console.error('Error saving step 3 progress:', error)
-      // Don't block user flow for progress saving errors
-    }
-  }
+  // Progress saving removed - all data collected at the end via Netlify Forms
 
   const handleNext = () => {
     if (currentQuestion < questions.length - 1) {

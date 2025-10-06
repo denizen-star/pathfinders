@@ -39,43 +39,12 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
       return
     }
     
-    setIsSubmitting(true)
-    
-    try {
-      // Save step 2 data
-      const step2Data = {
-        sessionId,
-        deviceInfo,
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        postalCode: formData.postalCode // Include postal code from step 1
-      }
-      
-      const response = await fetch('/api/step2', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(step2Data),
-      })
-      
-      const result = await response.json()
-      
-      if (result.success) {
-        updateFormData({ 
-          name: name.trim(), 
-          email: email.trim().toLowerCase() 
-        })
-        nextStep()
-      } else {
-        throw new Error(result.error || 'Failed to save data')
-      }
-    } catch (error) {
-      console.error('Error saving step 2 data:', error)
-      setError('There was an error saving your information. Please try again.')
-    } finally {
-      setIsSubmitting(false)
-    }
+    // Save to form data and proceed (data will be collected at the end)
+    updateFormData({ 
+      name: name.trim(), 
+      email: email.trim().toLowerCase() 
+    })
+    nextStep()
   }
 
   return (
