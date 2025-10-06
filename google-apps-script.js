@@ -72,6 +72,17 @@ function doPost(e) {
   }
 }
 
+// Function to handle GET requests (for testing)
+function doGet(e) {
+  return ContentService
+    .createTextOutput(JSON.stringify({ 
+      status: 'success', 
+      message: 'Google Apps Script is working!',
+      timestamp: new Date().toISOString()
+    }))
+    .setMimeType(ContentService.MimeType.JSON)
+}
+
 // Optional: Function to set up the spreadsheet headers
 function setupHeaders() {
   const sheet = SpreadsheetApp.getActiveSheet()
