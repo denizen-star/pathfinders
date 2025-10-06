@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { FormData } from '@/app/page'
-import { submitToGoogleSheets, storeSubmissionLocally, SubmissionData } from '@/lib/googleSheets'
 
 interface Step4Props {
   formData: Partial<FormData>
@@ -14,53 +13,11 @@ interface Step4Props {
 export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Step4Props) {
   const [isSubmitted, setIsSubmitted] = useState(false)
 
+  // Step4 is now just a confirmation page - data submission happens in previous steps
   useEffect(() => {
-    // Submit data when Step4 loads
-    if (!isSubmitted && formData.postalCode && formData.name && formData.email) {
-      const submitData = async () => {
-        try {
-          // Prepare submission data
-          const submissionData: SubmissionData = {
-            timestamp: new Date().toISOString(),
-            sessionId,
-            deviceInfo,
-            postalCode: formData.postalCode || '',
-            name: formData.name || '',
-            email: formData.email || '',
-            industry: formData.industry || '',
-            educationLevel: formData.educationLevel || '',
-            jobFunctionLevel: formData.jobFunctionLevel || '',
-            companySize: formData.companySize || '',
-            primaryGoal: formData.primaryGoal || [],
-            connectionTypes: formData.connectionTypes || [],
-            workEnvironment: formData.workEnvironment || [],
-            collaborationPreferences: formData.collaborationPreferences || [],
-            networkingWindow: formData.networkingWindow || [],
-            dayOfWeek: formData.dayOfWeek || [],
-            experience: formData.experience || '',
-            communication: formData.communication || '',
-            interests: formData.interests || [],
-            challenges: formData.challenges || [],
-            additionalInfo: formData.additionalInfo || ''
-          }
-          
-          // Try Google Sheets first, fallback to local storage
-          const success = await submitToGoogleSheets(submissionData)
-          if (!success) {
-            storeSubmissionLocally(submissionData)
-          }
-          
-          setIsSubmitted(true)
-        } catch (error) {
-          console.error('Error submitting data:', error)
-          setIsSubmitted(true) // Still mark as submitted to prevent retries
-        }
-      }
-      
-      // Add a small delay to ensure the DOM is ready
-      setTimeout(submitData, 1000)
-    }
-  }, [formData, isSubmitted, sessionId, deviceInfo])
+    // Mark as submitted immediately since this is just a thank you page
+    setIsSubmitted(true)
+  }, [])
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 text-center">
       <div className="mb-6">
