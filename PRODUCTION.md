@@ -1,4 +1,4 @@
-# Pathfinders v1.0.0 - Production Deployment Guide
+# Pathfinders v2.0.0 - Production Deployment Guide
 
 ## 🚀 Production Checklist
 
@@ -42,7 +42,7 @@
 ### Environment Variables
 ```bash
 NODE_ENV=production
-NEXT_PUBLIC_APP_VERSION=1.0.0
+NEXT_PUBLIC_APP_VERSION=2.0.0
 NEXT_PUBLIC_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/YOUR_SCRIPT_URL/exec
 ```
 
@@ -164,5 +164,5 @@ NEXT_PUBLIC_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/YOUR_SCRIPT_URL
 ---
 
 **Production Deployment Date**: $(date)
-**Version**: 1.0.0
+**Version**: 2.0.0
 **Status**: ✅ Ready for Production
