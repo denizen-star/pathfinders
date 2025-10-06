@@ -198,12 +198,13 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     setAnswers(prev => ({ ...prev, [questionId]: value }))
   }
 
-  // Check if current category is complete
+  // Check if current category has at least one answer
   const isCurrentCategoryComplete = () => {
     const currentCategoryQuestions = categories[currentCategory].questions
     const allQuestions = isLastCategory ? [...currentCategoryQuestions, additionalQuestion] : currentCategoryQuestions
     
-    return allQuestions.every(question => {
+    // Check if at least one question in the category has been answered
+    return allQuestions.some(question => {
       const answer = answers[question.id as keyof FormData]
       if (question.type === 'multi-select') {
         return Array.isArray(answer) && answer.length > 0
@@ -222,6 +223,8 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
   const handleNext = async () => {
     if (currentCategory < categories.length - 1) {
       setCurrentCategory(currentCategory + 1)
+      // Scroll to top when navigating to next category
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
       // Final submission - submit to Google Sheets
       setIsSubmitting(true)
@@ -275,6 +278,8 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
   const handlePrevious = () => {
     if (currentCategory > 0) {
       setCurrentCategory(currentCategory - 1)
+      // Scroll to top when navigating to previous category
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
       prevStep()
     }
@@ -605,6 +610,13 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         }
       `}</style>
       <div className="text-center mb-6">
+        <div className="flex justify-center mb-4">
+          <img 
+            src="/logo.jpeg" 
+            alt="Pathfinders Logo" 
+            className="h-12 w-auto"
+          />
+        </div>
         <h1 className="text-2xl font-bold text-pathfinders-blue mb-2">
           Quick Questionnaire
         </h1>

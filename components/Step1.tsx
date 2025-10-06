@@ -83,6 +83,13 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
       <div className="text-center mb-6">
+        <div className="flex justify-center mb-4">
+          <img 
+            src="/logo.jpeg" 
+            alt="Pathfinders Logo" 
+            className="h-16 w-auto"
+          />
+        </div>
         <h1 className="text-2xl font-bold text-pathfinders-blue mb-2">
           Welcome to Pathfinders
         </h1>

@@ -71,14 +71,20 @@ export default function Home() {
 
   const nextStep = () => {
     setCurrentStep(prev => prev + 1)
+    // Scroll to top when navigating between main steps
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const prevStep = () => {
     setCurrentStep(prev => prev - 1)
+    // Scroll to top when navigating between main steps
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const skipToSummary = () => {
     setCurrentStep(4)
+    // Scroll to top when skipping to summary
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const renderStep = () => {
