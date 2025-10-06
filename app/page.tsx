@@ -23,7 +23,7 @@ export interface FormData {
   networkingWindow: string[]
   dayOfWeek: string[]
   experience: string
-  communication: string
+  communication: string[]
   interests: string[]
   challenges: string[]
   additionalInfo: string

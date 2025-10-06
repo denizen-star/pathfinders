@@ -18,7 +18,7 @@ export interface SubmissionData {
   networkingWindow: string[]
   dayOfWeek: string[]
   experience: string
-  communication: string
+  communication: string[]
   interests: string[]
   challenges: string[]
   additionalInfo: string

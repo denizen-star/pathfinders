@@ -34,7 +34,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     networkingWindow: formData.networkingWindow || [],
     dayOfWeek: formData.dayOfWeek || [],
     experience: formData.experience || '6-10 years', // Default to middle option
-    communication: formData.communication || '',
+    communication: Array.isArray(formData.communication) ? formData.communication : (formData.communication ? [formData.communication] : []),
     interests: formData.interests || [],
     challenges: formData.challenges || [],
     additionalInfo: formData.additionalInfo || ''
@@ -172,8 +172,9 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         },
         {
           id: 'communication',
-          type: 'single-select-pill',
-          label: '12. What is your preferred communication style?',
+          type: 'multi-select',
+          label: '12. What is your preferred communication style? (Select up to 2)',
+          maxSelections: 2,
           options: ['Direct', 'Diplomatic', 'Analytical', 'Creative', 'Supportive']
         },
         {
@@ -254,7 +255,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           networkingWindow: answers.networkingWindow || [],
           dayOfWeek: answers.dayOfWeek || [],
           experience: answers.experience || '',
-          communication: answers.communication || '',
+          communication: Array.isArray(answers.communication) ? answers.communication : [],
           interests: answers.interests || [],
           challenges: answers.challenges || [],
           additionalInfo: answers.additionalInfo || ''
@@ -313,7 +314,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         networkingWindow: answers.networkingWindow || [],
         dayOfWeek: answers.dayOfWeek || [],
         experience: answers.experience || '',
-        communication: answers.communication || '',
+        communication: Array.isArray(answers.communication) ? answers.communication : [],
         interests: answers.interests || [],
         challenges: answers.challenges || [],
         additionalInfo: answers.additionalInfo || ''
@@ -398,40 +399,69 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         )}
 
         {question.type === 'single-select-pill' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {question.options?.map((option: string) => {
-              const isSelected = currentAnswer === option
-              
-              // Color coding for single-select pills
-              const getPillColor = (questionId: string, isSelected: boolean) => {
-                if (!isSelected) return 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+          <div className="space-y-4">
+            {/* Selection Progress */}
+            <div className="bg-gray-50 rounded-lg p-3 border">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">
+                  {currentAnswer ? '1 of 1 selected' : '0 of 1 selected'}
+                </span>
+                {currentAnswer && (
+                  <button
+                    type="button"
+                    onClick={() => handleAnswer(question.id, '')}
+                    className="text-xs text-gray-500 hover:text-gray-700 underline"
+                  >
+                    Clear selection
+                  </button>
+                )}
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                <div 
+                  className="bg-pathfinders-blue h-2 rounded-full transition-all duration-300"
+                  style={{ 
+                    width: `${currentAnswer ? 100 : 0}%` 
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Options Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {question.options?.map((option: string) => {
+                const isSelected = currentAnswer === option
                 
-                const colorMap: { [key: string]: string } = {
-                  'industry': 'bg-blue-100 border-blue-300 text-blue-800',
-                  'educationLevel': 'bg-green-100 border-green-300 text-green-800',
-                  'jobFunctionLevel': 'bg-purple-100 border-purple-300 text-purple-800',
-                  'communication': 'bg-orange-100 border-orange-300 text-orange-800'
+                // Color coding for single-select pills
+                const getPillColor = (questionId: string, isSelected: boolean) => {
+                  if (!isSelected) return 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                  
+                  const colorMap: { [key: string]: string } = {
+                    'industry': 'bg-blue-100 border-blue-300 text-blue-800',
+                    'educationLevel': 'bg-green-100 border-green-300 text-green-800',
+                    'jobFunctionLevel': 'bg-purple-100 border-purple-300 text-purple-800',
+                    'communication': 'bg-orange-100 border-orange-300 text-orange-800'
+                  }
+                  return colorMap[questionId] || 'bg-blue-100 border-blue-300 text-blue-800'
                 }
-                return colorMap[questionId] || 'bg-blue-100 border-blue-300 text-blue-800'
-              }
-              
-              return (
-                <button
-                  key={option}
-                  type="button"
-                  onClick={() => handleAnswer(question.id, option)}
-                  className={`
-                    flex items-center justify-between px-4 py-3 rounded-full border-2 transition-all duration-200 
-                    ${getPillColor(question.id, isSelected)}
-                    cursor-pointer hover:scale-105
-                    ${isSelected ? 'ring-2 ring-offset-1' : ''}
-                  `}
-                >
-                  <span className="text-sm font-medium">{option}</span>
-                  {isSelected && <span className="text-lg font-bold">✓</span>}
-                </button>
-              )
-            })}
+                
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => handleAnswer(question.id, option)}
+                    className={`
+                      flex items-center justify-between px-4 py-3 rounded-full border-2 transition-all duration-200 
+                      ${getPillColor(question.id, isSelected)}
+                      cursor-pointer hover:scale-105
+                      ${isSelected ? 'ring-2 ring-offset-1' : ''}
+                    `}
+                  >
+                    <span className="text-sm font-medium">{option}</span>
+                    {isSelected && <span className="text-lg font-bold">✓</span>}
+                  </button>
+                )
+              })}
+            </div>
           </div>
         )}
 
