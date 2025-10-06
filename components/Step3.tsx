@@ -200,46 +200,13 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     }
   }
 
-  const handleNext = async () => {
-    const currentQ = questions[currentQuestion]
-    
-    // Save progress for current question
-    await saveStep3Data(currentQuestion + 1, currentQ)
-    
+  const handleNext = () => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
     } else {
-      // Final submission - save all data
-      try {
-        const finalData = {
-          sessionId,
-          deviceInfo,
-          postalCode: formData.postalCode,
-          name: formData.name,
-          email: formData.email,
-          ...answers
-        }
-        
-        const response = await fetch('/api/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(finalData),
-        })
-        
-        const result = await response.json()
-        
-        if (result.success) {
-          updateFormData(answers)
-          nextStep()
-        } else {
-          throw new Error(result.error || 'Failed to save final submission')
-        }
-      } catch (error) {
-        console.error('Error saving final submission:', error)
-        alert('There was an error saving your information. Please try again.')
-      }
+      // Final submission - submit to Netlify form
+      updateFormData(answers)
+      nextStep()
     }
   }
 

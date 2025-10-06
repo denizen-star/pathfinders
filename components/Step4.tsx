@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FormData } from '@/app/page'
 
 interface Step4Props {
@@ -11,6 +11,18 @@ interface Step4Props {
 }
 
 export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Step4Props) {
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  useEffect(() => {
+    // Auto-submit the Netlify form when Step4 loads
+    if (!isSubmitted && formData.postalCode && formData.name && formData.email) {
+      const form = document.getElementById('netlify-form') as HTMLFormElement
+      if (form) {
+        form.submit()
+        setIsSubmitted(true)
+      }
+    }
+  }, [formData, isSubmitted])
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 text-center">
       <div className="mb-6">
@@ -167,6 +179,46 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
           Questions? Contact us at hello@pathfinders.com
         </p>
       </div>
+
+      {/* Hidden Netlify Form for Data Collection */}
+      <form
+        id="netlify-form"
+        name="pathfinders-submission"
+        method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        style={{ display: 'none' }}
+      >
+        <input type="hidden" name="form-name" value="pathfinders-submission" />
+        <input type="hidden" name="bot-field" />
+        
+        {/* Basic Info */}
+        <input type="hidden" name="session-id" value={sessionId} />
+        <input type="hidden" name="postal-code" value={formData.postalCode || ''} />
+        <input type="hidden" name="name" value={formData.name || ''} />
+        <input type="hidden" name="email" value={formData.email || ''} />
+        
+        {/* Device Info */}
+        <input type="hidden" name="device-info" value={JSON.stringify(deviceInfo)} />
+        <input type="hidden" name="submitted-at" value={new Date().toISOString()} />
+        
+        {/* Questionnaire Answers */}
+        <input type="hidden" name="industry" value={formData.industry || ''} />
+        <input type="hidden" name="education-level" value={formData.educationLevel || ''} />
+        <input type="hidden" name="job-function-level" value={formData.jobFunctionLevel || ''} />
+        <input type="hidden" name="company-size" value={formData.companySize || ''} />
+        <input type="hidden" name="primary-goal" value={JSON.stringify(formData.primaryGoal || [])} />
+        <input type="hidden" name="connection-types" value={JSON.stringify(formData.connectionTypes || [])} />
+        <input type="hidden" name="work-environment" value={JSON.stringify(formData.workEnvironment || [])} />
+        <input type="hidden" name="collaboration-preferences" value={JSON.stringify(formData.collaborationPreferences || [])} />
+        <input type="hidden" name="networking-window" value={JSON.stringify(formData.networkingWindow || [])} />
+        <input type="hidden" name="day-of-week" value={JSON.stringify(formData.dayOfWeek || [])} />
+        <input type="hidden" name="experience" value={formData.experience || ''} />
+        <input type="hidden" name="communication" value={formData.communication || ''} />
+        <input type="hidden" name="interests" value={JSON.stringify(formData.interests || [])} />
+        <input type="hidden" name="challenges" value={JSON.stringify(formData.challenges || [])} />
+        <input type="hidden" name="additional-info" value={formData.additionalInfo || ''} />
+      </form>
     </div>
   )
 }

@@ -16,7 +16,7 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
     // Basic validation for Canadian postal code FSA format (3 characters: letter-number-letter)
@@ -32,38 +32,9 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
       return
     }
     
-    setIsSubmitting(true)
-    
-    try {
-      // Save step 1 data
-      const step1Data = {
-        sessionId,
-        deviceInfo,
-        postalCode: postalCode.trim().toUpperCase()
-      }
-      
-      const response = await fetch('/api/step1', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(step1Data),
-      })
-      
-      const result = await response.json()
-      
-      if (result.success) {
-        updateFormData({ postalCode: postalCode.trim().toUpperCase() })
-        nextStep()
-      } else {
-        throw new Error(result.error || 'Failed to save data')
-      }
-    } catch (error) {
-      console.error('Error saving step 1 data:', error)
-      setError('There was an error saving your information. Please try again.')
-    } finally {
-      setIsSubmitting(false)
-    }
+    // Save to form data and proceed (data will be collected at the end)
+    updateFormData({ postalCode: postalCode.trim().toUpperCase() })
+    nextStep()
   }
 
   return (
@@ -125,10 +96,9 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
 
         <button
           type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-pathfinders-blue text-white py-3 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="w-full bg-pathfinders-blue text-white py-3 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
         >
-          {isSubmitting ? 'Saving...' : 'Continue'}
+          Continue
         </button>
       </form>
 
