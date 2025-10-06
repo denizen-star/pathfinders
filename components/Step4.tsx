@@ -28,9 +28,19 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h1 className="text-4xl font-bold text-pathfinders-blue mb-4">
-          Thank You!
-        </h1>
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <img 
+            src="/logo-p.png" 
+            alt="Pathfinders Logo" 
+            className="w-12 h-12"
+          />
+          <h1 className="text-4xl font-bold text-pathfinders-blue">
+            otential Unlocked
+          </h1>
+        </div>
+        <p className="text-2xl font-semibold text-pathfinders-blue mb-2">
+          Thank you!
+        </p>
         <p className="text-xl text-gray-600">
           Your information has been successfully submitted.
         </p>

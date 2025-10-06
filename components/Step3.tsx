@@ -657,7 +657,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
             className="w-10 h-10"
           />
           <h1 className="text-3xl font-bold text-pathfinders-blue">
-            rofile refinement
+            rofile Refinement
           </h1>
         </div>
         <p className="text-lg text-gray-600">
@@ -671,16 +671,10 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         </h2>
         <div className="text-sm text-gray-600 mb-4">
           <p>
-            Unlock curated, relevant networking opportunities! 
+           <b> Unlock curated, relevant networking opportunities! </b>
           </p>
-          <p>These 15 questions are key to building better connections. 
-            Using your anonymized traits and your general location (FSA), 
-            our model will work to match you with compatible peers for a 
-            voluntary 15-minute introductory networking event within the next one to two weeks. 
-            </p>
-            <p>
-            Say goodbye to awkward, random mingling; we're focused on quality connections that align with your interests and professional style.
-          </p>
+          <p>These 15 questions are key to building quality connections. 
+          </p> 
         </div>
 
         <div className="space-y-4">
@@ -718,8 +712,13 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
 
       <div className="mt-6 text-xs text-gray-500 text-center">
         <p>
-          Your responses help us create better matches for meaningful networking connections.
-        </p>
+        Using anonymized traits and FSAs, 
+            Our model will predict matches with compatible peers for a 
+            voluntary 15-minute introductory networking event within the next one to two weeks. 
+            </p>
+            <p>
+            Say goodbye to awkward, random mingling; we're focused on quality connections that align with your interests and professional style.
+          </p>      
       </div>
     </div>
   )
