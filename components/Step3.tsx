@@ -92,7 +92,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           min: 1,
           max: 5,
           step: 1,
-          labels: ['0-2 years', '3-5 years', '6-10 years', '11-15 years', '16+ years'],
+          labels: ['0-2 ', '3-5 ', '6-10 ', '11-15 ', '16+ years'],
           default: 3
         }
       ]

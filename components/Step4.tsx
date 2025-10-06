@@ -34,7 +34,7 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
             alt="Pathfinders Logo" 
             className="w-12 h-12"
           />
-          <h1 className="text-4xl font-bold text-pathfinders-blue">
+          <h1 className="text-3xl font-bold text-pathfinders-blue">
             otential Unlocked
           </h1>
         </div>
