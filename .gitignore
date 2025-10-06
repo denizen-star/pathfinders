@@ -6,6 +6,9 @@
 .pnp.js
 .yarn/install-state.gz
 
+# Node.js local installation
+node-v20.10.0-darwin-x64/
+
 # testing
 /coverage
 
