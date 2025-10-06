@@ -7,9 +7,9 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: false,
   // Performance optimizations
-  experimental: {
-    optimizeCss: true,
-  },
+  // experimental: {
+  //   optimizeCss: true, // Removed - requires critters package
+  // },
   // Security headers
   async headers() {
     return [
