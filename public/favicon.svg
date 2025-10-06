@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <style>
+      .letter-p {
+        fill: #3B82F6;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        font-size: 24px;
+      }
+    </style>
+  </defs>
+  <rect width="32" height="32" fill="transparent"/>
+  <text x="16" y="22" text-anchor="middle" class="letter-p">P</text>
+</svg>
