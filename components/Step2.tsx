@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { FormData } from '@/app/page'
+import { submitToGoogleSheets, storeSubmissionLocally, SubmissionData } from '@/lib/googleSheets'
 
 interface Step2Props {
   formData: Partial<FormData>
@@ -39,12 +40,111 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
       return
     }
     
-    // Save to form data and proceed (data will be collected at the end)
-    updateFormData({ 
-      name: name.trim(), 
-      email: email.trim().toLowerCase() 
-    })
-    nextStep()
+    setIsSubmitting(true)
+    
+    try {
+      // Prepare Step 2 data for Google Sheets
+      const step2Data: SubmissionData = {
+        timestamp: new Date().toISOString(),
+        sessionId,
+        deviceInfo,
+        postalCode: formData.postalCode || '',
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        industry: '',
+        educationLevel: '',
+        jobFunctionLevel: '',
+        companySize: '',
+        primaryGoal: [],
+        connectionTypes: [],
+        workEnvironment: [],
+        collaborationPreferences: [],
+        networkingWindow: [],
+        dayOfWeek: [],
+        experience: '',
+        communication: '',
+        interests: [],
+        challenges: [],
+        additionalInfo: ''
+      }
+      
+      // Submit to Google Sheets (Step 2)
+      const success = await submitToGoogleSheets(step2Data, 'Step2', 'Continue')
+      if (!success) {
+        storeSubmissionLocally(step2Data)
+      }
+      
+      // Save to form data and proceed
+      updateFormData({ 
+        name: name.trim(), 
+        email: email.trim().toLowerCase() 
+      })
+      nextStep()
+    } catch (error) {
+      console.error('Error submitting Step 2 data:', error)
+      // Still proceed to next step even if submission fails
+      updateFormData({ 
+        name: name.trim(), 
+        email: email.trim().toLowerCase() 
+      })
+      nextStep()
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleSkip = async () => {
+    setIsSubmitting(true)
+    
+    try {
+      // Prepare Step 2 data for Google Sheets (Skip action)
+      const step2Data: SubmissionData = {
+        timestamp: new Date().toISOString(),
+        sessionId,
+        deviceInfo,
+        postalCode: formData.postalCode || '',
+        name: name.trim() || '',
+        email: email.trim().toLowerCase() || '',
+        industry: '',
+        educationLevel: '',
+        jobFunctionLevel: '',
+        companySize: '',
+        primaryGoal: [],
+        connectionTypes: [],
+        workEnvironment: [],
+        collaborationPreferences: [],
+        networkingWindow: [],
+        dayOfWeek: [],
+        experience: '',
+        communication: '',
+        interests: [],
+        challenges: [],
+        additionalInfo: ''
+      }
+      
+      // Submit to Google Sheets (Step 2 - Skip)
+      const success = await submitToGoogleSheets(step2Data, 'Step2', 'Skip')
+      if (!success) {
+        storeSubmissionLocally(step2Data)
+      }
+      
+      // Save current data and skip to summary
+      updateFormData({ 
+        name: name.trim(), 
+        email: email.trim().toLowerCase() 
+      })
+      skipToSummary()
+    } catch (error) {
+      console.error('Error submitting Step 2 skip data:', error)
+      // Still skip to summary even if submission fails
+      updateFormData({ 
+        name: name.trim(), 
+        email: email.trim().toLowerCase() 
+      })
+      skipToSummary()
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -116,16 +216,18 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
           <button
             type="button"
             onClick={prevStep}
-            className="flex-1 bg-gray-300 text-gray-700 py-3 px-4 rounded-md font-medium hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
+            disabled={isSubmitting}
+            className="flex-1 bg-gray-300 text-gray-700 py-3 px-4 rounded-md font-medium hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors disabled:bg-gray-200 disabled:cursor-not-allowed"
           >
             Back
           </button>
           <button
             type="button"
-            onClick={skipToSummary}
-            className="flex-1 bg-pathfinders-orange text-white py-3 px-4 rounded-md font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-colors"
+            onClick={handleSkip}
+            disabled={isSubmitting}
+            className="flex-1 bg-pathfinders-orange text-white py-3 px-4 rounded-md font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            Skip
+            {isSubmitting ? 'Saving...' : 'Skip'}
           </button>
           <button
             type="submit"

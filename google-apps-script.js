@@ -94,9 +94,16 @@ function doPost(e) {
       sheet = spreadsheet.insertSheet(sheetName)
     }
     
-    // Add header row if this is the first submission to this sheet
+    // Clear existing data and add header row if this is the first submission to this sheet
     if (sheet.getLastRow() === 0) {
       sheet.getRange(1, 1, 1, headers.length).setValues([headers])
+    }
+    
+    // Ensure we have the right number of columns for the data
+    const requiredColumns = headers.length
+    const currentColumns = sheet.getLastColumn()
+    if (currentColumns < requiredColumns) {
+      sheet.insertColumns(currentColumns + 1, requiredColumns - currentColumns)
     }
     
     // Append the new row
