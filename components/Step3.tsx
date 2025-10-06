@@ -31,14 +31,14 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     industry: formData.industry || '',
     educationLevel: formData.educationLevel || '',
     jobFunctionLevel: formData.jobFunctionLevel || '',
-    companySize: formData.companySize || '50-200', // Default to middle option
+    companySize: formData.companySize || '1-10', // Default to lowest option
     primaryGoal: formData.primaryGoal || [],
     connectionTypes: formData.connectionTypes || [],
     workEnvironment: formData.workEnvironment || [],
     collaborationPreferences: formData.collaborationPreferences || [],
     networkingWindow: formData.networkingWindow || [],
     dayOfWeek: formData.dayOfWeek || [],
-    experience: formData.experience || '6-10 years', // Default to middle option
+    experience: formData.experience || '0-2 ', // Default to lowest option
     communication: Array.isArray(formData.communication) ? formData.communication : (formData.communication ? [formData.communication] : []),
     interests: formData.interests || [],
     challenges: formData.challenges || [],
@@ -83,7 +83,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           max: 5,
           step: 1,
           labels: ['1-10', '11-50', '50-200', '200-500', '500+'],
-          default: 3
+          default: 1
         },
         {
           id: 'experience',
@@ -93,7 +93,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           max: 5,
           step: 1,
           labels: ['0-2 ', '3-5 ', '6-10 ', '11-15 ', '16+ years'],
-          default: 3
+          default: 1
         }
       ]
     },
