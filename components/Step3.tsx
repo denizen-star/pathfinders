@@ -410,7 +410,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     
     return (
       <div key={question.id} className="mb-6">
-        <h3 className="text-sm font-medium text-gray-800 mb-3">
+        <h3 className="text-base md:text-sm font-medium text-gray-800 mb-3">
           {question.label}
         </h3>
         
@@ -418,7 +418,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           <select
             value={currentAnswer || ''}
             onChange={(e) => handleAnswer(question.id, e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pathfinders-blue text-sm"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pathfinders-blue text-base md:text-sm"
           >
             <option value="">Select an option...</option>
             {question.options?.map((option: string) => (
@@ -441,7 +441,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                   onChange={(e) => handleAnswer(question.id, e.target.value)}
                   className="mr-3 text-pathfinders-blue focus:ring-pathfinders-blue"
                 />
-                <span className="text-sm">{option}</span>
+                <span className="text-base md:text-sm">{option}</span>
               </label>
             ))}
           </div>
@@ -452,7 +452,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
             {/* Selection Progress */}
             <div className="bg-gray-50 rounded-lg p-3 border">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-base md:text-sm font-medium text-gray-700">
                   {currentAnswer ? '1 of 1 selected' : '0 of 1 selected'}
                 </span>
                 {currentAnswer && (
@@ -505,7 +505,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                       ${isSelected ? 'ring-2 ring-offset-1' : ''}
                     `}
                   >
-                    <span className="text-sm font-medium">{option}</span>
+                    <span className="text-base md:text-sm font-medium">{option}</span>
                     {isSelected && <span className="text-lg font-bold">✓</span>}
                   </button>
                 )
@@ -519,7 +519,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
             {/* Selection Progress */}
             <div className="bg-gray-50 rounded-lg p-3 border">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-base md:text-sm font-medium text-gray-700">
                   {currentAnswer ? '1 of 1 selected' : '0 of 1 selected'}
                 </span>
                 {currentAnswer && (
@@ -554,7 +554,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 className="w-full flex items-center justify-between px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
               >
-                <span className={`text-sm ${currentAnswer ? 'text-gray-900' : 'text-gray-500'}`}>
+                <span className={`text-base md:text-sm ${currentAnswer ? 'text-gray-900' : 'text-gray-500'}`}>
                   {currentAnswer || question.placeholder}
                 </span>
                 <svg 
@@ -583,7 +583,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                         placeholder="Search industries..."
                         value={industrySearch}
                         onChange={(e) => setIndustrySearch(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                        className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base md:text-sm"
                         autoFocus
                       />
                       {industrySearch && (
@@ -609,7 +609,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                       
                       if (filteredOptions.length === 0) {
                         return (
-                          <div className="px-4 py-3 text-sm text-gray-500 text-center">
+                          <div className="px-4 py-3 text-base md:text-sm text-gray-500 text-center">
                             No industries found matching "{industrySearch}"
                           </div>
                         )
@@ -626,7 +626,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                               setIsDropdownOpen(false)
                               setIndustrySearch('')
                             }}
-                            className={`w-full px-4 py-3 text-left text-sm hover:bg-gray-50 transition-colors duration-150 flex items-center justify-between ${
+                            className={`w-full px-4 py-3 text-left text-base md:text-sm hover:bg-gray-50 transition-colors duration-150 flex items-center justify-between ${
                               isSelected ? 'bg-blue-50 text-blue-800' : 'text-gray-900'
                             }`}
                           >
@@ -652,7 +652,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                   <svg className="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-sm font-medium text-blue-800">
+                  <span className="text-base md:text-sm font-medium text-blue-800">
                     Selected: {currentAnswer}
                   </span>
                 </div>
@@ -689,7 +689,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
               </div>
             </div>
             <div className="text-center">
-              <span className="text-sm font-medium text-pathfinders-blue">
+              <span className="text-base md:text-sm font-medium text-pathfinders-blue">
                 Selected: {currentAnswer || question.labels?.[question.default - 1]}
               </span>
             </div>
@@ -702,7 +702,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
             <div className="bg-gray-50 rounded-lg p-3 border">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-base md:text-sm font-medium text-gray-700">
                     {Array.isArray(currentAnswer) ? currentAnswer.length : 0}
                     {question.maxSelections ? ` of ${question.maxSelections}` : ''} selected
                   </span>
@@ -748,7 +748,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                 onClick={() => setDropdownState(question.id, { isOpen: !getDropdownState(question.id).isOpen })}
                 className="w-full flex items-center justify-between px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
               >
-                <span className={`text-sm ${Array.isArray(currentAnswer) && currentAnswer.length > 0 ? 'text-gray-900' : 'text-gray-500'}`}>
+                <span className={`text-base md:text-sm ${Array.isArray(currentAnswer) && currentAnswer.length > 0 ? 'text-gray-900' : 'text-gray-500'}`}>
                   {Array.isArray(currentAnswer) && currentAnswer.length > 0 
                     ? `${currentAnswer.length} selected` 
                     : question.placeholder}
@@ -779,7 +779,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                         placeholder="Search options..."
                         value={getDropdownState(question.id).search}
                         onChange={(e) => setDropdownState(question.id, { search: e.target.value })}
-                        className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                        className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base md:text-sm"
                         autoFocus
                       />
                       {getDropdownState(question.id).search && (
@@ -805,7 +805,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                       
                       if (filteredOptions.length === 0) {
                         return (
-                          <div className="px-4 py-3 text-sm text-gray-500 text-center">
+                          <div className="px-4 py-3 text-base md:text-sm text-gray-500 text-center">
                             No options found matching "{getDropdownState(question.id).search}"
                           </div>
                         )
@@ -831,7 +831,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                               }
                             }}
                             disabled={!canSelect && !isSelected}
-                            className={`w-full px-4 py-3 text-left text-sm hover:bg-gray-50 transition-colors duration-150 flex items-center justify-between ${
+                            className={`w-full px-4 py-3 text-left text-base md:text-sm hover:bg-gray-50 transition-colors duration-150 flex items-center justify-between ${
                               isSelected ? 'bg-blue-50 text-blue-800' : canSelect ? 'text-gray-900' : 'text-gray-400 cursor-not-allowed'
                             }`}
                           >
@@ -886,7 +886,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
             <div className="bg-gray-50 rounded-lg p-3 border">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-base md:text-sm font-medium text-gray-700">
                     {Array.isArray(currentAnswer) ? currentAnswer.length : 0}
                     {question.maxSelections ? ` of ${question.maxSelections}` : ''} selected
                   </span>
@@ -966,7 +966,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                       ${isSelected ? 'ring-2 ring-offset-1' : ''}
                     `}
                   >
-                    <span className="text-sm font-medium">{option}</span>
+                    <span className="text-base md:text-sm font-medium">{option}</span>
                     {isSelected && <span className="text-lg font-bold">✓</span>}
                   </button>
                 )
@@ -981,7 +981,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
             onChange={(e) => handleAnswer(question.id, e.target.value)}
             placeholder={question.placeholder}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pathfinders-blue text-sm"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pathfinders-blue text-base md:text-sm"
           />
         )}
       </div>
@@ -1050,13 +1050,13 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         <div className="bg-primary-50 rounded-xl p-6 mb-6 border border-primary-100">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-white text-sm">📝</span>
+              <span className="text-white text-base md:text-sm">📝</span>
             </div>
             <h2 className="text-xl font-bold text-primary-800">
               {currentCategoryData.title}
             </h2>
           </div>
-          <div className="text-primary-500 text-sm leading-relaxed space-y-2">
+          <div className="text-primary-500 text-base md:text-sm leading-relaxed space-y-2">
             <p className="font-medium">
               Unlock curated, relevant networking opportunities!
             </p>
