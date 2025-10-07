@@ -90,7 +90,7 @@ export default function Home() {
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return <Step1 formData={formData} updateFormData={updateFormData} nextStep={nextStep} sessionId={sessionId} deviceInfo={deviceInfo} />
+        return <Step1 formData={formData} updateFormData={updateFormData} nextStep={nextStep} skipToSummary={skipToSummary} sessionId={sessionId} deviceInfo={deviceInfo} />
       case 2:
         return <Step2 formData={formData} updateFormData={updateFormData} nextStep={nextStep} prevStep={prevStep} skipToSummary={skipToSummary} sessionId={sessionId} deviceInfo={deviceInfo} />
       case 3:

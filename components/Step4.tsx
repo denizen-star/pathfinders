@@ -20,6 +20,75 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
     // Scroll to top when component loads
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
+
+  // Determine what content to show based on user's progress
+  const getNextStepsContent = () => {
+    const hasFSA = formData.postalCode && formData.postalCode.trim() !== ''
+    const hasName = formData.name && formData.name.trim() !== ''
+    const hasEmail = formData.email && formData.email.trim() !== ''
+    const hasStep3Data = formData.industry || formData.primaryGoal?.length || formData.interests?.length
+
+    // Case 1: Step 3 complete (highest priority - if they reached finish button)
+    // This means they completed the full form and should see the original content
+    if (hasStep3Data) {
+      return {
+        title: "Buckle up! Here's your networking adventure roadmap! 🚀",
+        items: [
+          "🎯 We'll play matchmaker with your responses",
+          "📧 Your networking crystal ball arrives next week (with voting powers!)",
+          "☎️ If you're chosen, we'll call to book your 15-minute networking magic!",
+          "🏆 Only 20 lucky winners get VIP access to our first event!"
+        ]
+      }
+    }
+
+    // Case 2: No FSA (they skipped at the very beginning)
+    if (!hasFSA) {
+      return {
+        title: "Aw, shucks! You're leaving us so soon? 😢",
+        items: [
+          "We're bummed you didn't stick around to see the magic! ✨",
+          "Maybe next time you'll join our networking adventure? 🤝"
+        ]
+      }
+    }
+
+    // Case 3: FSA and/or full name (no email address)
+    if (!hasEmail && (hasFSA || hasName)) {
+      return {
+        title: "Nice moves! 🎯 You're getting the inside scoop cehck the boards for:",
+        items: [
+          "📍 Networking scene",
+          "🎪 Cool events happening", 
+          "🔮 Community vibes and preferences"
+        ]
+      }
+    }
+
+    // Case 4: Full Name and Email address (but incomplete Step 3)
+    if (hasEmail && hasName && !hasStep3Data) {
+      return {
+        title: "Wait, don't go! 🛑 You were SO close to the finish line! 🏁",
+        items: [
+          "We'll send you some networking superpowers via email! 💪",
+          "Think of it as your personalized networking cheat sheet! 📋"
+        ]
+      }
+    }
+
+    // Default fallback (shouldn't reach here normally)
+    return {
+      title: "Buckle up! Here's your networking adventure roadmap! 🚀",
+      items: [
+        "🎯 We'll play matchmaker with your responses",
+        "📧 Your networking crystal ball arrives next week (with voting powers!)",
+        "☎️ If you're chosen, we'll call to book your 15-minute networking magic!",
+        "🏆 Only 20 lucky winners get VIP access to our first event!"
+      ]
+    }
+  }
+
+  const nextStepsContent = getNextStepsContent()
   return (
     <div className="bg-gradient-card rounded-2xl shadow-medium p-8 border border-neutral-100 text-center">
       <div className="mb-8">
@@ -156,21 +225,14 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
 
       <div className="bg-blue-50 rounded-lg p-4 mb-6">
         <h2 className="font-semibold text-pathfinders-blue mb-2">
-          What Happens Next?
+          {nextStepsContent.title}
         </h2>
         <div className="text-sm text-gray-700 space-y-2">
-          <p>
-            • We'll analyze your responses and identify potential matches
-          </p>
-          <p>
-            • You'll receive an email summary of your potential networking events within a week - You will vote your preferences on the events
-          </p>
-          <p>
-            • If selected, we'll contact you to schedule you for a 15-minute networking event
-          </p>
-          <p>
-            • Only 20 participants will be selected for our first event
-          </p>
+          {nextStepsContent.items.map((item, index) => (
+            <p key={index}>
+              • {item}
+            </p>
+          ))}
         </div>
       </div>
 

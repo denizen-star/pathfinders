@@ -8,11 +8,12 @@ interface Step1Props {
   formData: Partial<FormData>
   updateFormData: (data: Partial<FormData>) => void
   nextStep: () => void
+  skipToSummary: () => void
   sessionId: string
   deviceInfo: any
 }
 
-export default function Step1({ formData, updateFormData, nextStep, sessionId, deviceInfo }: Step1Props) {
+export default function Step1({ formData, updateFormData, nextStep, skipToSummary, sessionId, deviceInfo }: Step1Props) {
   const [postalCode, setPostalCode] = useState(formData.postalCode || '')
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -75,6 +76,54 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
       // Still proceed to next step even if submission fails
       updateFormData({ postalCode: postalCode.trim().toUpperCase() })
       nextStep()
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleSkip = async () => {
+    setIsSubmitting(true)
+    
+    try {
+      // Prepare Step 1 data for Google Sheets (Skip action)
+      const step1Data: SubmissionData = {
+        timestamp: new Date().toISOString(),
+        sessionId,
+        deviceInfo,
+        postalCode: postalCode.trim() || '',
+        name: '',
+        email: '',
+        industry: '',
+        educationLevel: '',
+        jobFunctionLevel: '',
+        companySize: '',
+        primaryGoal: [],
+        connectionTypes: [],
+        workEnvironment: [],
+        collaborationPreferences: [],
+        networkingWindow: [],
+        dayOfWeek: [],
+        experience: '',
+        communication: [],
+        interests: [],
+        challenges: [],
+        additionalInfo: ''
+      }
+      
+      // Submit to Google Sheets (Step 1 - Skip)
+      const success = await submitToGoogleSheets(step1Data, 'Step1', 'Skip')
+      if (!success) {
+        storeSubmissionLocally(step1Data)
+      }
+      
+      // Save current data and skip to summary
+      updateFormData({ postalCode: postalCode.trim() })
+      skipToSummary()
+    } catch (error) {
+      console.error('Error submitting Step 1 skip data:', error)
+      // Still skip to summary even if submission fails
+      updateFormData({ postalCode: postalCode.trim() })
+      skipToSummary()
     } finally {
       setIsSubmitting(false)
     }
@@ -178,7 +227,7 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
             This is a small experiment limited to a space/ community.
           </p>
           <ul className="text-sm text-secondary-600 space-y-1">
-          <li>We will publish on boards:</li>
+          <li>What you get with this first step? We will publish on boards:</li>
             <li>• Geographic profile</li>
             <li>• Relevant networking events in your area</li>
             <li>• Community insights and preferences</li>
@@ -210,7 +259,7 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
           <div className="flex items-start gap-3">
             <span className="text-success-500 text-sm mt-1">✓</span>
             <p className="text-sm font-medium text-primary-600">
-              Your information will never be used for marketing purposes.
+              You can drop at any time.Your information will never be used for marketing purposes.
             </p>
           </div>
           
@@ -224,6 +273,18 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
             with nearby peers.
           </p>
         </div>
+      </div>
+
+      {/* Opt-out Button */}
+      <div className="mt-6 text-center">
+        <button
+          type="button"
+          onClick={handleSkip}
+          disabled={isSubmitting}
+          className="text-sm text-neutral-500 hover:text-neutral-700 underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? 'Processing...' : 'Opt out of this experiment'}
+        </button>
       </div>
     </div>
   )
