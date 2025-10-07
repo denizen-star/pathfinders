@@ -212,6 +212,15 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
           </div>
         </div>
 
+        {/* Enhanced Button - Moved right after location section */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-gradient-primary text-white py-4 px-6 rounded-xl font-semibold text-lg shadow-brand hover:shadow-strong focus:outline-none focus:ring-4 focus:ring-primary-200 transition-all duration-200 disabled:bg-neutral-400 disabled:cursor-not-allowed disabled:shadow-none"
+        >
+          {isSubmitting ? 'Saving...' : 'Continue →'}
+        </button>
+
         {/* Enhanced Info Section */}
         <div className="bg-secondary-50 rounded-xl p-6 border border-secondary-200">
           <div className="flex items-center gap-3 mb-3">
@@ -233,15 +242,6 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
             <li>• Community insights and preferences</li>
           </ul>
         </div>
-
-        {/* Enhanced Button */}
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-gradient-primary text-white py-4 px-6 rounded-xl font-semibold text-lg shadow-brand hover:shadow-strong focus:outline-none focus:ring-4 focus:ring-primary-200 transition-all duration-200 disabled:bg-neutral-400 disabled:cursor-not-allowed disabled:shadow-none"
-        >
-          {isSubmitting ? 'Saving...' : 'Continue →'}
-        </button>
       </form>
 
       {/* Enhanced Privacy Section */}

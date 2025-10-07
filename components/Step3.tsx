@@ -253,26 +253,39 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     }))
   }
 
-  // Check if current category has at least one answer
-  const isCurrentCategoryComplete = () => {
+  // Get count of answered questions in current category
+  const getCurrentCategoryAnsweredCount = () => {
     const currentCategoryQuestions = categories[currentCategory].questions
     const allQuestions = isLastCategory ? [...currentCategoryQuestions, additionalQuestion] : currentCategoryQuestions
     
-    // Check if at least one question in the category has been answered
-    return allQuestions.some(question => {
+    let answeredCount = 0
+    
+    allQuestions.forEach(question => {
       const answer = answers[question.id as keyof FormData]
-      if (question.type === 'multi-select') {
-        return Array.isArray(answer) && answer.length > 0
+      if (question.type === 'multi-select' || question.type === 'multi-select-dropdown') {
+        if (Array.isArray(answer) && answer.length > 0) {
+          answeredCount++
+        }
+      } else if (question.type === 'slider' || question.type === 'single-select-pill' || question.type === 'searchable-dropdown') {
+        if (answer && answer !== '') {
+          answeredCount++
+        }
+      } else if (question.type === 'textarea') {
+        // Textarea is optional, so don't count toward minimum
+        return
+      } else {
+        if (answer && answer !== '') {
+          answeredCount++
+        }
       }
-      if (question.type === 'slider' || question.type === 'single-select-pill') {
-        return answer && answer !== ''
-      }
-      if (question.type === 'textarea') {
-        // Textarea is optional, so always return true
-        return true
-      }
-      return answer && answer !== ''
     })
+    
+    return answeredCount
+  }
+
+  // Check if current category has at least 3 questions answered
+  const isCurrentCategoryComplete = () => {
+    return getCurrentCategoryAnsweredCount() >= 3
   }
 
   const handleNext = async () => {
@@ -1045,7 +1058,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         </div>
       </div>
 
-      {/* Enhanced Category Section */}
+      {/* Enhanced Current Section */}
       <div className="mb-8">
         <div className="bg-primary-50 rounded-xl p-6 mb-6 border border-primary-100">
           <div className="flex items-center gap-3 mb-3">
@@ -1097,6 +1110,33 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         >
           {isSubmitting ? 'Saving...' : (isLastCategory ? 'Finish' : 'Next')}
         </button>
+      </div>
+
+      {/* Category Progress Indicator - Moved after buttons */}
+      <div className="bg-gray-50 rounded-xl p-4 mt-6 border border-gray-200">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-medium text-gray-700">
+            Current Section Progress
+          </span>
+          <span className="text-sm font-bold text-pathfinders-blue">
+            {getCurrentCategoryAnsweredCount()}/{isLastCategory ? currentCategoryData.questions.length : currentCategoryData.questions.length} answered
+          </span>
+        </div>
+        <div className="w-full bg-gray-200 rounded-full h-3">
+          <div 
+            className="bg-gradient-to-r from-pathfinders-blue to-blue-600 h-3 rounded-full transition-all duration-500"
+            style={{ 
+              width: `${Math.min((getCurrentCategoryAnsweredCount() / (isLastCategory ? currentCategoryData.questions.length : currentCategoryData.questions.length)) * 100, 100)}%` 
+            }}
+          />
+        </div>
+        <div className="mt-2 text-xs text-gray-600">
+          {getCurrentCategoryAnsweredCount() >= 3 ? (
+            <span className="text-green-600 font-medium">✓ Ready to proceed!</span>
+          ) : (
+            <span>Answer at least 3 questions in this category to continue</span>
+          )}
+        </div>
       </div>
 
       <div className="mt-6 text-xs text-gray-500 text-center">

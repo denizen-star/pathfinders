@@ -254,20 +254,6 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
           </div>
         </div>
 
-        {/* Enhanced Privacy Notice */}
-        <div className="bg-primary-50 rounded-xl p-6 border border-primary-100">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-8 bg-success-500 rounded-lg flex items-center justify-center">
-              <span className="text-white text-sm">🔒</span>
-            </div>
-            <h4 className="text-lg font-semibold text-primary-800">
-              Privacy Promise
-            </h4>
-          </div>
-          <p className="text-primary-700 font-medium">
-            Your email will only be used for this experiment and match summaries.
-          </p>
-        </div>
         {/* Enhanced Button Section */}
         <div className="flex space-x-3">
           <button
@@ -293,6 +279,21 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
           >
             {isSubmitting ? 'Saving...' : 'Continue →'}
           </button>
+        </div>
+
+        {/* Enhanced Privacy Notice - Moved after buttons */}
+        <div className="bg-primary-50 rounded-xl p-6 border border-primary-100">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 bg-success-500 rounded-lg flex items-center justify-center">
+              <span className="text-white text-sm">🔒</span>
+            </div>
+            <h4 className="text-lg font-semibold text-primary-800">
+              Privacy Promise
+            </h4>
+          </div>
+          <p className="text-primary-700 font-medium">
+            Your email will only be used for this experiment and match summaries.
+          </p>
         </div>
       </form>
 
