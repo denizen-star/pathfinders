@@ -17,6 +17,8 @@ interface Step3Props {
 export default function Step3({ formData, updateFormData, nextStep, prevStep, skipToSummary, sessionId, deviceInfo }: Step3Props) {
   const [currentCategory, setCurrentCategory] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [industrySearch, setIndustrySearch] = useState('')
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   // Scroll to top when component loads
   useEffect(() => {
@@ -27,6 +29,23 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [currentCategory])
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isDropdownOpen) {
+        const target = event.target as Element
+        if (!target.closest('.dropdown-container')) {
+          setIsDropdownOpen(false)
+        }
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isDropdownOpen])
   const [answers, setAnswers] = useState<Partial<FormData>>({
     industry: formData.industry || '',
     educationLevel: formData.educationLevel || '',
@@ -51,14 +70,15 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
       questions: [
         {
           id: 'industry',
-          type: 'single-select-pill',
+          type: 'searchable-dropdown',
           label: '1. What industry do you work in?',
           options: [
             'Arts', 'Business', 'Civil Service', 'Creative Arts', 'Education',
             'Executive', 'Finance', 'Government', 'Healthcare', 'Law',
             'Marketing', 'Medicine', 'NGO', 'Professional', 'Public Sector',
             'Retail', 'Science', 'Service', 'Student', 'Tech', 'Trade'
-          ]
+          ],
+          placeholder: 'Search and select your industry...'
         },
         {
           id: 'educationLevel',
@@ -186,7 +206,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           id: 'networkingWindow',
           type: 'multi-select',
           label: '13. What time window works best for networking?',
-          options: ['Early Morning', 'Lunch', 'Post-Work', 'Evening', 'Late Evening']
+          options: ['Early Morning', 'Lunch', 'Afternoon', 'Post-Work', 'Evening', 'Late Evening']
         },
         {
           id: 'dayOfWeek',
@@ -467,6 +487,153 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                 )
               })}
             </div>
+          </div>
+        )}
+
+        {question.type === 'searchable-dropdown' && (
+          <div className="space-y-4">
+            {/* Selection Progress */}
+            <div className="bg-gray-50 rounded-lg p-3 border">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">
+                  {currentAnswer ? '1 of 1 selected' : '0 of 1 selected'}
+                </span>
+                {currentAnswer && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleAnswer(question.id, '')
+                      setIndustrySearch('')
+                      setIsDropdownOpen(false)
+                    }}
+                    className="text-xs text-gray-500 hover:text-gray-700 underline"
+                  >
+                    Clear selection
+                  </button>
+                )}
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                <div 
+                  className="bg-pathfinders-blue h-2 rounded-full transition-all duration-300"
+                  style={{ 
+                    width: `${currentAnswer ? 100 : 0}%` 
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Searchable Dropdown */}
+            <div className="relative dropdown-container">
+              {/* Dropdown Trigger */}
+              <button
+                type="button"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="w-full flex items-center justify-between px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              >
+                <span className={`text-sm ${currentAnswer ? 'text-gray-900' : 'text-gray-500'}`}>
+                  {currentAnswer || question.placeholder}
+                </span>
+                <svg 
+                  className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {/* Dropdown Content */}
+              {isDropdownOpen && (
+                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-hidden">
+                  {/* Search Input */}
+                  <div className="p-3 border-b border-gray-200">
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Search industries..."
+                        value={industrySearch}
+                        onChange={(e) => setIndustrySearch(e.target.value)}
+                        className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                        autoFocus
+                      />
+                      {industrySearch && (
+                        <button
+                          type="button"
+                          onClick={() => setIndustrySearch('')}
+                          className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                        >
+                          <svg className="h-4 w-4 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Options List */}
+                  <div className="max-h-48 overflow-y-auto">
+                    {(() => {
+                      const filteredOptions = question.options?.filter((option: string) => 
+                        option.toLowerCase().includes(industrySearch.toLowerCase())
+                      ) || []
+                      
+                      if (filteredOptions.length === 0) {
+                        return (
+                          <div className="px-4 py-3 text-sm text-gray-500 text-center">
+                            No industries found matching "{industrySearch}"
+                          </div>
+                        )
+                      }
+                      
+                      return filteredOptions.map((option: string) => {
+                        const isSelected = currentAnswer === option
+                        return (
+                          <button
+                            key={option}
+                            type="button"
+                            onClick={() => {
+                              handleAnswer(question.id, option)
+                              setIsDropdownOpen(false)
+                              setIndustrySearch('')
+                            }}
+                            className={`w-full px-4 py-3 text-left text-sm hover:bg-gray-50 transition-colors duration-150 flex items-center justify-between ${
+                              isSelected ? 'bg-blue-50 text-blue-800' : 'text-gray-900'
+                            }`}
+                          >
+                            <span className="font-medium">{option}</span>
+                            {isSelected && (
+                              <svg className="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                            )}
+                          </button>
+                        )
+                      })
+                    })()}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Selected Option Display */}
+            {currentAnswer && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <div className="flex items-center gap-2">
+                  <svg className="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-sm font-medium text-blue-800">
+                    Selected: {currentAnswer}
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
