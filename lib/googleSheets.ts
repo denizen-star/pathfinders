@@ -27,41 +27,37 @@ export interface SubmissionData {
 
 export const submitToGoogleSheets = async (data: SubmissionData, stepType: 'Step1' | 'Step2' | 'Step3' = 'Step3', action: string = ''): Promise<boolean> => {
   try {
-    // Your Google Apps Script web app URL
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxP8H-qh4r4uEN5Ea2xBXa__YjXFlJ30h7F4_kebDna3HEMlbz_WqG8H8pWBRhp2rSx/exec'
-    
-    // Convert arrays to strings for Google Sheets and add stepType and action
-    const formattedData = {
+    // Prepare data for submission
+    const submissionData = {
       stepType,
       action,
-      ...data,
-      primaryGoal: Array.isArray(data.primaryGoal) ? data.primaryGoal.join('; ') : data.primaryGoal,
-      connectionTypes: Array.isArray(data.connectionTypes) ? data.connectionTypes.join('; ') : data.connectionTypes,
-      workEnvironment: Array.isArray(data.workEnvironment) ? data.workEnvironment.join('; ') : data.workEnvironment,
-      collaborationPreferences: Array.isArray(data.collaborationPreferences) ? data.collaborationPreferences.join('; ') : data.collaborationPreferences,
-      networkingWindow: Array.isArray(data.networkingWindow) ? data.networkingWindow.join('; ') : data.networkingWindow,
-      dayOfWeek: Array.isArray(data.dayOfWeek) ? data.dayOfWeek.join('; ') : data.dayOfWeek,
-      interests: Array.isArray(data.interests) ? data.interests.join('; ') : data.interests,
-      challenges: Array.isArray(data.challenges) ? data.challenges.join('; ') : data.challenges,
-      deviceInfo: JSON.stringify(data.deviceInfo || {})
+      ...data
     }
     
-    console.log(`Submitting ${stepType} data to Google Sheets:`, formattedData)
+    console.log(`Submitting ${stepType} data to Google Sheets via secure API`)
     
-    // Use form data instead of JSON for better compatibility
-    const formData = new FormData()
-    Object.entries(formattedData).forEach(([key, value]) => {
-      formData.append(key, String(value))
-    })
-    
-    const response = await fetch(GOOGLE_SCRIPT_URL, {
+    // Use the secure API route instead of calling Google Apps Script directly
+    const response = await fetch('/api/google-sheets', {
       method: 'POST',
-      mode: 'no-cors', // Required for Google Apps Script
-      body: formData
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(submissionData)
     })
     
-    console.log(`Google Sheets ${stepType} submission completed`)
-    return true // Assume success with no-cors
+    if (!response.ok) {
+      throw new Error(`API responded with status: ${response.status}`)
+    }
+    
+    const result = await response.json()
+    
+    if (result.success) {
+      console.log(`Google Sheets ${stepType} submission completed successfully`)
+      return true
+    } else {
+      console.error(`Google Sheets submission failed:`, result.error)
+      return false
+    }
   } catch (error) {
     console.error(`Error submitting ${stepType} data to Google Sheets:`, error)
     return false

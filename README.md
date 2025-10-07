@@ -70,14 +70,20 @@ Local Storage (Fallback) → Session Management
 # Production Environment Variables
 NODE_ENV=production
 NEXT_PUBLIC_APP_VERSION=1.0.0
-NEXT_PUBLIC_GOOGLE_SCRIPT_URL=[Your Google Apps Script URL]
+
+# Google Sheets Integration (Server-side only - SECURE)
+GOOGLE_APPS_SCRIPT_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
 ```
+
+**⚠️ Security Note**: The Google Apps Script URL is now stored as a server-side environment variable and is no longer exposed to the client. This prevents unauthorized access to your Google Sheets endpoint.
 
 ### Security Features
 - **Headers**: X-Frame-Options, X-Content-Type-Options, Referrer-Policy
 - **Authentication**: Protected admin access with bcrypt
 - **Data Protection**: No sensitive data exposure, secure transmission
 - **Input Validation**: Comprehensive client and server-side validation
+- **API Security**: Google Sheets integration secured behind server-side API routes
+- **Environment Variables**: Sensitive credentials stored server-side only
 
 ### Performance Optimizations
 - **Compression**: Gzip compression enabled
