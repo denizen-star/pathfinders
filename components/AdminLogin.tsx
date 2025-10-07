@@ -3,16 +3,31 @@
 import { useState } from 'react'
 import { verifyPassword, getAuthToken } from '../lib/auth'
 
-// Production safety check - block admin login in production
-if (process.env.NODE_ENV === 'production') {
-  throw new Error('Admin login is not available in production environment')
-}
-
 interface AdminLoginProps {
   onLogin: (token: string) => void
 }
 
 export default function AdminLogin({ onLogin }: AdminLoginProps) {
+  // Production safety check - block admin login in production
+  if (process.env.NODE_ENV === 'production') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="text-center">
+              <div className="text-red-600 text-6xl mb-4">🔒</div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Access Denied
+              </h1>
+              <p className="text-gray-600">
+                Admin login is not available in production environment.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)

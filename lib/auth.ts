@@ -1,21 +1,28 @@
 // Simple password protection for admin page (development only)
 const ADMIN_PASSWORD = '1ndustr1M@tch'
 
-// Production safety check - block auth functions in production
-if (process.env.NODE_ENV === 'production') {
-  throw new Error('Admin authentication is not available in production environment')
-}
-
 export function verifyPassword(password: string): boolean {
+  // Production safety check - block auth functions in production
+  if (process.env.NODE_ENV === 'production') {
+    return false
+  }
   return password === ADMIN_PASSWORD
 }
 
 export function getAuthToken(): string {
+  // Production safety check - block auth functions in production
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('Admin authentication is not available in production environment')
+  }
   // Simple token generation for session management
   return btoa(`${ADMIN_PASSWORD}_${Date.now()}`)
 }
 
 export function verifyAuthToken(token: string): boolean {
+  // Production safety check - block auth functions in production
+  if (process.env.NODE_ENV === 'production') {
+    return false
+  }
   try {
     const decoded = atob(token)
     const [password, timestamp] = decoded.split('_')

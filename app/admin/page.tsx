@@ -4,12 +4,6 @@ import { useState, useEffect } from 'react'
 import AdminLogin from '../../components/AdminLogin'
 import { verifyAuthToken } from '../../lib/auth'
 
-// Production safety check - block admin access in production
-if (process.env.NODE_ENV === 'production') {
-  // This will prevent the admin page from being accessible in production
-  throw new Error('Admin access is not available in production environment')
-}
-
 // Status checking interfaces
 interface ConnectionStatus {
   isConnected: boolean
@@ -31,6 +25,23 @@ interface ConfigurationStatus {
 }
 
 export default function AdminPage() {
+  // Production safety check - block admin access in production
+  if (process.env.NODE_ENV === 'production') {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6">
+          <div className="text-center">
+            <div className="text-red-600 text-6xl mb-4">🔒</div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Access Denied</h1>
+            <p className="text-gray-600">
+              Admin access is not available in production environment.
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>({
     isConnected: false,
