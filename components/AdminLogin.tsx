@@ -3,6 +3,11 @@
 import { useState } from 'react'
 import { verifyPassword, getAuthToken } from '../lib/auth'
 
+// Production safety check - block admin login in production
+if (process.env.NODE_ENV === 'production') {
+  throw new Error('Admin login is not available in production environment')
+}
+
 interface AdminLoginProps {
   onLogin: (token: string) => void
 }

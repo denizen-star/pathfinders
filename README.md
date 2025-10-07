@@ -79,11 +79,12 @@ GOOGLE_APPS_SCRIPT_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
 
 ### Security Features
 - **Headers**: X-Frame-Options, X-Content-Type-Options, Referrer-Policy
-- **Authentication**: Protected admin access with bcrypt
+- **Admin Security**: Admin dashboard only accessible in development environment
 - **Data Protection**: No sensitive data exposure, secure transmission
 - **Input Validation**: Comprehensive client and server-side validation
 - **API Security**: Google Sheets integration secured behind server-side API routes
 - **Environment Variables**: Sensitive credentials stored server-side only
+- **Production Safety**: Admin functionality completely disabled in production builds
 
 ### Performance Optimizations
 - **Compression**: Gzip compression enabled
@@ -116,7 +117,7 @@ npm run dev
 
 ## 🔐 Admin Dashboard
 
-**Access**: `/admin` | **Password**: `1ndustr1M@tch`
+**Access**: `/admin` (Development Only) | **Password**: `1ndustr1M@tch`
 
 ### Features
 - Real-time data viewing
@@ -124,6 +125,9 @@ npm run dev
 - Session tracking
 - Completion analytics
 - Data integrity monitoring
+
+### Security Notice
+The admin dashboard is **only accessible in development environment** for security reasons. In production, accessing `/admin` will show a security notice instead of the admin interface.
 
 ## 📈 Analytics & Monitoring
 

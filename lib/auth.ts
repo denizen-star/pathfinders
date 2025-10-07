@@ -1,5 +1,10 @@
-// Simple password protection for admin page
+// Simple password protection for admin page (development only)
 const ADMIN_PASSWORD = '1ndustr1M@tch'
+
+// Production safety check - block auth functions in production
+if (process.env.NODE_ENV === 'production') {
+  throw new Error('Admin authentication is not available in production environment')
+}
 
 export function verifyPassword(password: string): boolean {
   return password === ADMIN_PASSWORD

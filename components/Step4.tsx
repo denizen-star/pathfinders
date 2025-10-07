@@ -80,9 +80,9 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
     return {
       title: "Buckle up! Here's your networking adventure roadmap! 🚀",
       items: [
-        "🎯 We'll play matchmaker with your responses",
-        "📧 Your networking crystal ball arrives next week (with voting powers!)",
-        "☎️ If you're chosen, we'll call to book your 15-minute networking magic!",
+        "🎯 We'll model your responses for matches",
+        "📧 Your networking ideas arrive next week (with voting powers!)",
+        "☎️ If you're chosen, we'll email to book your 15-minute networking magic!",
         "🏆 Only 20 lucky winners get VIP access to our first event!"
       ]
     }

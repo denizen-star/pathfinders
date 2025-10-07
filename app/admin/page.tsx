@@ -4,6 +4,12 @@ import { useState, useEffect } from 'react'
 import AdminLogin from '../../components/AdminLogin'
 import { verifyAuthToken } from '../../lib/auth'
 
+// Production safety check - block admin access in production
+if (process.env.NODE_ENV === 'production') {
+  // This will prevent the admin page from being accessible in production
+  throw new Error('Admin access is not available in production environment')
+}
+
 // Status checking interfaces
 interface ConnectionStatus {
   isConnected: boolean
