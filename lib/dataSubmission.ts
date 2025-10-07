@@ -25,7 +25,8 @@ export interface SubmissionData {
   deviceInfo: any
 }
 
-export const submitToGoogleSheets = async (data: SubmissionData, stepType: 'Step1' | 'Step2' | 'Step3' = 'Step3', action: string = ''): Promise<boolean> => {
+// Obfuscated function names and generic messaging
+const submitData = async (data: SubmissionData, stepType: 'Step1' | 'Step2' | 'Step3' = 'Step3', action: string = ''): Promise<boolean> => {
   try {
     // Prepare data for submission
     const submissionData = {
@@ -34,10 +35,11 @@ export const submitToGoogleSheets = async (data: SubmissionData, stepType: 'Step
       ...data
     }
     
-    console.log(`Submitting ${stepType} data to Google Sheets via secure API`)
+    // Generic console message - no mention of Google Sheets
+    console.log(`Processing ${stepType} data submission`)
     
-    // Use the secure API route instead of calling Google Apps Script directly
-    const response = await fetch('/api/google-sheets', {
+    // Use generic API endpoint name
+    const response = await fetch('/api/data-submission', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,31 +48,34 @@ export const submitToGoogleSheets = async (data: SubmissionData, stepType: 'Step
     })
     
     if (!response.ok) {
-      throw new Error(`API responded with status: ${response.status}`)
+      throw new Error(`Submission failed with status: ${response.status}`)
     }
     
     const result = await response.json()
     
     if (result.success) {
-      console.log(`Google Sheets ${stepType} submission completed successfully`)
+      console.log(`${stepType} data processed successfully`)
       return true
     } else {
-      console.error(`Google Sheets submission failed:`, result.error)
+      console.error(`Data processing failed:`, result.error)
       return false
     }
   } catch (error) {
-    console.error(`Error submitting ${stepType} data to Google Sheets:`, error)
+    console.error(`Error processing ${stepType} data:`, error)
     return false
   }
 }
 
+// Export with obfuscated name
+export const submitToGoogleSheets = submitData
+
 // Fallback: Store in localStorage as backup
 export const storeSubmissionLocally = (data: SubmissionData): void => {
   try {
-    const submissions = JSON.parse(localStorage.getItem('pathfinders-submissions') || '[]')
+    const submissions = JSON.parse(localStorage.getItem('app-data') || '[]')
     submissions.push(data)
-    localStorage.setItem('pathfinders-submissions', JSON.stringify(submissions))
+    localStorage.setItem('app-data', JSON.stringify(submissions))
   } catch (error) {
-    console.error('Error storing submission locally:', error)
+    console.error('Error storing data locally:', error)
   }
 }

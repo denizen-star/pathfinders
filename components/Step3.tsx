@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { FormData } from '../app/page'
-import { submitToGoogleSheets, storeSubmissionLocally, SubmissionData } from '../lib/googleSheets'
+import { submitToGoogleSheets, storeSubmissionLocally, SubmissionData } from '../lib/dataSubmission'
 
 interface Step3Props {
   formData: Partial<FormData>
