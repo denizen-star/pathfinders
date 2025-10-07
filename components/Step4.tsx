@@ -37,7 +37,7 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
             />
           </div>
           <div className="text-left">
-            <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               Potential Unlocked
             </h1>
             <p className="text-lg font-medium text-neutral-600">
@@ -45,9 +45,7 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
             </p>
           </div>
         </div>
-        <p className="text-2xl font-semibold text-pathfinders-blue mb-2">
-          Thank you!
-        </p>
+
 
       </div>
 

@@ -569,10 +569,10 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                     'workEnvironment': 'bg-teal-100 border-teal-300 text-teal-800',
                     // Collaboration Preferences - Indigo tones
                     'collaborationPreferences': 'bg-indigo-100 border-indigo-300 text-indigo-800',
-                    // Networking Window - Pink tones
-                    'networkingWindow': 'bg-pink-100 border-pink-300 text-pink-800',
-                    // Day of Week - Yellow tones
-                    'dayOfWeek': 'bg-yellow-100 border-yellow-300 text-yellow-800'
+                    // Networking Window - Emerald tones
+                    'networkingWindow': 'bg-emerald-100 border-emerald-300 text-emerald-800',
+                    // Day of Week - Cyan tones
+                    'dayOfWeek': 'bg-cyan-100 border-cyan-300 text-cyan-800'
                   }
                   return colorMap[questionId] || 'bg-blue-100 border-blue-300 text-blue-800'
                 }
