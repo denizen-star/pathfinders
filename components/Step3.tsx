@@ -19,6 +19,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [industrySearch, setIndustrySearch] = useState('')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [dropdownStates, setDropdownStates] = useState<{[key: string]: {isOpen: boolean, search: string}}>({})
 
   // Scroll to top when component loads
   useEffect(() => {
@@ -30,14 +31,21 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [currentCategory])
 
-  // Close dropdown when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (isDropdownOpen) {
-        const target = event.target as Element
-        if (!target.closest('.dropdown-container')) {
+      const target = event.target as Element
+      if (!target.closest('.dropdown-container')) {
+        // Close industry dropdown
+        if (isDropdownOpen) {
           setIsDropdownOpen(false)
         }
+        // Close all other dropdowns
+        Object.keys(dropdownStates).forEach(questionId => {
+          if (dropdownStates[questionId]?.isOpen) {
+            setDropdownState(questionId, { isOpen: false })
+          }
+        })
       }
     }
 
@@ -45,7 +53,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [isDropdownOpen])
+  }, [isDropdownOpen, dropdownStates])
   const [answers, setAnswers] = useState<Partial<FormData>>({
     industry: formData.industry || '',
     educationLevel: formData.educationLevel || '',
@@ -122,7 +130,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
       questions: [
         {
           id: 'primaryGoal',
-          type: 'multi-select',
+          type: 'multi-select-dropdown',
           label: '6. What is your primary goal for networking?',
           maxSelections: 5,
           options: [
@@ -132,11 +140,12 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
             'Investment Opportunities', 'Job Opportunities', 'Market Expansion',
             'Professional Development', 'Secure Funding', 'Skill Development',
             'Strategic Partnerships', 'Thought Leadership'
-          ]
+          ],
+          placeholder: 'Search and select your networking goals...'
         },
         {
           id: 'connectionTypes',
-          type: 'multi-select',
+          type: 'multi-select-dropdown',
           label: '7. What types of connections are you looking for? (Select all that apply)',
           maxSelections: 5,
           options: [
@@ -144,18 +153,20 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
             'Creative Professional', 'Domain Expert', 'Industry Influencer',
             'Investor/VC', 'Manager/Leader', 'Mentor', 'Peer Professional',
             'Potential Client', 'Strategic Partner', 'Thought Leader'
-          ]
+          ],
+          placeholder: 'Search and select connection types...'
         },
         {
           id: 'interests',
-          type: 'multi-select',
+          type: 'multi-select-dropdown',
           label: '8. What are your main professional interests? (Select up to 3)',
           maxSelections: 3,
           options: [
             'Technology Innovation', 'Business Strategy', 'Creative Arts', 'Data Science',
             'Sustainability', 'Leadership', 'Entrepreneurship', 'Research', 'Design',
             'Finance', 'Healthcare', 'Education', 'Social Impact'
-          ]
+          ],
+          placeholder: 'Search and select your interests...'
         },
         {
           id: 'challenges',
@@ -185,7 +196,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         },
         {
           id: 'collaborationPreferences',
-          type: 'multi-select',
+          type: 'multi-select-dropdown',
           label: '11. What collaboration preferences do you have? (Select all that apply)',
           maxSelections: 3,
           options: [
@@ -193,7 +204,8 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
             'Dynamic Sessions', 'Flexible Collaboration', 'Impromptu Brainstorms',
             'Planned Collaboration', 'Social Collaboration', 'Strategic Sessions',
             'Structured Meetings'
-          ]
+          ],
+          placeholder: 'Search and select collaboration preferences...'
         },
         {
           id: 'communication',
@@ -227,6 +239,18 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
 
   const handleAnswer = (questionId: string, value: any) => {
     setAnswers(prev => ({ ...prev, [questionId]: value }))
+  }
+
+  // Helper functions for dropdown state management
+  const getDropdownState = (questionId: string) => {
+    return dropdownStates[questionId] || { isOpen: false, search: '' }
+  }
+
+  const setDropdownState = (questionId: string, updates: Partial<{isOpen: boolean, search: string}>) => {
+    setDropdownStates(prev => ({
+      ...prev,
+      [questionId]: { ...getDropdownState(questionId), ...updates }
+    }))
   }
 
   // Check if current category has at least one answer
@@ -669,6 +693,190 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                 Selected: {currentAnswer || question.labels?.[question.default - 1]}
               </span>
             </div>
+          </div>
+        )}
+
+        {question.type === 'multi-select-dropdown' && (
+          <div className="space-y-4">
+            {/* Selection Counter */}
+            <div className="bg-gray-50 rounded-lg p-3 border">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm font-medium text-gray-700">
+                    {Array.isArray(currentAnswer) ? currentAnswer.length : 0}
+                    {question.maxSelections ? ` of ${question.maxSelections}` : ''} selected
+                  </span>
+                  {question.maxSelections && (
+                    <div className="w-16 bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="bg-pathfinders-blue h-2 rounded-full transition-all duration-300"
+                        style={{ 
+                          width: `${Math.min(((Array.isArray(currentAnswer) ? currentAnswer.length : 0) / question.maxSelections) * 100, 100)}%` 
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+                {Array.isArray(currentAnswer) && currentAnswer.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleAnswer(question.id, [])
+                      setDropdownState(question.id, { search: '' })
+                    }}
+                    className="text-xs text-gray-500 hover:text-gray-700 underline"
+                  >
+                    Clear all
+                  </button>
+                )}
+              </div>
+              {question.maxSelections && Array.isArray(currentAnswer) && currentAnswer.length >= question.maxSelections * 0.8 && (
+                <div className="mt-2 text-xs text-orange-600 font-medium">
+                  {currentAnswer.length >= question.maxSelections ? 
+                    "Maximum selections reached" : 
+                    "Approaching selection limit"
+                  }
+                </div>
+              )}
+            </div>
+
+            {/* Searchable Dropdown */}
+            <div className="relative dropdown-container">
+              {/* Dropdown Trigger */}
+              <button
+                type="button"
+                onClick={() => setDropdownState(question.id, { isOpen: !getDropdownState(question.id).isOpen })}
+                className="w-full flex items-center justify-between px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              >
+                <span className={`text-sm ${Array.isArray(currentAnswer) && currentAnswer.length > 0 ? 'text-gray-900' : 'text-gray-500'}`}>
+                  {Array.isArray(currentAnswer) && currentAnswer.length > 0 
+                    ? `${currentAnswer.length} selected` 
+                    : question.placeholder}
+                </span>
+                <svg 
+                  className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${getDropdownState(question.id).isOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {/* Dropdown Content */}
+              {getDropdownState(question.id).isOpen && (
+                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-hidden">
+                  {/* Search Input */}
+                  <div className="p-3 border-b border-gray-200">
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Search options..."
+                        value={getDropdownState(question.id).search}
+                        onChange={(e) => setDropdownState(question.id, { search: e.target.value })}
+                        className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                        autoFocus
+                      />
+                      {getDropdownState(question.id).search && (
+                        <button
+                          type="button"
+                          onClick={() => setDropdownState(question.id, { search: '' })}
+                          className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                        >
+                          <svg className="h-4 w-4 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Options List */}
+                  <div className="max-h-48 overflow-y-auto">
+                    {(() => {
+                      const filteredOptions = question.options?.filter((option: string) => 
+                        option.toLowerCase().includes(getDropdownState(question.id).search.toLowerCase())
+                      ) || []
+                      
+                      if (filteredOptions.length === 0) {
+                        return (
+                          <div className="px-4 py-3 text-sm text-gray-500 text-center">
+                            No options found matching "{getDropdownState(question.id).search}"
+                          </div>
+                        )
+                      }
+                      
+                      return filteredOptions.map((option: string) => {
+                        const isSelected = Array.isArray(currentAnswer) && currentAnswer.includes(option)
+                        const canSelect = !isSelected && (!question.maxSelections || (Array.isArray(currentAnswer) && currentAnswer.length < question.maxSelections))
+                        
+                        return (
+                          <button
+                            key={option}
+                            type="button"
+                            onClick={() => {
+                              if (isSelected) {
+                                // Remove option
+                                const newValues = (currentAnswer as string[]).filter(v => v !== option)
+                                handleAnswer(question.id, newValues)
+                              } else if (canSelect) {
+                                // Add option
+                                const newValues = [...(currentAnswer as string[] || []), option]
+                                handleAnswer(question.id, newValues)
+                              }
+                            }}
+                            disabled={!canSelect && !isSelected}
+                            className={`w-full px-4 py-3 text-left text-sm hover:bg-gray-50 transition-colors duration-150 flex items-center justify-between ${
+                              isSelected ? 'bg-blue-50 text-blue-800' : canSelect ? 'text-gray-900' : 'text-gray-400 cursor-not-allowed'
+                            }`}
+                          >
+                            <span className="font-medium">{option}</span>
+                            {isSelected && (
+                              <svg className="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                            )}
+                          </button>
+                        )
+                      })
+                    })()}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Selected Options Display */}
+            {Array.isArray(currentAnswer) && currentAnswer.length > 0 && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <div className="flex flex-wrap gap-2">
+                  {currentAnswer.map((option: string) => (
+                    <span
+                      key={option}
+                      className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full"
+                    >
+                      {option}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newValues = currentAnswer.filter(v => v !== option)
+                          handleAnswer(question.id, newValues)
+                        }}
+                        className="ml-1 hover:text-blue-600"
+                      >
+                        <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
