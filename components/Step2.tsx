@@ -153,109 +153,153 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <div className="text-left mb-8">
-        <div className="flex items-center gap-3 mb-3">
-          <img 
-            src="/logo-p.png" 
-            alt="Pathfinders Logo" 
-            className="w-10 h-10"
-          />
-          <h1 className="text-3xl font-bold text-pathfinders-blue">
-            erspective
-          </h1>
+    <div className="bg-gradient-card rounded-2xl shadow-medium p-8 border border-neutral-100">
+      {/* Enhanced Hero Section */}
+      <div className="text-center mb-8">
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-brand">
+            <img 
+              src="/logo-p.png" 
+              alt="Pathfinders Logo" 
+              className="w-10 h-10 filter brightness-0 invert"
+            />
+          </div>
+          <div className="text-left">
+            <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              Perspective
+            </h1>
+            <p className="text-lg font-medium text-neutral-600">
+              Your Networking Profile
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-3">
-        Get a glimpse into your networking style!
-        </h2>
-        <div className="text-sm text-gray-600 space-y-2">
-          <p>
+      {/* Enhanced Content Section */}
+      <div className="mb-8">
+        <div className="bg-secondary-50 rounded-xl p-6 mb-6 border border-secondary-100">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+              <span className="text-white text-sm">👤</span>
+            </div>
+            <h2 className="text-xl font-bold text-secondary-800">
+              Get a glimpse into your networking style!
+            </h2>
+          </div>
+          <p className="text-neutral-700 leading-relaxed">
             With your email address, you'll opt-in to receive a personalized summary next week. 
             With exclusive, high-level analysis of the personality traits that your response 
-            suggest with our must broad model. This self-insight is the first step toward 
-            understanding how you can best connect with collegues.
+            suggest with our most broad model. This self-insight is the first step toward 
+            understanding how you can best connect with colleagues.
           </p>
-          
-
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-            Full Name*
-          </label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value)
-              setError('')
-            }}
-            placeholder="Enter your full name"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pathfinders-blue"
-          />
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Enhanced Form Section */}
+        <div className="bg-neutral-50 rounded-xl p-6 border border-neutral-200">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+              <span className="text-white text-sm">📝</span>
+            </div>
+            <h3 className="text-lg font-semibold text-neutral-800">
+              Step 2: Contact Information
+            </h3>
+          </div>
+          
+          <div className="space-y-6">
+            <div>
+              <label htmlFor="name" className="block text-sm font-semibold text-neutral-700 mb-2">
+                Full Name*
+              </label>
+              <div className="bg-white rounded-lg border-2 border-neutral-200 focus-within:border-primary-500 focus-within:ring-4 focus-within:ring-primary-100 transition-all duration-200">
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value)
+                    setError('')
+                  }}
+                  placeholder="Enter your full name"
+                  className="w-full px-4 py-3 text-lg font-medium border-0 rounded-lg focus:outline-none focus:ring-0"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-semibold text-neutral-700 mb-2">
+                Email Address*
+              </label>
+              <div className="bg-white rounded-lg border-2 border-neutral-200 focus-within:border-primary-500 focus-within:ring-4 focus-within:ring-primary-100 transition-all duration-200">
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    setError('')
+                  }}
+                  placeholder="Enter your email address"
+                  className="w-full px-4 py-3 text-lg font-medium border-0 rounded-lg focus:outline-none focus:ring-0"
+                />
+              </div>
+            </div>
+
+            {error && (
+              <div className="bg-accent-50 border border-accent-200 rounded-lg p-3">
+                <p className="text-accent-600 text-sm font-medium">{error}</p>
+              </div>
+            )}
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-            Email Address*
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value)
-              setError('')
-            }}
-            placeholder="Enter your email address"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pathfinders-blue"
-          />
-        </div>
-
-        {error && (
-          <p className="text-red-500 text-sm">{error}</p>
-        )}
-        <div className="mt-6 text-xs text-gray-500 text-left">
-               <p className="font-medium text-pathfinders-blue">
+        {/* Enhanced Privacy Notice */}
+        <div className="bg-primary-50 rounded-xl p-6 border border-primary-100">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 bg-success-500 rounded-lg flex items-center justify-center">
+              <span className="text-white text-sm">🔒</span>
+            </div>
+            <h4 className="text-lg font-semibold text-primary-800">
+              Privacy Promise
+            </h4>
+          </div>
+          <p className="text-primary-700 font-medium">
             Your email will only be used for this experiment and match summaries.
           </p>
-          </div>
-        <div className="flex space-x-2">
+        </div>
+        {/* Enhanced Button Section */}
+        <div className="flex space-x-3">
           <button
             type="button"
             onClick={prevStep}
             disabled={isSubmitting}
-            className="flex-1 bg-gray-300 text-gray-700 py-3 px-4 rounded-md font-medium hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors disabled:bg-gray-200 disabled:cursor-not-allowed"
+            className="flex-1 bg-neutral-200 text-neutral-700 py-4 px-6 rounded-xl font-semibold hover:bg-neutral-300 focus:outline-none focus:ring-4 focus:ring-neutral-200 transition-all duration-200 disabled:bg-neutral-100 disabled:cursor-not-allowed"
           >
-            Back
+            ← Back
           </button>
           <button
             type="button"
             onClick={handleSkip}
             disabled={isSubmitting}
-            className="flex-1 bg-pathfinders-orange text-white py-3 px-4 rounded-md font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="flex-1 bg-gradient-to-r from-accent-500 to-accent-600 text-white py-4 px-6 rounded-xl font-semibold shadow-medium hover:shadow-strong focus:outline-none focus:ring-4 focus:ring-accent-200 transition-all duration-200 disabled:bg-neutral-400 disabled:cursor-not-allowed disabled:shadow-none"
           >
-            {isSubmitting ? 'Saving...' : 'Skip'}
+            {isSubmitting ? 'Saving...' : 'Skip →'}
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 bg-pathfinders-blue text-white py-3 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="flex-1 bg-gradient-primary text-white py-4 px-6 rounded-xl font-semibold shadow-brand hover:shadow-strong focus:outline-none focus:ring-4 focus:ring-primary-200 transition-all duration-200 disabled:bg-neutral-400 disabled:cursor-not-allowed disabled:shadow-none"
           >
-            {isSubmitting ? 'Saving...' : 'Continue'}
+            {isSubmitting ? 'Saving...' : 'Continue →'}
           </button>
         </div>
       </form>
 
-      <div className="mt-6 text-xs text-gray-500 text-center">
-        <p>
-         ... All rights reserved....
+      {/* Enhanced Footer */}
+      <div className="mt-8 text-center">
+        <p className="text-xs text-neutral-500">
+          © 2024 Pathfinders. All rights reserved.
         </p>
       </div>
     </div>
