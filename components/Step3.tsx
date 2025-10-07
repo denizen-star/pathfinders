@@ -47,7 +47,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
 
   const categories = [
     {
-      title: 'Professional Background & Experience',
+      title: 'Professional Background & Experience (1/3)',
       questions: [
         {
           id: 'industry',
@@ -92,13 +92,13 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           min: 1,
           max: 5,
           step: 1,
-          labels: ['0-2 ', '3-5 ', '6-10 ', '11-15 ', '16+ years'],
+          labels: ['0-2 ', '3-5 ', '6-10 ', '11-15 ', '16+ yrs'],
           default: 1
         }
       ]
     },
     {
-      title: 'Networking Goals & Needs',
+      title: 'Networking Goals & Needs (2/3)',
       questions: [
         {
           id: 'primaryGoal',
@@ -151,7 +151,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
       ]
     },
     {
-      title: 'Environmental & Style Preferences',
+      title: 'Environmental & Style Preferences (3/3)',
       questions: [
         {
           id: 'workEnvironment',
@@ -681,11 +681,11 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
               {currentCategoryData.title}
             </h2>
           </div>
-          <div className="text-primary-800 leading-relaxed space-y-2">
+          <div className="text-primary-500 text-sm leading-relaxed space-y-2">
             <p className="font-medium">
               Unlock curated, relevant networking opportunities!
             </p>
-            <p>
+            <p className="font-small">
               These 15 questions are key to building quality connections.
             </p>
           </div>
