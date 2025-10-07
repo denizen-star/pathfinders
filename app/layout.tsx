@@ -51,11 +51,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=5" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=5" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png?v=5" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png?v=5" />
-        <link rel="shortcut icon" href="/favicon.png?v=5" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=6" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=6" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png?v=6" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=6" />
+        <link rel="shortcut icon" href="/favicon.png?v=6" />
         <style dangerouslySetInnerHTML={{
           __html: `
             /* Ensure favicon adapts to browser background */

@@ -614,7 +614,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-gradient-card rounded-2xl shadow-medium p-8 border border-neutral-100">
       <style jsx>{`
         .slider::-webkit-slider-thumb {
           appearance: none;
@@ -649,32 +649,46 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
         }
       `}</style>
-      <div className="text-left mb-8">
-        <div className="flex items-center gap-3 mb-3">
-          <img 
-            src="/logo-p.png" 
-            alt="Pathfinders Logo" 
-            className="w-10 h-10"
-          />
-          <h1 className="text-3xl font-bold text-pathfinders-blue">
-            rofile Refinement
-          </h1>
+      {/* Enhanced Hero Section */}
+      <div className="text-center mb-8">
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-brand">
+            <img 
+              src="/logo-p.png" 
+              alt="Pathfinders Logo" 
+              className="w-10 h-10 rounded-lg"
+            />
+          </div>
+          <div className="text-left">
+            <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              Profile Refinement
+            </h1>
+            <p className="text-lg font-medium text-neutral-600">
+              Your Professional Profile
+            </p>
+          </div>
         </div>
-        <p className="text-lg text-gray-600">
-          Category {currentCategory + 1} of {categories.length}: {currentCategoryData.title}
-        </p>
       </div>
 
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-3">
-          {currentCategoryData.title}
-        </h2>
-        <div className="text-sm text-gray-600 mb-4">
-          <p>
-           <b> Unlock curated, relevant networking opportunities! </b>
-          </p>
-          <p>These 15 questions are key to building quality connections. 
-          </p> 
+      {/* Enhanced Category Section */}
+      <div className="mb-8">
+        <div className="bg-primary-50 rounded-xl p-6 mb-6 border border-primary-100">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+              <span className="text-white text-sm">📝</span>
+            </div>
+            <h2 className="text-xl font-bold text-primary-800">
+              {currentCategoryData.title}
+            </h2>
+          </div>
+          <div className="text-primary-800 leading-relaxed space-y-2">
+            <p className="font-medium">
+              Unlock curated, relevant networking opportunities!
+            </p>
+            <p>
+              These 15 questions are key to building quality connections.
+            </p>
+          </div>
         </div>
 
         <div className="space-y-4">

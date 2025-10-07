@@ -161,7 +161,7 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
             <img 
               src="/logo-p.png" 
               alt="Pathfinders Logo" 
-              className="w-10 h-10 filter brightness-0 invert"
+              className="w-10 h-10 rounded-lg"
             />
           </div>
           <div className="text-left">
@@ -186,7 +186,7 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
               Get a glimpse into your networking style!
             </h2>
           </div>
-          <p className="text-neutral-700 leading-relaxed">
+          <p className="text-secondary-800 leading-relaxed">
             With your email address, you'll opt-in to receive a personalized summary next week. 
             With exclusive, high-level analysis of the personality traits that your response 
             suggest with our most broad model. This self-insight is the first step toward 

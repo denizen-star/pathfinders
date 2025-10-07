@@ -89,7 +89,7 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
             <img 
               src="/logo-p.png" 
               alt="Pathfinders Logo" 
-              className="w-10 h-10 filter brightness-0 invert"
+              className="w-10 h-10 rounded-lg"
             />
           </div>
           <div className="text-left">
@@ -114,7 +114,7 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
               Try Networking with Intelligence
             </h2>
           </div>
-          <p className="text-neutral-700 leading-relaxed">
+          <p className="text-primary-800 leading-relaxed">
             We believe we can create meaningful professional connections 
             by matching people based on FSA, a few indicators, and the right activities
           </p>
@@ -175,12 +175,13 @@ export default function Step1({ formData, updateFormData, nextStep, sessionId, d
           </div>
           <p className="text-secondary-700 leading-relaxed mb-3">
             We're looking for just 20 people to participate in our first networking event.
-            This is a small experiment limited to our co-working space community.
+            This is a small experiment limited to a space/ community.
           </p>
           <ul className="text-sm text-secondary-600 space-y-1">
-            <li>• Geographic matching for local connections</li>
+          <li>We will publish on boards:</li>
+            <li>• Geographic profile</li>
             <li>• Relevant networking events in your area</li>
-            <li>• Community insights and distribution</li>
+            <li>• Community insights and preferences</li>
           </ul>
         </div>
 

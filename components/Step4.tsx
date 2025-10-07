@@ -21,22 +21,29 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+    <div className="bg-gradient-card rounded-2xl shadow-medium p-8 border border-neutral-100 text-center">
       <div className="mb-8">
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <img 
-            src="/logo-p.png" 
-            alt="Pathfinders Logo" 
-            className="w-12 h-12"
-          />
-          <h1 className="text-3xl font-bold text-pathfinders-blue">
-            otential Unlocked
-          </h1>
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-brand">
+            <img 
+              src="/logo-p.png" 
+              alt="Pathfinders Logo" 
+              className="w-10 h-10 rounded-lg"
+            />
+          </div>
+          <div className="text-left">
+            <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              Potential Unlocked
+            </h1>
+            <p className="text-lg font-medium text-neutral-600">
+              Thank You for Participating
+            </p>
+          </div>
         </div>
         <p className="text-2xl font-semibold text-pathfinders-blue mb-2">
           Thank you!
