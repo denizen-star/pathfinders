@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathfinders Design Samples - All UI Concepts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1A2B3C 0%, #2E3B55 50%, #000000 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .sample-1-accent {
+            background: linear-gradient(135deg, #00D4D4, #0066FF);
+        }
+        
+        .sample-2-accent {
+            background: linear-gradient(135deg, #FF0033, #FF6B35);
+        }
+        
+        .sample-3-accent {
+            background: linear-gradient(135deg, #FFD700, #FF6B35);
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="gradient-bg text-white min-h-screen">
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <div class="flex items-center justify-center gap-4 mb-6">
+                <div class="w-20 h-20 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-3xl flex items-center justify-center">
+                    <span class="text-3xl">🚀</span>
+                </div>
+                <div class="text-left">
+                    <h1 class="text-5xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                        Pathfinders
+                    </h1>
+                    <p class="text-2xl font-medium text-gray-300">Design Samples</p>
+                </div>
+            </div>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                Explore 3 different design concepts for the Pathfinders onboarding flow, 
+                each inspired by our marketing materials and using the official color palette.
+            </p>
+        </div>
+        
+        <!-- Design Samples Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            
+            <!-- Sample 1: Smart Connections -->
+            <div class="glassmorphism rounded-3xl p-8 card-hover">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 sample-1-accent rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">✨</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-2">Smart Connections</h2>
+                    <p class="text-gray-300 text-sm">Dark glassmorphism theme</p>
+                </div>
+                
+                <div class="space-y-4 mb-6">
+                    <div class="bg-black/20 rounded-xl p-4">
+                        <h3 class="text-lg font-semibold text-cyan-300 mb-2">Step 1: Location</h3>
+                        <a href="Sample1_SmartConnections.html" class="block w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-white py-3 px-4 rounded-xl font-semibold text-center hover:shadow-lg transition-all duration-200">
+                            View Step 1 →
+                        </a>
+                    </div>
+                    
+                    <div class="bg-black/20 rounded-xl p-4">
+                        <h3 class="text-lg font-semibold text-cyan-300 mb-2">Step 2: Contact</h3>
+                        <a href="Sample1_Step2_Contact.html" class="block w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-white py-3 px-4 rounded-xl font-semibold text-center hover:shadow-lg transition-all duration-200">
+                            View Step 2 →
+                        </a>
+                    </div>
+                    
+                    <div class="bg-black/20 rounded-xl p-4">
+                        <h3 class="text-lg font-semibold text-cyan-300 mb-2">Step 3: Profile</h3>
+                        <a href="Sample1_Step3_Profile.html" class="block w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-white py-3 px-4 rounded-xl font-semibold text-center hover:shadow-lg transition-all duration-200">
+                            View Step 3 →
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="text-xs text-gray-400">
+                    <p class="mb-2"><strong>Colors:</strong> Teal, Electric Blue, Bright Red, Golden Yellow</p>
+                    <p><strong>Features:</strong> Glassmorphism, abstract shapes, gradient text</p>
+                </div>
+            </div>
+            
+            <!-- Sample 2: Stop Random -->
+            <div class="glassmorphism rounded-3xl p-8 card-hover">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 sample-2-accent rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🛑</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-2">Stop Random</h2>
+                    <p class="text-gray-300 text-sm">Bold typography with red emphasis</p>
+                </div>
+                
+                <div class="space-y-4 mb-6">
+                    <div class="bg-black/20 rounded-xl p-4">
+                        <h3 class="text-lg font-semibold text-red-300 mb-2">Step 1: Location</h3>
+                        <a href="Sample2_StopRandom.html" class="block w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-4 rounded-xl font-semibold text-center hover:shadow-lg transition-all duration-200">
+                            View Step 1 →
+                        </a>
+                    </div>
+                    
+                    <div class="bg-black/20 rounded-xl p-4">
+                        <h3 class="text-lg font-semibold text-red-300 mb-2">Step 2: Contact</h3>
+                        <a href="Sample2_Step2_Contact.html" class="block w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-4 rounded-xl font-semibold text-center hover:shadow-lg transition-all duration-200">
+                            View Step 2 →
+                        </a>
+                    </div>
+                    
+                    <div class="bg-black/20 rounded-xl p-4">
+                        <h3 class="text-lg font-semibold text-red-300 mb-2">Step 3: Profile</h3>
+                        <a href="Sample2_Step3_Profile.html" class="block w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-4 rounded-xl font-semibold text-center hover:shadow-lg transition-all duration-200">
+                            View Step 3 →
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="text-xs text-gray-400">
+                    <p class="mb-2"><strong>Colors:</strong> Bright Red, Electric Blue, Cyan, Golden Yellow</p>
+                    <p><strong>Features:</strong> Bold typography, clean cards, geometric shapes</p>
+                </div>
+            </div>
+            
+            <!-- Sample 3: Quality Over Quantity -->
+            <div class="glassmorphism rounded-3xl p-8 card-hover">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 sample-3-accent rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">⭐</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-white mb-2">Quality Over Quantity</h2>
+                    <p class="text-gray-300 text-sm">Navy theme with yellow accents</p>
+                </div>
+                
+                <div class="space-y-4 mb-6">
+                    <div class="bg-black/20 rounded-xl p-4">
+                        <h3 class="text-lg font-semibold text-yellow-300 mb-2">Step 1: Location</h3>
+                        <a href="Sample3_QualityOverQuantity.html" class="block w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white py-3 px-4 rounded-xl font-semibold text-center hover:shadow-lg transition-all duration-200">
+                            View Step 1 →
+                        </a>
+                    </div>
+                    
+                    <div class="bg-black/20 rounded-xl p-4">
+                        <h3 class="text-lg font-semibold text-yellow-300 mb-2">Step 2: Contact</h3>
+                        <a href="Sample3_Step2_Contact.html" class="block w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white py-3 px-4 rounded-xl font-semibold text-center hover:shadow-lg transition-all duration-200">
+                            View Step 2 →
+                        </a>
+                    </div>
+                    
+                    <div class="bg-black/20 rounded-xl p-4">
+                        <h3 class="text-lg font-semibold text-yellow-300 mb-2">Step 3: Profile</h3>
+                        <a href="Sample3_Step3_Profile.html" class="block w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white py-3 px-4 rounded-xl font-semibold text-center hover:shadow-lg transition-all duration-200">
+                            View Step 3 →
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="text-xs text-gray-400">
+                    <p class="mb-2"><strong>Colors:</strong> Golden Yellow, Orange, Teal, Navy Blue</p>
+                    <p><strong>Features:</strong> Structured layout, overlapping cards, checkmarks</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Color Palette Reference -->
+        <div class="glassmorphism rounded-3xl p-8 mb-8">
+            <h2 class="text-3xl font-bold text-center mb-8">Official Color Palette</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-[#0066FF] rounded-xl mx-auto mb-2"></div>
+                    <p class="text-xs text-gray-300">Electric Blue</p>
+                    <p class="text-xs text-gray-500">#0066FF</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-[#00D4D4] rounded-xl mx-auto mb-2"></div>
+                    <p class="text-xs text-gray-300">Cyan</p>
+                    <p class="text-xs text-gray-500">#00D4D4</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-[#FF0033] rounded-xl mx-auto mb-2"></div>
+                    <p class="text-xs text-gray-300">Bright Red</p>
+                    <p class="text-xs text-gray-500">#FF0033</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-[#FFD700] rounded-xl mx-auto mb-2"></div>
+                    <p class="text-xs text-gray-300">Golden Yellow</p>
+                    <p class="text-xs text-gray-500">#FFD700</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-[#FF6B35] rounded-xl mx-auto mb-2"></div>
+                    <p class="text-xs text-gray-300">Orange</p>
+                    <p class="text-xs text-gray-500">#FF6B35</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-[#2E3B55] rounded-xl mx-auto mb-2"></div>
+                    <p class="text-xs text-gray-300">Navy Blue</p>
+                    <p class="text-xs text-gray-500">#2E3B55</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-[#000000] rounded-xl mx-auto mb-2 border border-gray-600"></div>
+                    <p class="text-xs text-gray-300">Black</p>
+                    <p class="text-xs text-gray-500">#000000</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Documentation Link -->
+        <div class="text-center">
+            <a href="README.md" class="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-400 to-blue-500 text-white py-4 px-8 rounded-xl font-semibold text-lg hover:shadow-lg transition-all duration-200">
+                📖 View Documentation
+            </a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="text-center mt-16 pt-8 border-t border-gray-700">
+            <p class="text-gray-500 text-sm">
+                © 2024 Pathfinders. All rights reserved. | 
+                <a href="https://pathfinders.kervinapps.com" class="text-cyan-400 hover:text-cyan-300">Live Application</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
