@@ -17,16 +17,12 @@
   to = "/api/:splat"
   status = 200
 
-[[redirects]]
-  from = "/Design_Samples/*"
-  to = "/Design_Samples/:splat"
-  status = 200
-
-# Handle Next.js dynamic routes
+# Handle Next.js dynamic routes (exclude static files)
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
 
 [functions]
   directory = ".netlify/functions"
