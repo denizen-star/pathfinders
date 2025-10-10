@@ -35,18 +35,18 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
         {/* Logo and Title */}
         <div className="flex items-center justify-center gap-6 mb-8">
 
-          <div className="text-left">
+          <div className="text-center">
             <h1 className="text-5xl font-black text-white mb-2">
               Pathfinders
             </h1>
-            <p className="text-lg font-medium text-white">
+            <p className="text-lg font-medium text-white text-center">
               Intelligent Professional Networking
             </p>
           </div>
         </div>
 
         {/* Main Headline with Vibrant Colors */}
-        <div className="mb-8">
+        <div className="mb-8 text-center">
           <h2 className="text-5xl md:text-6xl font-black mb-4 tracking-tight">
             <span className="bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
               SMART
@@ -61,7 +61,7 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
 
 
         {/* Stats Section with Yellow Numbers */}
-        <div className="flex justify-center gap-12 mb-12">
+        <div className="flex justify-center ">
           <div className="text-center">
             <div className="text-4xl font-black text-yellow-400 mb-2">20</div>
             <div className="text-lg font-medium text-white">Curated Spots</div>
@@ -85,14 +85,14 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
       </div>
         {/* Subheading */}
         <div className="mb-12">
-          <p className="text-2xl font-medium text-white leading-relaxed">
+          <p className="text-lg font-medium text-white leading-relaxed">
             Why waste time at random events?<br />
             Meet professionals matched to your goals.
           </p>
         </div>
       {/* Tagline */}
       <div className="mb-8">
-        <p className="text-lg font-medium text-white">
+        <p className="text-xl font-medium text-white">
           Exclusive • Pre-Matched • Intentional
         </p>
       </div>
