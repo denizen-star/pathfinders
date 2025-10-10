@@ -422,8 +422,8 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
     const currentAnswer = answers[question.id as keyof FormData]
     
     return (
-      <div key={question.id} className="mb-6">
-        <h3 className="text-base md:text-sm font-medium text-gray-800 mb-3">
+      <div key={question.id} className="mb-8">
+        <h3 className="text-lg font-semibold text-white mb-4">
           {question.label}
         </h3>
         
@@ -431,11 +431,11 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           <select
             value={currentAnswer || ''}
             onChange={(e) => handleAnswer(question.id, e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pathfinders-blue text-base md:text-sm"
+            className="form-input w-full px-4 py-3 rounded-xl focus:outline-none text-base"
           >
             <option value="">Select an option...</option>
             {question.options?.map((option: string) => (
-              <option key={option} value={option}>
+              <option key={option} value={option} className="bg-gray-800 text-white">
                 {option}
               </option>
             ))}
@@ -443,44 +443,44 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         )}
 
         {question.type === 'select' && (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {question.options?.map((option: string) => (
-              <label key={option} className="flex items-center">
+              <label key={option} className="flex items-center cursor-pointer">
                 <input
                   type="radio"
                   name={question.id}
                   value={option}
                   checked={currentAnswer === option}
                   onChange={(e) => handleAnswer(question.id, e.target.value)}
-                  className="mr-3 text-pathfinders-blue focus:ring-pathfinders-blue"
+                  className="mr-4 w-4 h-4 text-cyan-500 focus:ring-cyan-500 bg-gray-700 border-gray-600"
                 />
-                <span className="text-base md:text-sm">{option}</span>
+                <span className="text-base text-gray-300">{option}</span>
               </label>
             ))}
           </div>
         )}
 
         {question.type === 'single-select-pill' && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {/* Selection Progress */}
-            <div className="bg-gray-50 rounded-lg p-3 border">
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
               <div className="flex items-center justify-between">
-                <span className="text-base md:text-sm font-medium text-gray-700">
+                <span className="text-base font-medium text-gray-300">
                   {currentAnswer ? '1 of 1 selected' : '0 of 1 selected'}
                 </span>
                 {currentAnswer && (
                   <button
                     type="button"
                     onClick={() => handleAnswer(question.id, '')}
-                    className="text-xs text-gray-500 hover:text-gray-700 underline"
+                    className="text-sm text-gray-400 hover:text-gray-200 underline"
                   >
                     Clear selection
                   </button>
                 )}
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+              <div className="w-full bg-gray-800 rounded-full h-2 mt-3">
                 <div 
-                  className="bg-pathfinders-blue h-2 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 h-2 rounded-full transition-all duration-300"
                   style={{ 
                     width: `${currentAnswer ? 100 : 0}%` 
                   }}
@@ -489,21 +489,16 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
             </div>
 
             {/* Options Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {question.options?.map((option: string) => {
                 const isSelected = currentAnswer === option
                 
-                // Color coding for single-select pills
+                // Color coding for single-select pills - consistent blue gradient for selected
                 const getPillColor = (questionId: string, isSelected: boolean) => {
-                  if (!isSelected) return 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                  if (!isSelected) return 'bg-white/10 border-white/20 text-gray-300 hover:bg-white/20'
                   
-                  const colorMap: { [key: string]: string } = {
-                    'industry': 'bg-blue-100 border-blue-300 text-blue-800',
-                    'educationLevel': 'bg-green-100 border-green-300 text-green-800',
-                    'jobFunctionLevel': 'bg-purple-100 border-purple-300 text-purple-800',
-                    'communication': 'bg-orange-100 border-orange-300 text-orange-800'
-                  }
-                  return colorMap[questionId] || 'bg-blue-100 border-blue-300 text-blue-800'
+                  // For selected pills, always return the blue gradient as per wireframe
+                  return 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white border-blue-500 shadow-lg shadow-cyan-500/30'
                 }
                 
                 return (
@@ -512,14 +507,14 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                     type="button"
                     onClick={() => handleAnswer(question.id, option)}
                     className={`
-                      flex items-center justify-between px-4 py-3 rounded-full border-2 transition-all duration-200 
+                      flex items-center justify-between px-6 py-4 rounded-2xl border-2 transition-all duration-200 
                       ${getPillColor(question.id, isSelected)}
                       cursor-pointer hover:scale-105
-                      ${isSelected ? 'ring-2 ring-offset-1' : ''}
+                      ${isSelected ? 'ring-2 ring-cyan-500/50 ring-offset-2 ring-offset-black' : ''}
                     `}
                   >
-                    <span className="text-base md:text-sm font-medium">{option}</span>
-                    {isSelected && <span className="text-lg font-bold">✓</span>}
+                    <span className="text-base font-medium">{option}</span>
+                    {isSelected && <span className="text-xl font-bold">✓</span>}
                   </button>
                 )
               })}
@@ -528,11 +523,11 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         )}
 
         {question.type === 'searchable-dropdown' && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {/* Selection Progress */}
-            <div className="bg-gray-50 rounded-lg p-3 border">
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
               <div className="flex items-center justify-between">
-                <span className="text-base md:text-sm font-medium text-gray-700">
+                <span className="text-base font-medium text-gray-300">
                   {currentAnswer ? '1 of 1 selected' : '0 of 1 selected'}
                 </span>
                 {currentAnswer && (
@@ -543,15 +538,15 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                       setIndustrySearch('')
                       setIsDropdownOpen(false)
                     }}
-                    className="text-xs text-gray-500 hover:text-gray-700 underline"
+                    className="text-sm text-cyan-400 hover:text-cyan-300 underline"
                   >
                     Clear selection
                   </button>
                 )}
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+              <div className="w-full bg-gray-800 rounded-full h-2 mt-3">
                 <div 
-                  className="bg-pathfinders-blue h-2 rounded-full transition-all duration-300"
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 h-2 rounded-full transition-all duration-300"
                   style={{ 
                     width: `${currentAnswer ? 100 : 0}%` 
                   }}
@@ -565,9 +560,9 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
               <button
                 type="button"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="w-full flex items-center justify-between px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="form-input w-full flex items-center justify-between px-6 py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/30 transition-all duration-200"
               >
-                <span className={`text-base md:text-sm ${currentAnswer ? 'text-gray-900' : 'text-gray-500'}`}>
+                <span className={`text-base font-medium ${currentAnswer ? 'text-white' : 'text-gray-400'}`}>
                   {currentAnswer || question.placeholder}
                 </span>
                 <svg 
@@ -582,9 +577,9 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
 
               {/* Dropdown Content */}
               {isDropdownOpen && (
-                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-hidden">
+                <div className="absolute z-10 w-full mt-2 bg-gray-800/95 backdrop-blur-sm border border-white/20 rounded-xl shadow-2xl max-h-60 overflow-hidden">
                   {/* Search Input */}
-                  <div className="p-3 border-b border-gray-200">
+                  <div className="p-4 border-b border-white/10">
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -596,7 +591,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                         placeholder="Search industries..."
                         value={industrySearch}
                         onChange={(e) => setIndustrySearch(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base md:text-sm"
+                        className="form-input w-full pl-9 pr-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50 text-base"
                         autoFocus
                       />
                       {industrySearch && (
@@ -605,7 +600,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                           onClick={() => setIndustrySearch('')}
                           className="absolute inset-y-0 right-0 pr-3 flex items-center"
                         >
-                          <svg className="h-4 w-4 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="h-4 w-4 text-gray-400 hover:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                           </svg>
                         </button>
@@ -622,7 +617,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                       
                       if (filteredOptions.length === 0) {
                         return (
-                          <div className="px-4 py-3 text-base md:text-sm text-gray-500 text-center">
+                          <div className="px-4 py-3 text-base text-gray-400 text-center">
                             No industries found matching "{industrySearch}"
                           </div>
                         )
@@ -639,13 +634,13 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                               setIsDropdownOpen(false)
                               setIndustrySearch('')
                             }}
-                            className={`w-full px-4 py-3 text-left text-base md:text-sm hover:bg-gray-50 transition-colors duration-150 flex items-center justify-between ${
-                              isSelected ? 'bg-blue-50 text-blue-800' : 'text-gray-900'
+                            className={`w-full px-4 py-3 text-left text-base hover:bg-white/10 transition-colors duration-150 flex items-center justify-between ${
+                              isSelected ? 'bg-gradient-to-r from-cyan-500/20 to-blue-600/20 text-cyan-300' : 'text-gray-300'
                             }`}
                           >
                             <span className="font-medium">{option}</span>
                             {isSelected && (
-                              <svg className="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                              <svg className="h-4 w-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                               </svg>
                             )}
@@ -660,12 +655,12 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
 
             {/* Selected Option Display */}
             {currentAnswer && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <div className="flex items-center gap-2">
-                  <svg className="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <div className="bg-gradient-to-r from-cyan-500/10 to-blue-600/10 border border-cyan-500/30 rounded-xl p-4">
+                <div className="flex items-center gap-3">
+                  <svg className="h-5 w-5 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-base md:text-sm font-medium text-blue-800">
+                  <span className="text-base font-semibold text-cyan-300">
                     Selected: {currentAnswer}
                   </span>
                 </div>
@@ -675,7 +670,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         )}
 
         {question.type === 'slider' && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="relative">
               <input
                 type="range"
@@ -688,12 +683,12 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                   const selectedLabel = question.labels[index]
                   handleAnswer(question.id, selectedLabel)
                 }}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                className="w-full h-3 bg-gray-800 rounded-lg appearance-none cursor-pointer slider"
                 style={{
-                  background: `linear-gradient(to right, #3B82F6 0%, #3B82F6 ${((parseInt(question.labels?.indexOf(currentAnswer as string) + 1 || question.default) - 1) / (question.max - 1)) * 100}%, #E5E7EB ${((parseInt(question.labels?.indexOf(currentAnswer as string) + 1 || question.default) - 1) / (question.max - 1)) * 100}%, #E5E7EB 100%)`
+                  background: `linear-gradient(to right, #00D4D4 0%, #0066FF ${((parseInt(question.labels?.indexOf(currentAnswer as string) + 1 || question.default) - 1) / (question.max - 1)) * 100}%, #374151 ${((parseInt(question.labels?.indexOf(currentAnswer as string) + 1 || question.default) - 1) / (question.max - 1)) * 100}%, #374151 100%)`
                 }}
               />
-              <div className="flex justify-between text-xs text-gray-500 mt-2">
+              <div className="flex justify-between text-sm text-gray-400 mt-3">
                 {question.labels?.map((label: string, index: number) => (
                   <span key={label} className="text-center" style={{ width: `${100 / question.labels.length}%` }}>
                     {label}
@@ -702,7 +697,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
               </div>
             </div>
             <div className="text-center">
-              <span className="text-base md:text-sm font-medium text-pathfinders-blue">
+              <span className="text-lg font-semibold gradient-text">
                 Selected: {currentAnswer || question.labels?.[question.default - 1]}
               </span>
             </div>
@@ -710,19 +705,19 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         )}
 
         {question.type === 'multi-select-dropdown' && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {/* Selection Counter */}
-            <div className="bg-gray-50 rounded-lg p-3 border">
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <span className="text-base md:text-sm font-medium text-gray-700">
+                <div className="flex items-center space-x-3">
+                  <span className="text-base font-medium text-gray-300">
                     {Array.isArray(currentAnswer) ? currentAnswer.length : 0}
                     {question.maxSelections ? ` of ${question.maxSelections}` : ''} selected
                   </span>
                   {question.maxSelections && (
-                    <div className="w-16 bg-gray-200 rounded-full h-2">
+                    <div className="w-20 bg-gray-800 rounded-full h-2">
                       <div 
-                        className="bg-pathfinders-blue h-2 rounded-full transition-all duration-300"
+                        className="bg-gradient-to-r from-cyan-500 to-blue-600 h-2 rounded-full transition-all duration-300"
                         style={{ 
                           width: `${Math.min(((Array.isArray(currentAnswer) ? currentAnswer.length : 0) / question.maxSelections) * 100, 100)}%` 
                         }}
@@ -737,14 +732,14 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                       handleAnswer(question.id, [])
                       setDropdownState(question.id, { search: '' })
                     }}
-                    className="text-xs text-gray-500 hover:text-gray-700 underline"
+                    className="text-sm text-cyan-400 hover:text-cyan-300 underline"
                   >
                     Clear all
                   </button>
                 )}
               </div>
               {question.maxSelections && Array.isArray(currentAnswer) && currentAnswer.length >= question.maxSelections * 0.8 && (
-                <div className="mt-2 text-xs text-orange-600 font-medium">
+                <div className="mt-3 text-sm text-orange-400 font-medium">
                   {currentAnswer.length >= question.maxSelections ? 
                     "Maximum selections reached" : 
                     "Approaching selection limit"
@@ -759,9 +754,9 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
               <button
                 type="button"
                 onClick={() => setDropdownState(question.id, { isOpen: !getDropdownState(question.id).isOpen })}
-                className="w-full flex items-center justify-between px-4 py-3 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="form-input w-full flex items-center justify-between px-6 py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/30 transition-all duration-200"
               >
-                <span className={`text-base md:text-sm ${Array.isArray(currentAnswer) && currentAnswer.length > 0 ? 'text-gray-900' : 'text-gray-500'}`}>
+                <span className={`text-base font-medium ${Array.isArray(currentAnswer) && currentAnswer.length > 0 ? 'text-white' : 'text-gray-400'}`}>
                   {Array.isArray(currentAnswer) && currentAnswer.length > 0 
                     ? `${currentAnswer.length} selected` 
                     : question.placeholder}
@@ -778,9 +773,9 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
 
               {/* Dropdown Content */}
               {getDropdownState(question.id).isOpen && (
-                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-hidden">
+                <div className="absolute z-10 w-full mt-2 bg-gray-800/95 backdrop-blur-sm border border-white/20 rounded-xl shadow-2xl max-h-60 overflow-hidden">
                   {/* Search Input */}
-                  <div className="p-3 border-b border-gray-200">
+                  <div className="p-4 border-b border-white/10">
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -792,7 +787,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                         placeholder="Search options..."
                         value={getDropdownState(question.id).search}
                         onChange={(e) => setDropdownState(question.id, { search: e.target.value })}
-                        className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base md:text-sm"
+                        className="form-input w-full pl-9 pr-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500/50 text-base"
                         autoFocus
                       />
                       {getDropdownState(question.id).search && (
@@ -801,7 +796,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                           onClick={() => setDropdownState(question.id, { search: '' })}
                           className="absolute inset-y-0 right-0 pr-3 flex items-center"
                         >
-                          <svg className="h-4 w-4 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="h-4 w-4 text-gray-400 hover:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                           </svg>
                         </button>
@@ -818,7 +813,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                       
                       if (filteredOptions.length === 0) {
                         return (
-                          <div className="px-4 py-3 text-base md:text-sm text-gray-500 text-center">
+                          <div className="px-4 py-3 text-base text-gray-400 text-center">
                             No options found matching "{getDropdownState(question.id).search}"
                           </div>
                         )
@@ -844,13 +839,13 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                               }
                             }}
                             disabled={!canSelect && !isSelected}
-                            className={`w-full px-4 py-3 text-left text-base md:text-sm hover:bg-gray-50 transition-colors duration-150 flex items-center justify-between ${
-                              isSelected ? 'bg-blue-50 text-blue-800' : canSelect ? 'text-gray-900' : 'text-gray-400 cursor-not-allowed'
+                            className={`w-full px-4 py-3 text-left text-base hover:bg-white/10 transition-colors duration-150 flex items-center justify-between ${
+                              isSelected ? 'bg-gradient-to-r from-cyan-500/20 to-blue-600/20 text-cyan-300' : canSelect ? 'text-gray-300' : 'text-gray-500 cursor-not-allowed'
                             }`}
                           >
                             <span className="font-medium">{option}</span>
                             {isSelected && (
-                              <svg className="h-4 w-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                              <svg className="h-4 w-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                               </svg>
                             )}
@@ -865,12 +860,12 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
 
             {/* Selected Options Display */}
             {Array.isArray(currentAnswer) && currentAnswer.length > 0 && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                <div className="flex flex-wrap gap-2">
+              <div className="bg-gradient-to-r from-cyan-500/10 to-blue-600/10 border border-cyan-500/30 rounded-xl p-4">
+                <div className="flex flex-wrap gap-3">
                   {currentAnswer.map((option: string) => (
                     <span
                       key={option}
-                      className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full"
+                      className="inline-flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 text-cyan-300 text-sm font-medium rounded-xl border border-cyan-500/30"
                     >
                       {option}
                       <button
@@ -879,9 +874,9 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                           const newValues = currentAnswer.filter(v => v !== option)
                           handleAnswer(question.id, newValues)
                         }}
-                        className="ml-1 hover:text-blue-600"
+                        className="hover:text-cyan-100 transition-colors"
                       >
-                        <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                         </svg>
                       </button>
@@ -894,19 +889,19 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         )}
 
         {question.type === 'multi-select' && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {/* Selection Counter - Prominent Display */}
-            <div className="bg-gray-50 rounded-lg p-3 border">
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <span className="text-base md:text-sm font-medium text-gray-700">
+                <div className="flex items-center space-x-3">
+                  <span className="text-base font-medium text-gray-300">
                     {Array.isArray(currentAnswer) ? currentAnswer.length : 0}
                     {question.maxSelections ? ` of ${question.maxSelections}` : ''} selected
                   </span>
                   {question.maxSelections && (
-                    <div className="w-16 bg-gray-200 rounded-full h-2">
+                    <div className="w-20 bg-gray-800 rounded-full h-2">
                       <div 
-                        className="bg-pathfinders-blue h-2 rounded-full transition-all duration-300"
+                        className="bg-gradient-to-r from-cyan-500 to-blue-600 h-2 rounded-full transition-all duration-300"
                         style={{ 
                           width: `${Math.min(((Array.isArray(currentAnswer) ? currentAnswer.length : 0) / question.maxSelections) * 100, 100)}%` 
                         }}
@@ -918,14 +913,14 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                   <button
                     type="button"
                     onClick={() => handleAnswer(question.id, [])}
-                    className="text-xs text-gray-500 hover:text-gray-700 underline"
+                    className="text-sm text-cyan-400 hover:text-cyan-300 underline"
                   >
                     Clear all
                   </button>
                 )}
               </div>
               {question.maxSelections && Array.isArray(currentAnswer) && currentAnswer.length >= question.maxSelections * 0.8 && (
-                <div className="mt-2 text-xs text-orange-600 font-medium">
+                <div className="mt-3 text-sm text-orange-400 font-medium">
                   {currentAnswer.length >= question.maxSelections ? 
                     "Maximum selections reached" : 
                     "Approaching selection limit"
@@ -940,29 +935,12 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                 const isSelected = Array.isArray(currentAnswer) && currentAnswer.includes(option)
                 const canSelect = !isSelected && (!question.maxSelections || (Array.isArray(currentAnswer) && currentAnswer.length < question.maxSelections))
                 
-                // Color coding based on question type and option
+                // Color coding for multi-select pills - consistent blue gradient for selected
                 const getOptionColor = (questionId: string, option: string, isSelected: boolean) => {
-                  if (!isSelected) return 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                  if (!isSelected) return 'bg-white/10 border-white/20 text-gray-300 hover:bg-white/20'
                   
-                  const colorMap: { [key: string]: string } = {
-                    // Primary Goals - Blue tones
-                    'primaryGoal': 'bg-blue-100 border-blue-300 text-blue-800',
-                    // Connection Types - Green tones  
-                    'connectionTypes': 'bg-green-100 border-green-300 text-green-800',
-                    // Interests - Purple tones
-                    'interests': 'bg-purple-100 border-purple-300 text-purple-800',
-                    // Challenges - Orange tones
-                    'challenges': 'bg-orange-100 border-orange-300 text-orange-800',
-                    // Work Environment - Teal tones
-                    'workEnvironment': 'bg-teal-100 border-teal-300 text-teal-800',
-                    // Collaboration Preferences - Indigo tones
-                    'collaborationPreferences': 'bg-indigo-100 border-indigo-300 text-indigo-800',
-                    // Networking Window - Emerald tones
-                    'networkingWindow': 'bg-emerald-100 border-emerald-300 text-emerald-800',
-                    // Day of Week - Cyan tones
-                    'dayOfWeek': 'bg-cyan-100 border-cyan-300 text-cyan-800'
-                  }
-                  return colorMap[questionId] || 'bg-blue-100 border-blue-300 text-blue-800'
+                  // For selected pills, always return the blue gradient as per wireframe
+                  return 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white border-blue-500 shadow-lg shadow-cyan-500/30'
                 }
                 
                 
@@ -973,14 +951,14 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                     onClick={() => handleMultiSelect(question.id, option, question.maxSelections || Infinity)}
                     disabled={!canSelect && !isSelected}
                     className={`
-                      flex items-center justify-between px-4 py-3 rounded-full border-2 transition-all duration-200 
+                      flex items-center justify-between px-6 py-4 rounded-2xl border-2 transition-all duration-200 
                       ${getOptionColor(question.id, option, isSelected)}
                       ${canSelect || isSelected ? 'cursor-pointer hover:scale-105' : 'opacity-50 cursor-not-allowed'}
-                      ${isSelected ? 'ring-2 ring-offset-1' : ''}
+                      ${isSelected ? 'ring-2 ring-cyan-500/50 ring-offset-2 ring-offset-black' : ''}
                     `}
                   >
-                    <span className="text-base md:text-sm font-medium">{option}</span>
-                    {isSelected && <span className="text-lg font-bold">✓</span>}
+                    <span className="text-base font-medium">{option}</span>
+                    {isSelected && <span className="text-xl font-bold">✓</span>}
                   </button>
                 )
               })}
@@ -989,40 +967,42 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         )}
 
         {question.type === 'textarea' && (
-          <textarea
-            value={currentAnswer || ''}
-            onChange={(e) => handleAnswer(question.id, e.target.value)}
-            placeholder={question.placeholder}
-            rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pathfinders-blue text-base md:text-sm"
-          />
+          <div className="space-y-6">
+            <textarea
+              value={currentAnswer || ''}
+              onChange={(e) => handleAnswer(question.id, e.target.value)}
+              placeholder={question.placeholder}
+              rows={4}
+              className="form-input w-full px-6 py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-cyan-500/30 text-base resize-none min-h-[120px]"
+            />
+          </div>
         )}
       </div>
     )
   }
 
   return (
-    <div className="bg-gradient-card rounded-2xl shadow-medium p-8 border border-neutral-100">
+    <div className="dark-glassmorphism p-8 md:p-10">
       <style jsx>{`
         .slider::-webkit-slider-thumb {
           appearance: none;
           height: 20px;
           width: 20px;
           border-radius: 50%;
-          background: #3B82F6;
+          background: linear-gradient(135deg, #00D4D4, #0066FF);
           cursor: pointer;
           border: 2px solid #ffffff;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 4px 8px rgba(0, 212, 212, 0.3);
         }
         
         .slider::-moz-range-thumb {
           height: 20px;
           width: 20px;
           border-radius: 50%;
-          background: #3B82F6;
+          background: linear-gradient(135deg, #00D4D4, #0066FF);
           cursor: pointer;
           border: 2px solid #ffffff;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 4px 8px rgba(0, 212, 212, 0.3);
         }
         
         .slider:focus {
@@ -1030,28 +1010,28 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
         }
         
         .slider:focus::-webkit-slider-thumb {
-          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+          box-shadow: 0 0 0 3px rgba(0, 212, 212, 0.3);
         }
         
         .slider:focus::-moz-range-thumb {
-          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+          box-shadow: 0 0 0 3px rgba(0, 212, 212, 0.3);
         }
       `}</style>
       {/* Enhanced Hero Section */}
-      <div className="text-center mb-8">
-        <div className="flex items-center justify-center gap-4 mb-4">
-          <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-brand">
+      <div className="text-center mb-10">
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <div className="w-20 h-20 rounded-2xl flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 shadow-2xl">
             <img 
               src="/logo-p.png" 
               alt="Pathfinders Logo" 
-              className="w-10 h-10 rounded-lg"
+              className="w-12 h-12 rounded-lg"
             />
           </div>
           <div className="text-left">
-            <h1 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            <h1 className="text-4xl font-black gradient-text">
               Profile Refinement
             </h1>
-            <p className="text-lg font-medium text-neutral-600">
+            <p className="text-lg font-medium text-gray-300">
               Your Professional Profile
             </p>
           </div>
@@ -1059,38 +1039,40 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
       </div>
 
       {/* Enhanced Current Section */}
-      <div className="mb-8">
-        <div className="bg-primary-50 rounded-xl p-6 mb-6 border border-primary-100">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-white text-base md:text-sm">📝</span>
+      <div className="mb-10">
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-600">
+              <span className="text-white text-xl">📝</span>
             </div>
-            <h2 className="text-xl font-bold text-primary-800">
+            <h2 className="text-2xl font-bold gradient-text">
               {currentCategoryData.title}
             </h2>
           </div>
-          <div className="text-primary-500 text-base md:text-sm leading-relaxed space-y-2">
-            <p className="font-medium">
+          <div className="text-gray-300 text-base leading-relaxed space-y-2">
+            <p className="font-semibold">
               Unlock curated, relevant networking opportunities!
             </p>
-            <p className="font-small">
+            <p className="text-gray-400">
               These 15 questions are key to building quality connections.
             </p>
           </div>
         </div>
 
-        <div className="space-y-4">
-          {currentCategoryData.questions.map(renderQuestion)}
-          {isLastCategory && renderQuestion(additionalQuestion)}
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+          <div className="space-y-8">
+            {currentCategoryData.questions.map(renderQuestion)}
+            {isLastCategory && renderQuestion(additionalQuestion)}
+          </div>
         </div>
       </div>
 
-      <div className="flex space-x-2">
+      <div className="flex flex-col sm:flex-row gap-4 mt-8">
         <button
           type="button"
           onClick={handlePrevious}
           disabled={isSubmitting}
-          className="flex-1 bg-gray-300 text-gray-700 py-3 px-4 rounded-md font-medium hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors disabled:bg-gray-200 disabled:cursor-not-allowed"
+          className="btn-secondary flex-1 py-4 px-6 rounded-xl font-semibold focus:outline-none focus:ring-4 focus:ring-gray-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {currentCategory === 0 ? 'Back' : 'Previous'}
         </button>
@@ -1098,7 +1080,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           type="button"
           onClick={handleSkip}
           disabled={isSubmitting}
-          className="flex-1 bg-pathfinders-orange text-white py-3 px-4 rounded-md font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="btn-muted flex-1 py-4 px-6 rounded-xl font-semibold focus:outline-none focus:ring-4 focus:ring-gray-400/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? 'Saving...' : 'Skip'}
         </button>
@@ -1106,48 +1088,47 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
           type="button"
           onClick={handleNext}
           disabled={!isCurrentCategoryComplete() || isSubmitting}
-          className="flex-1 bg-pathfinders-blue text-white py-3 px-4 rounded-md font-medium hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="btn-primary flex-1 py-4 px-6 rounded-xl font-bold focus:outline-none focus:ring-4 focus:ring-cyan-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:transform-none"
         >
           {isSubmitting ? 'Saving...' : (isLastCategory ? 'Finish' : 'Next')}
         </button>
       </div>
 
       {/* Category Progress Indicator - Moved after buttons */}
-      <div className="bg-gray-50 rounded-xl p-4 mt-6 border border-gray-200">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-gray-700">
+      <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mt-8 border border-white/10">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-base font-semibold text-gray-300">
             Current Section Progress
           </span>
-          <span className="text-sm font-bold text-pathfinders-blue">
+          <span className="text-base font-bold gradient-text">
             {getCurrentCategoryAnsweredCount()}/{isLastCategory ? currentCategoryData.questions.length : currentCategoryData.questions.length} answered
           </span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-3">
+        <div className="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
           <div 
-            className="bg-gradient-to-r from-pathfinders-blue to-blue-600 h-3 rounded-full transition-all duration-500"
+            className="btn-primary h-3 transition-all duration-500"
             style={{ 
               width: `${Math.min((getCurrentCategoryAnsweredCount() / (isLastCategory ? currentCategoryData.questions.length : currentCategoryData.questions.length)) * 100, 100)}%` 
             }}
           />
         </div>
-        <div className="mt-2 text-xs text-gray-600">
+        <div className="mt-3 text-sm">
           {getCurrentCategoryAnsweredCount() >= 3 ? (
-            <span className="text-green-600 font-medium">✓ Ready to proceed!</span>
+            <span className="text-green-400 font-semibold">✓ Ready to proceed!</span>
           ) : (
-            <span>Answer at least 3 questions in this category to continue</span>
+            <span className="text-gray-400">Answer at least 3 questions in this category to continue</span>
           )}
         </div>
       </div>
 
-      <div className="mt-6 text-xs text-gray-500 text-center">
+      <div className="mt-8 text-sm text-gray-400 text-center bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+        <p className="mb-3">
+          Using anonymized traits and FSAs, our model will predict matches with compatible peers for a 
+          voluntary 15-minute introductory networking event within the next one to two weeks.
+        </p>
         <p>
-        Using anonymized traits and FSAs, 
-            Our model will predict matches with compatible peers for a 
-            voluntary 15-minute introductory networking event within the next one to two weeks. 
-            </p>
-            <p>
-            Say goodbye to awkward, random mingling; we're focused on quality connections that align with your interests and professional style.
-          </p>      
+          Say goodbye to awkward, random mingling; we're focused on quality connections that align with your interests and professional style.
+        </p>      
       </div>
     </div>
   )

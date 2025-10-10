@@ -90,166 +90,189 @@ export default function Step4({ formData, prevStep, sessionId, deviceInfo }: Ste
 
   const nextStepsContent = getNextStepsContent()
   return (
-    <div className="bg-gradient-card rounded-2xl shadow-medium p-8 border border-neutral-100 text-center">
-      <div className="mb-8">
-        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div className="dark-glassmorphism p-8 md:p-10 text-center">
+      {/* Hero Section */}
+      <div className="mb-10">
+        <div className="w-24 h-24 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg shadow-green-500/30">
+          <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <div className="flex items-center justify-center gap-4 mb-4">
-          <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-brand">
+        <div className="flex items-center justify-center gap-6 mb-6">
+          <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-cyan-500/30">
             <img 
               src="/logo-p.png" 
               alt="Pathfinders Logo" 
-              className="w-10 h-10 rounded-lg"
+              className="w-12 h-12 rounded-lg"
             />
           </div>
           <div className="text-left">
-            <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold gradient-text">
               Potential Unlocked
             </h1>
-            <p className="text-lg font-medium text-neutral-600">
+            <p className="text-xl font-medium text-gray-300">
               Thank You for Participating
             </p>
           </div>
         </div>
-
-
       </div>
 
       {/* Review Information Section */}
-      <div className="text-left space-y-4 mb-6 bg-gray-50 rounded-lg p-4">
-        <h2 className="text-lg font-semibold text-gray-800 mb-3 text-center">Your Submission Summary</h2>
+      <div className="text-left space-y-6 mb-8 bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-semibold text-white">Your Submission Summary</h2>
+        </div>
         
-        <div className="border-b pb-3">
-          <h3 className="font-medium text-gray-800 mb-1">Location</h3>
-          <p className="text-sm text-gray-600">{formData.postalCode}</p>
+        <div className="border-b border-white/10 pb-4">
+          <h3 className="font-semibold text-gray-300 mb-2">📍 Location</h3>
+          <p className="text-gray-400">{formData.postalCode}</p>
         </div>
 
-        <div className="border-b pb-3">
-          <h3 className="font-medium text-gray-800 mb-1">Contact Information</h3>
-          <p className="text-sm text-gray-600">{formData.name}</p>
-          <p className="text-sm text-gray-600">{formData.email}</p>
+        <div className="border-b border-white/10 pb-4">
+          <h3 className="font-semibold text-gray-300 mb-2">📞 Contact Information</h3>
+          <p className="text-gray-400">{formData.name}</p>
+          <p className="text-gray-400">{formData.email}</p>
         </div>
 
-        <div className="border-b pb-3">
-          <h3 className="font-medium text-gray-800 mb-1">Professional Background</h3>
-          <p className="text-sm text-gray-600">
-            <strong>Industry:</strong> {formData.industry}
+        <div className="border-b border-white/10 pb-4">
+          <h3 className="font-semibold text-gray-300 mb-2">💼 Professional Background</h3>
+          <p className="text-gray-400">
+            <strong className="text-gray-300">Industry:</strong> {formData.industry}
           </p>
-          <p className="text-sm text-gray-600">
-            <strong>Education:</strong> {formData.educationLevel}
+          <p className="text-gray-400">
+            <strong className="text-gray-300">Education:</strong> {formData.educationLevel}
           </p>
-          <p className="text-sm text-gray-600">
-            <strong>Job Level:</strong> {formData.jobFunctionLevel}
+          <p className="text-gray-400">
+            <strong className="text-gray-300">Job Level:</strong> {formData.jobFunctionLevel}
           </p>
-          <p className="text-sm text-gray-600">
-            <strong>Company Size:</strong> {formData.companySize}
+          <p className="text-gray-400">
+            <strong className="text-gray-300">Company Size:</strong> {formData.companySize}
           </p>
           {formData.experience && (
-            <p className="text-sm text-gray-600">
-              <strong>Experience:</strong> {formData.experience}
+            <p className="text-gray-400">
+              <strong className="text-gray-300">Experience:</strong> {formData.experience}
             </p>
           )}
           {formData.communication && (
-            <p className="text-sm text-gray-600">
-              <strong>Communication Style:</strong> {formData.communication}
+            <p className="text-gray-400">
+              <strong className="text-gray-300">Communication Style:</strong> {formData.communication}
             </p>
           )}
         </div>
 
-        <div className="border-b pb-3">
-          <h3 className="font-medium text-gray-800 mb-1">Networking Goals</h3>
+        <div className="border-b border-white/10 pb-4">
+          <h3 className="font-semibold text-gray-300 mb-2">🎯 Networking Goals</h3>
           {formData.primaryGoal && (
-            <p className="text-sm text-gray-600">
-              <strong>Primary Goal:</strong> {Array.isArray(formData.primaryGoal) ? formData.primaryGoal.join(', ') : formData.primaryGoal}
+            <p className="text-gray-400">
+              <strong className="text-gray-300">Primary Goal:</strong> {Array.isArray(formData.primaryGoal) ? formData.primaryGoal.join(', ') : formData.primaryGoal}
             </p>
           )}
           {formData.connectionTypes && (
-            <p className="text-sm text-gray-600">
-              <strong>Connection Types:</strong> {Array.isArray(formData.connectionTypes) ? formData.connectionTypes.join(', ') : formData.connectionTypes}
+            <p className="text-gray-400">
+              <strong className="text-gray-300">Connection Types:</strong> {Array.isArray(formData.connectionTypes) ? formData.connectionTypes.join(', ') : formData.connectionTypes}
             </p>
           )}
         </div>
 
-        <div className="border-b pb-3">
-          <h3 className="font-medium text-gray-800 mb-1">Preferences</h3>
+        <div className="border-b border-white/10 pb-4">
+          <h3 className="font-semibold text-gray-300 mb-2">⚙️ Preferences</h3>
           {formData.workEnvironment && (
-            <p className="text-sm text-gray-600">
-              <strong>Work Environment:</strong> {Array.isArray(formData.workEnvironment) ? formData.workEnvironment.join(', ') : formData.workEnvironment}
+            <p className="text-gray-400">
+              <strong className="text-gray-300">Work Environment:</strong> {Array.isArray(formData.workEnvironment) ? formData.workEnvironment.join(', ') : formData.workEnvironment}
             </p>
           )}
           {formData.collaborationPreferences && (
-            <p className="text-sm text-gray-600">
-              <strong>Collaboration Style:</strong> {Array.isArray(formData.collaborationPreferences) ? formData.collaborationPreferences.join(', ') : formData.collaborationPreferences}
+            <p className="text-gray-400">
+              <strong className="text-gray-300">Collaboration Style:</strong> {Array.isArray(formData.collaborationPreferences) ? formData.collaborationPreferences.join(', ') : formData.collaborationPreferences}
             </p>
           )}
           {formData.networkingWindow && (
-            <p className="text-sm text-gray-600">
-              <strong>Best Time:</strong> {Array.isArray(formData.networkingWindow) ? formData.networkingWindow.join(', ') : formData.networkingWindow}
+            <p className="text-gray-400">
+              <strong className="text-gray-300">Best Time:</strong> {Array.isArray(formData.networkingWindow) ? formData.networkingWindow.join(', ') : formData.networkingWindow}
             </p>
           )}
           {formData.dayOfWeek && (
-            <p className="text-sm text-gray-600">
-              <strong>Best Days:</strong> {Array.isArray(formData.dayOfWeek) ? formData.dayOfWeek.join(', ') : formData.dayOfWeek}
+            <p className="text-gray-400">
+              <strong className="text-gray-300">Best Days:</strong> {Array.isArray(formData.dayOfWeek) ? formData.dayOfWeek.join(', ') : formData.dayOfWeek}
             </p>
           )}
         </div>
 
         {Array.isArray(formData.interests) && formData.interests.length > 0 && (
-          <div className="border-b pb-3">
-            <h3 className="font-medium text-gray-800 mb-1">Professional Interests</h3>
-            <p className="text-sm text-gray-600">
-              <strong>Main Interests:</strong> {formData.interests.join(', ')}
+          <div className="border-b border-white/10 pb-4">
+            <h3 className="font-semibold text-gray-300 mb-2">💡 Professional Interests</h3>
+            <p className="text-gray-400">
+              <strong className="text-gray-300">Main Interests:</strong> {formData.interests.join(', ')}
             </p>
           </div>
         )}
 
         {Array.isArray(formData.challenges) && formData.challenges.length > 0 && (
-          <div className="border-b pb-3">
-            <h3 className="font-medium text-gray-800 mb-1">Professional Challenges</h3>
-            <p className="text-sm text-gray-600">
-              <strong>Current Challenges:</strong> {formData.challenges.join(', ')}
+          <div className="border-b border-white/10 pb-4">
+            <h3 className="font-semibold text-gray-300 mb-2">🚧 Professional Challenges</h3>
+            <p className="text-gray-400">
+              <strong className="text-gray-300">Current Challenges:</strong> {formData.challenges.join(', ')}
             </p>
           </div>
         )}
 
         {formData.additionalInfo && (
           <div>
-            <h3 className="font-medium text-gray-800 mb-1">Additional Information</h3>
-            <p className="text-sm text-gray-600">{formData.additionalInfo}</p>
+            <h3 className="font-semibold text-gray-300 mb-2">📝 Additional Information</h3>
+            <p className="text-gray-400">{formData.additionalInfo}</p>
           </div>
         )}
       </div>
 
-      <div className="bg-blue-50 rounded-lg p-4 mb-6">
-        <h2 className="font-semibold text-pathfinders-blue mb-2">
-          {nextStepsContent.title}
-        </h2>
-        <div className="text-sm text-gray-700 space-y-2">
+      <div className="bg-gradient-to-r from-cyan-500/10 to-blue-600/10 border border-cyan-500/30 rounded-2xl p-6 mb-8">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-semibold gradient-text">
+            {nextStepsContent.title}
+          </h2>
+        </div>
+        <div className="text-gray-300 space-y-3">
           {nextStepsContent.items.map((item, index) => (
-            <p key={index}>
-              • {item}
+            <p key={index} className="flex items-start gap-3">
+              <span className="text-cyan-400 mt-1">•</span>
+              <span>{item}</span>
             </p>
           ))}
         </div>
       </div>
 
-      <div className="bg-gray-50 rounded-lg p-4 mb-6">
-        <h3 className="font-semibold text-gray-800 mb-2">
-          Your Privacy Promise
-        </h3>
-        <p className="text-sm text-gray-600">
+      <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-white/10">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 className="text-xl font-semibold text-white">
+            Your Privacy Promise
+          </h3>
+        </div>
+        <p className="text-gray-400 leading-relaxed">
           We pledge not to share or use your information for marketing purposes. 
           This is purely an experiment to test our networking assumptions.
         </p>
       </div>
 
-      <div className="text-xs text-gray-500">
-        <p>
-          Questions? Contact us at hello@pathfinders.com
-        </p>
+      <div className="text-center">
+        <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+          <p className="text-sm text-gray-400">
+            Questions? Contact us at <span className="text-cyan-400 font-medium">hello@pathfinders.com</span>
+          </p>
+        </div>
       </div>
 
       {/* Hidden Netlify Form for Data Collection */}

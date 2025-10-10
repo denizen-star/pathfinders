@@ -28,19 +28,22 @@ export default function ProgressBar({ currentStep, totalSteps }: ProgressBarProp
 
   return (
     <div className="mb-8">
+      {/* Rainbow gradient divider at top */}
+      <div className="rainbow-gradient mb-6"></div>
+      
       {/* Step indicator with icons */}
       <div className="flex justify-between items-center mb-4">
         {Array.from({ length: totalSteps }, (_, i) => i + 1).map((step) => (
           <div key={step} className="flex flex-col items-center">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300 ${
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300 ${
               step <= currentStep 
-                ? 'bg-gradient-primary text-white shadow-brand' 
-                : 'bg-neutral-200 text-neutral-500'
+                ? 'btn-primary' 
+                : 'bg-gray-700 text-gray-400'
             }`}>
               {step < currentStep ? '✓' : getStepIcon(step)}
             </div>
-            <span className={`text-xs mt-1 font-medium ${
-              step <= currentStep ? 'text-primary-600' : 'text-neutral-400'
+            <span className={`text-xs mt-2 font-medium ${
+              step <= currentStep ? 'gradient-text' : 'text-gray-500'
             }`}>
               {getStepLabel(step)}
             </span>
@@ -50,16 +53,16 @@ export default function ProgressBar({ currentStep, totalSteps }: ProgressBarProp
 
       {/* Progress bar */}
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-semibold text-primary-600">
+        <span className="text-sm font-semibold gradient-text">
           Step {currentStep} of {totalSteps}
         </span>
-        <span className="text-sm text-neutral-600">
+        <span className="text-sm text-gray-400">
           {Math.round(progressPercentage)}% Complete
         </span>
       </div>
-      <div className="w-full bg-neutral-200 rounded-full h-3 shadow-soft">
+      <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
         <div
-          className="bg-gradient-primary h-3 rounded-full transition-all duration-500 ease-out shadow-soft"
+          className="btn-primary h-2 transition-all duration-500 ease-out"
           style={{ width: `${progressPercentage}%` }}
         ></div>
       </div>

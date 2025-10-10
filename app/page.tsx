@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Step0 from '../components/Step0'
 import Step1 from '../components/Step1'
 import Step2 from '../components/Step2'
 import Step3 from '../components/Step3'
@@ -30,7 +31,7 @@ export interface FormData {
 }
 
 export default function Home() {
-  const [currentStep, setCurrentStep] = useState(1)
+  const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState<Partial<FormData>>({})
   const [sessionId, setSessionId] = useState<string>('')
   const [deviceInfo, setDeviceInfo] = useState<any>(null)
@@ -89,6 +90,8 @@ export default function Home() {
 
   const renderStep = () => {
     switch (currentStep) {
+      case 0:
+        return <Step0 nextStep={nextStep} skipToSummary={skipToSummary} />
       case 1:
         return <Step1 formData={formData} updateFormData={updateFormData} nextStep={nextStep} skipToSummary={skipToSummary} sessionId={sessionId} deviceInfo={deviceInfo} />
       case 2:
@@ -103,9 +106,15 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-hero">
-      <div className="container mx-auto px-4 py-6 max-w-md">
-        <ProgressBar currentStep={currentStep} totalSteps={4} />
+    <div className="min-h-screen bg-black text-white relative overflow-x-hidden">
+      {/* Abstract Background Shapes */}
+      <div className="abstract-shape shape-1"></div>
+      <div className="abstract-shape shape-2"></div>
+      <div className="abstract-shape shape-3"></div>
+      
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8 max-w-4xl relative z-10">
+        {currentStep > 0 && <ProgressBar currentStep={currentStep} totalSteps={4} />}
         {renderStep()}
       </div>
     </div>

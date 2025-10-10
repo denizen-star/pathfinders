@@ -130,22 +130,22 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
   }
 
   return (
-    <div className="bg-gradient-card rounded-2xl shadow-medium p-8 border border-neutral-100">
+    <div className="dark-glassmorphism p-8 md:p-10">
       {/* Enhanced Hero Section */}
-      <div className="text-center mb-8">
-        <div className="flex items-center justify-center gap-4 mb-4">
-          <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-brand">
+      <div className="text-center mb-10">
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <div className="w-20 h-20 rounded-2xl flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 shadow-2xl">
             <img 
               src="/logo-p.png" 
               alt="Pathfinders Logo" 
-              className="w-10 h-10 rounded-lg"
+              className="w-12 h-12 rounded-lg"
             />
           </div>
           <div className="text-left">
-            <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            <h1 className="text-5xl font-black gradient-text">
               Pathfinders
             </h1>
-            <p className="text-lg font-medium text-neutral-600">
+            <p className="text-lg font-medium text-gray-300">
               Connect • Create • Grow
             </p>
           </div>
@@ -153,60 +153,58 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
       </div>
 
       {/* Enhanced Content Section */}
-      <div className="mb-8">
-        <div className="bg-primary-50 rounded-xl p-6 mb-6 border border-primary-100">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-white text-sm">🚀</span>
+      <div className="mb-10">
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600">
+              <span className="text-white text-xl">🚀</span>
             </div>
-            <h2 className="text-xl font-bold text-primary-800">
+            <h2 className="text-2xl font-bold gradient-text">
               Try Networking with Intelligence
             </h2>
           </div>
-          <p className="text-primary-800 leading-relaxed">
+          <p className="text-gray-300 leading-relaxed text-lg">
             We believe we can create meaningful professional connections 
             by matching people based on FSA, a few indicators, and the right activities
           </p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
         {/* Enhanced Form Section */}
-        <div className="bg-neutral-50 rounded-xl p-6 border border-neutral-200">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-white text-sm">🗺️</span>
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600">
+              <span className="text-white text-xl">🗺️</span>
             </div>
-            <h3 className="text-lg font-semibold text-neutral-800">
+            <h3 className="text-xl font-bold text-white">
               Step 1: Your Location
             </h3>
           </div>
           
           <div className="space-y-4">
             <div>
-              <label htmlFor="postalCode" className="block text-sm font-semibold text-neutral-700 mb-2">
+              <label htmlFor="postalCode" className="block text-sm font-semibold text-gray-300 mb-3">
                 Enter 3 first digits of your Postal Code (FSA)
               </label>
-              <div className="bg-white rounded-lg border-2 border-neutral-200 focus-within:border-primary-500 focus-within:ring-4 focus-within:ring-primary-100 transition-all duration-200">
-                <input
-                  type="text"
-                  id="postalCode"
-                  value={postalCode}
-                  onChange={(e) => {
-                    setPostalCode(e.target.value.toUpperCase())
-                    setError('')
-                  }}
-                  placeholder="e.g., M6J"
-                  maxLength={3}
-                  className="w-full px-4 py-3 text-lg font-medium text-center border-0 rounded-lg focus:outline-none focus:ring-0"
-                />
-              </div>
-              <div className="flex items-center gap-2 mt-2">
-                <span className="text-sm text-neutral-600">💡 Example:</span>
-                <span className="text-sm font-medium text-neutral-700">M6J 2Y7 → M6J</span>
+              <input
+                type="text"
+                id="postalCode"
+                value={postalCode}
+                onChange={(e) => {
+                  setPostalCode(e.target.value.toUpperCase())
+                  setError('')
+                }}
+                placeholder="e.g., M6J"
+                maxLength={3}
+                className="form-input w-full px-6 py-4 text-2xl font-bold text-center rounded-xl focus:outline-none"
+              />
+              <div className="flex items-center gap-2 mt-3">
+                <span className="text-sm text-gray-400">💡 Example:</span>
+                <span className="text-sm font-medium text-gray-300">M6J 2Y7 → M6J</span>
               </div>
               {error && (
-                <p className="text-accent-600 text-sm mt-2 font-medium">{error}</p>
+                <p className="text-red-400 text-sm mt-3 font-medium bg-red-500/10 px-4 py-2 rounded-lg border border-red-500/20">{error}</p>
               )}
             </div>
           </div>
@@ -216,54 +214,63 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-gradient-primary text-white py-4 px-6 rounded-xl font-semibold text-lg shadow-brand hover:shadow-strong focus:outline-none focus:ring-4 focus:ring-primary-200 transition-all duration-200 disabled:bg-neutral-400 disabled:cursor-not-allowed disabled:shadow-none"
+          className="btn-primary w-full py-5 px-8 rounded-xl text-lg font-bold focus:outline-none focus:ring-4 focus:ring-cyan-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:transform-none"
         >
           {isSubmitting ? 'Saving...' : 'Continue →'}
         </button>
 
         {/* Enhanced Info Section */}
-        <div className="bg-secondary-50 rounded-xl p-6 border border-secondary-200">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <span className="text-white text-sm">🎯</span>
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-yellow-500 to-orange-600">
+              <span className="text-white text-xl">🎯</span>
             </div>
-            <h4 className="text-lg font-semibold text-secondary-800">
+            <h4 className="text-xl font-bold gradient-text">
               Why This Matters
             </h4>
           </div>
-          <p className="text-secondary-700 leading-relaxed mb-3">
+          <p className="text-gray-300 leading-relaxed mb-4 text-base">
             We're looking for just 20 people to participate in our first networking event.
             This is a small experiment limited to a space/ community.
           </p>
-          <ul className="text-sm text-secondary-600 space-y-1">
-          <li>What you get with this first step? We will publish on boards:</li>
-            <li>• Geographic profile</li>
-            <li>• Relevant networking events in your area</li>
-            <li>• Community insights and preferences</li>
+          <ul className="text-sm text-gray-400 space-y-2">
+          <li className="font-semibold text-gray-300">What you get with this first step? We will publish on boards:</li>
+            <li className="flex items-start gap-2">
+              <span className="text-cyan-400">•</span>
+              <span>Geographic profile</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-cyan-400">•</span>
+              <span>Relevant networking events in your area</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-cyan-400">•</span>
+              <span>Community insights and preferences</span>
+            </li>
           </ul>
         </div>
       </form>
 
       {/* Enhanced Privacy Section */}
-      <div className="mt-8 bg-neutral-50 rounded-xl p-6 border border-neutral-200">
+      <div className="mt-8 bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-8 h-8 bg-success-500 rounded-lg flex items-center justify-center">
-            <span className="text-white text-sm">🔒</span>
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-green-500 to-emerald-600">
+            <span className="text-white text-xl">🔒</span>
           </div>
-          <h4 className="text-lg font-semibold text-neutral-800">
+          <h4 className="text-xl font-bold gradient-text">
             Your Privacy Matters
           </h4>
         </div>
         
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div className="flex items-start gap-3">
-            <span className="text-success-500 text-sm mt-1">✓</span>
-            <p className="text-sm font-medium text-primary-600">
-              You can drop at any time.Your information will never be used for marketing purposes.
+            <span className="text-green-400 text-lg mt-1">✓</span>
+            <p className="text-base font-semibold text-gray-200">
+              You can drop at any time. Your information will never be used for marketing purposes.
             </p>
           </div>
           
-          <p className="text-sm text-neutral-600 leading-relaxed">
+          <p className="text-sm text-gray-400 leading-relaxed">
             By continuing, you'll help us understand the local co-working ecosystem and 
             improve our model potential for accurate matches! We only collect the 
             first three digits of your postal code (FSA) to understand the general 
@@ -276,12 +283,12 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
       </div>
 
       {/* Opt-out Button */}
-      <div className="mt-6 text-center">
+      <div className="mt-8 text-center">
         <button
           type="button"
           onClick={handleSkip}
           disabled={isSubmitting}
-          className="text-sm text-neutral-500 hover:text-neutral-700 underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-muted py-3 px-6 rounded-xl text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? 'Processing...' : 'Opt out of this experiment'}
         </button>
