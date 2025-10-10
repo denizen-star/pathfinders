@@ -29,7 +29,12 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
   }
 
   return (
-    <div className="bg-black text-center min-h-screen px-4 py-8 md:py-12">
+    <div className="bg-black text-center min-h-screen px-4 py-8 md:py-12 relative overflow-x-hidden">
+      {/* Abstract Background Shapes */}
+      <div className="abstract-shape shape-1"></div>
+      <div className="abstract-shape shape-2"></div>
+      <div className="abstract-shape shape-3"></div>
+      
       {/* Hero Section - Based on Reference Design */}
       <div className="mb-12 max-w-3xl mx-auto">
         {/* Logo and Title */}

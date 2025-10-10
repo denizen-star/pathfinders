@@ -1045,7 +1045,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-600">
               <span className="text-white text-xl">📝</span>
             </div>
-            <h2 className="text-2xl font-bold gradient-text">
+            <h2 className="text-xl font-bold gradient-text text-center">
               {currentCategoryData.title}
             </h2>
           </div>
