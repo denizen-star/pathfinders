@@ -151,9 +151,7 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
         <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
           <div className="flex items-center gap-3 mb-4">
 
-            <h2 className="text-2xl font-bold gradient-text">
-              Try Networking with Intelligence
-            </h2>
+
           </div>
           
         </div>
@@ -212,8 +210,10 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
         </button>
         <div className="mb-10">
         <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
-
-          <p className="text-gray-300 leading-relaxed text-lg">
+        <h2 className="text-2xl font-bold text-center gradient-text">
+              Try Networking with Intelligence
+            </h2>
+          <p className="text-gray-300 leading-relaxed text-lg text-center">
             We believe we can create meaningful professional connections 
             by matching people based on FSA, a few indicators, and the right activities
           </p>

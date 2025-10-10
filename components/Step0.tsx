@@ -29,9 +29,9 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
   }
 
   return (
-    <div className="bg-black p-8 md:p-12 text-center min-h-screen">
+    <div className="bg-black text-center min-h-screen px-4 py-8 md:py-12">
       {/* Hero Section - Based on Reference Design */}
-      <div className="mb-12">
+      <div className="mb-12 max-w-3xl mx-auto">
         {/* Logo and Title */}
         <div className="flex items-center justify-center gap-6 mb-8">
 
@@ -61,14 +61,21 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
 
 
         {/* Stats Section with Yellow Numbers */}
-        <div className="flex justify-center ">
+        <div className="flex justify-center items-center gap-12">
           <div className="text-center">
             <div className="text-4xl font-black text-yellow-400 mb-2">20</div>
             <div className="text-lg font-medium text-white">Curated Spots</div>
           </div>
+          
           <div className="text-center">
             <div className="text-4xl font-black text-yellow-400 mb-2">3</div>
             <div className="text-lg font-medium text-white">Min Signup</div>
+          </div>
+          
+          {/* Infinity Symbol Connections */}
+          <div className="text-center">
+            <div className="text-4xl font-black text-yellow-400 mb-2">∞</div>
+            <div className="text-lg font-medium text-white">Connections</div>
           </div>
         </div>
       </div>
@@ -98,7 +105,7 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
       </div>
 
       {/* Privacy Section */}
-      <div className="mt-12 bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700 max-w-2xl mx-auto">
+      <div className="mt-12 bg-gray-900/50 backdrop-blur-sm rounded-2xl p-6 border border-gray-700 max-w-2xl mx-auto px-4">
         <div className="flex items-center justify-center gap-3 mb-4">
           <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-green-500">
             <span className="text-white text-xl">🔒</span>
