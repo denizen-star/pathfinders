@@ -130,10 +130,10 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
   }
 
   return (
-    <div className="dark-glassmorphism p-8 md:p-10">
+    <div className="dark-glassmorphism p-4 md:p-10">
       {/* Enhanced Hero Section */}
-      <div className="text-center mb-10">
-        <div className="flex items-center justify-center gap-4 mb-6">
+      <div className="text-center mb-5">
+        <div className="flex items-center justify-center gap-4 mb-3">
 
           <div className="text-center">
             <h1 className="text-5xl font-black gradient-text">
