@@ -134,14 +134,8 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
       {/* Enhanced Hero Section */}
       <div className="text-center mb-10">
         <div className="flex items-center justify-center gap-4 mb-6">
-          <div className="w-20 h-20 rounded-2xl flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 shadow-2xl">
-            <img 
-              src="/logo-p.png" 
-              alt="Pathfinders Logo" 
-              className="w-12 h-12 rounded-lg"
-            />
-          </div>
-          <div className="text-left">
+
+          <div className="text-center">
             <h1 className="text-5xl font-black gradient-text">
               Pathfinders
             </h1>
@@ -156,17 +150,12 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
       <div className="mb-10">
         <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600">
-              <span className="text-white text-xl">🚀</span>
-            </div>
+
             <h2 className="text-2xl font-bold gradient-text">
               Try Networking with Intelligence
             </h2>
           </div>
-          <p className="text-gray-300 leading-relaxed text-lg">
-            We believe we can create meaningful professional connections 
-            by matching people based on FSA, a few indicators, and the right activities
-          </p>
+          
         </div>
       </div>
 
@@ -201,7 +190,7 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
               />
               <div className="flex items-center gap-2 mt-3">
                 <span className="text-sm text-gray-400">💡 Example:</span>
-                <span className="text-sm font-medium text-gray-300">M6J 2Y7 → M6J</span>
+                <span className="text-sm font-medium text-gray-300">33 Bloor St E, Toronto, ON M4W 3H1 → M4W</span>
               </div>
               {error && (
                 <p className="text-red-400 text-sm mt-3 font-medium bg-red-500/10 px-4 py-2 rounded-lg border border-red-500/20">{error}</p>
@@ -218,7 +207,15 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
         >
           {isSubmitting ? 'Saving...' : 'Continue →'}
         </button>
+        <div className="mb-10">
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
 
+          <p className="text-gray-300 leading-relaxed text-lg">
+            We believe we can create meaningful professional connections 
+            by matching people based on FSA, a few indicators, and the right activities
+          </p>
+        </div>
+      </div>
         {/* Enhanced Info Section */}
         <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
           <div className="flex items-center gap-3 mb-4">
