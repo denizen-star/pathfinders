@@ -146,16 +146,7 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
         </div>
       </div>
 
-      {/* Enhanced Content Section */}
-      <div className="mb-10">
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
-          <div className="flex items-center gap-3 mb-4">
 
-
-          </div>
-          
-        </div>
-      </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Enhanced Form Section */}

@@ -175,25 +175,6 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
         </div>
       </div>
 
-      {/* Enhanced Content Section */}
-      <div className="mb-10">
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-purple-500 to-pink-600">
-              <span className="text-white text-xl">👤</span>
-            </div>
-            <h2 className="text-2xl font-bold gradient-text">
-              Get a glimpse into your networking style!
-            </h2>
-          </div>
-          <p className="text-gray-300 leading-relaxed text-lg">
-            With your email address, you'll opt-in to receive a personalized summary next week. 
-            With exclusive, high-level analysis of the personality traits that your response 
-            suggest with our most broad model. This self-insight is the first step toward 
-            understanding how you can best connect with colleagues.
-          </p>
-        </div>
-      </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Enhanced Form Section */}
@@ -276,6 +257,25 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
             {isSubmitting ? 'Saving...' : 'Continue →'}
           </button>
         </div>
+      {/* Enhanced Content Section */}
+      <div className="mb-10">
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-purple-500 to-pink-600">
+              <span className="text-white text-xl">👤</span>
+            </div>
+            <h2 className="text-xl text-center font-bold gradient-text">
+              Get a glimpse into your networking style!
+            </h2>
+          </div>
+          <p className="text-gray-300 leading-relaxed text-lg text-center">
+            With your email address, you'll opt-in to receive a personalized summary next week. 
+            With exclusive, high-level analysis of the personality traits that your response 
+            suggest with our most broad model. This self-insight is the first step toward 
+            understanding how you can best connect with colleagues.
+          </p>
+        </div>
+      </div>
 
         {/* Enhanced Privacy Notice - Moved after buttons */}
         <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
@@ -283,11 +283,11 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-green-500 to-emerald-600">
               <span className="text-white text-xl">🔒</span>
             </div>
-            <h4 className="text-xl font-bold gradient-text">
+            <h4 className="text-xl font-bold gradient-text text-center">
               Privacy Promise
             </h4>
           </div>
-          <p className="text-gray-300 font-semibold text-base">
+          <p className="text-gray-300 font-semibold text-base text-center">
             Your email will only be used for this experiment and match summaries.
           </p>
         </div>
