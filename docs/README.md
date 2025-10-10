@@ -30,10 +30,20 @@ User guides and onboarding documentation for understanding the platform.
 
 ### 🎨 [assets/](./assets/)
 Documentation assets including diagrams, screenshots, and design references.
-- **Design Samples** - HTML/CSS prototypes (11 active prototypes)
+- **[Design_Samples/](./assets/Design_Samples/)** - HTML/CSS prototypes (11 active)
+- **[marketing/](./assets/marketing/)** - Brand and marketing assets (4 files)
+- **[archive/](./assets/archive/)** - Deprecated assets (8 files)
 - Architecture diagrams (future)
 - UI/UX mockups (future)
-- Marketing materials (future)
+
+### 🔧 [scripts/](./scripts/)
+Utility scripts and automation tools.
+- **[google-apps-script.js](./scripts/google-apps-script.js)** - Google Sheets integration
+
+### 📊 [data-sampling/](./data-sampling/)
+Sample data and data generation tools for testing.
+- Sample CSV files for all three steps
+- Python script for generating test data
 
 ## 🎯 Quick Links
 
