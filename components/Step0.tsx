@@ -34,13 +34,7 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
       <div className="mb-12">
         {/* Logo and Title */}
         <div className="flex items-center justify-center gap-6 mb-8">
-          <div className="w-20 h-20 rounded-2xl flex items-center justify-center bg-white shadow-lg">
-            <img 
-              src="/logo-p.png" 
-              alt="Pathfinders Logo" 
-              className="w-12 h-12 rounded-lg"
-            />
-          </div>
+
           <div className="text-left">
             <h1 className="text-5xl font-black text-white mb-2">
               Pathfinders
@@ -64,13 +58,7 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
           </h2>
         </div>
 
-        {/* Subheading */}
-        <div className="mb-12">
-          <p className="text-2xl font-medium text-white leading-relaxed">
-            Why waste time at random events?<br />
-            Meet professionals matched to your goals.
-          </p>
-        </div>
+
 
         {/* Stats Section with Yellow Numbers */}
         <div className="flex justify-center gap-12 mb-12">
@@ -95,7 +83,13 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
           {isSubmitting ? 'Starting...' : 'Continue →'}
         </button>
       </div>
-
+        {/* Subheading */}
+        <div className="mb-12">
+          <p className="text-2xl font-medium text-white leading-relaxed">
+            Why waste time at random events?<br />
+            Meet professionals matched to your goals.
+          </p>
+        </div>
       {/* Tagline */}
       <div className="mb-8">
         <p className="text-lg font-medium text-white">
