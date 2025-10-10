@@ -75,7 +75,7 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
           {/* Infinity Symbol Connections */}
           <div className="text-center">
             <div className="text-4xl font-black text-yellow-400 mb-2">∞</div>
-            <div className="text-lg font-medium text-white">Connections</div>
+            <div className="text-lg font-medium text-white">Infinite Connections</div>
           </div>
         </div>
       </div>
