@@ -577,7 +577,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
 
               {/* Dropdown Content */}
               {isDropdownOpen && (
-                <div className="absolute z-10 w-full mt-2 bg-gray-800/95 backdrop-blur-sm border border-white/20 rounded-xl shadow-2xl max-h-60 overflow-hidden">
+                <div className="absolute z-10 w-full mt-2 bg-gray-800/95 backdrop-blur-sm border border-white/20 rounded-xl shadow-2xl max-h-80 overflow-hidden">
                   {/* Search Input */}
                   <div className="p-4 border-b border-white/10">
                     <div className="relative">
@@ -608,8 +608,8 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                     </div>
                   </div>
 
-                  {/* Options List */}
-                  <div className="max-h-48 overflow-y-auto">
+                  {/* Options List - Shows ~5 options as standard */}
+                  <div className="max-h-60 overflow-y-auto">
                     {(() => {
                       const filteredOptions = question.options?.filter((option: string) => 
                         option.toLowerCase().includes(industrySearch.toLowerCase())
@@ -773,7 +773,7 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
 
               {/* Dropdown Content */}
               {getDropdownState(question.id).isOpen && (
-                <div className="absolute z-10 w-full mt-2 bg-gray-800/95 backdrop-blur-sm border border-white/20 rounded-xl shadow-2xl max-h-60 overflow-hidden">
+                <div className="absolute z-10 w-full mt-2 bg-gray-800/95 backdrop-blur-sm border border-white/20 rounded-xl shadow-2xl max-h-80 overflow-hidden">
                   {/* Search Input */}
                   <div className="p-4 border-b border-white/10">
                     <div className="relative">
@@ -804,8 +804,8 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
                     </div>
                   </div>
 
-                  {/* Options List */}
-                  <div className="max-h-48 overflow-y-auto">
+                  {/* Options List - Shows ~5 options as standard */}
+                  <div className="max-h-60 overflow-y-auto">
                     {(() => {
                       const filteredOptions = question.options?.filter((option: string) => 
                         option.toLowerCase().includes(getDropdownState(question.id).search.toLowerCase())
@@ -1068,22 +1068,24 @@ export default function Step3({ formData, updateFormData, nextStep, prevStep, sk
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 mt-8">
-        <button
+        {/* Back Button - COMMENTED OUT - May re-enable later */}
+        {/* <button
           type="button"
           onClick={handlePrevious}
           disabled={isSubmitting}
           className="btn-secondary flex-1 py-4 px-6 rounded-xl font-semibold focus:outline-none focus:ring-4 focus:ring-gray-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {currentCategory === 0 ? 'Back' : 'Previous'}
-        </button>
-        <button
+        </button> */}
+        {/* Skip Button - COMMENTED OUT - May re-enable later */}
+        {/* <button
           type="button"
           onClick={handleSkip}
           disabled={isSubmitting}
           className="btn-muted flex-1 py-4 px-6 rounded-xl font-semibold focus:outline-none focus:ring-4 focus:ring-gray-400/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? 'Saving...' : 'Skip'}
-        </button>
+        </button> */}
         <button
           type="button"
           onClick={handleNext}

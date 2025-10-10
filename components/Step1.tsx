@@ -273,8 +273,8 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
         </div>
       </div>
 
-      {/* Opt-out Button */}
-      <div className="mt-8 text-center">
+      {/* Opt-out Button - COMMENTED OUT - May re-enable later */}
+      {/* <div className="mt-8 text-center">
         <button
           type="button"
           onClick={handleSkip}
@@ -283,7 +283,7 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
         >
           {isSubmitting ? 'Processing...' : 'Opt out of this experiment'}
         </button>
-      </div>
+      </div> */}
     </div>
   )
 }

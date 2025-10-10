@@ -136,8 +136,8 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
         </div>
       </div>
 
-      {/* Opt-out Button */}
-      <div className="mt-8 text-center">
+      {/* Opt-out Button - COMMENTED OUT - May re-enable later */}
+      {/* <div className="mt-8 text-center">
         <button
           type="button"
           onClick={handleSkip}
@@ -146,7 +146,7 @@ export default function Step0({ nextStep, skipToSummary }: Step0Props) {
         >
           {isSubmitting ? 'Processing...' : 'Opt out of this experiment'}
         </button>
-      </div>
+      </div> */}
 
       {/* Footer */}
       <div className="mt-12 text-center">
