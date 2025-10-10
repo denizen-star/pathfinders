@@ -233,13 +233,14 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
 
         {/* Enhanced Button Section */}
         <div className="flex flex-col sm:flex-row gap-4">
+
+
           <button
-            type="button"
-            onClick={prevStep}
+            type="submit"
             disabled={isSubmitting}
-            className="btn-secondary flex-1 py-4 px-6 rounded-xl font-semibold focus:outline-none focus:ring-4 focus:ring-gray-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-primary flex-1 py-4 px-6 rounded-xl font-bold focus:outline-none focus:ring-4 focus:ring-cyan-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:transform-none"
           >
-            ← Back
+            {isSubmitting ? 'Saving...' : 'Continue →'}
           </button>
           <button
             type="button"
@@ -249,14 +250,8 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
           >
             {isSubmitting ? 'Saving...' : 'Skip →'}
           </button>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="btn-primary flex-1 py-4 px-6 rounded-xl font-bold focus:outline-none focus:ring-4 focus:ring-cyan-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:transform-none"
-          >
-            {isSubmitting ? 'Saving...' : 'Continue →'}
-          </button>
         </div>
+        
       {/* Enhanced Content Section */}
       <div className="mb-10">
         <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/10">
