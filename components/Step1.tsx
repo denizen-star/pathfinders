@@ -163,7 +163,7 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
           <div className="space-y-4">
             <div>
               <label htmlFor="postalCode" className="block text-sm font-semibold text-gray-300 mb-3">
-                Home Postal Code First 3 Digits (FSA)
+                Home Postal Code First 3 Digits
               </label>
               <input
                 type="text"
@@ -178,11 +178,11 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
                 className="form-input w-full px-6 py-4 text-2xl font-bold text-center rounded-xl focus:outline-none"
               />
               <div className="flex items-center gap-2 mt-3">
-                <span className="text-sm text-gray-400">💡 Example:</span>
+                <span className="text-sm text-gray-400">💡 eg. 1 Bloor St E, Toronto, ON</span>
                 </div>
                 <div className="flex items-center gap-2 mt-3">
 
-                <span className="text-sm font-medium text-gray-300">33 Bloor St E, Toronto, ON M4W 3H1 → M4W</span>
+                <span className="text-sm text-gray-300"> M4W 3H1 → M4W</span>
               </div>
               {error && (
                 <p className="text-red-400 text-sm mt-3 font-medium bg-red-500/10 px-4 py-2 rounded-lg border border-red-500/20">{error}</p>
