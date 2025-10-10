@@ -157,14 +157,8 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
       {/* Enhanced Hero Section */}
       <div className="text-center mb-10">
         <div className="flex items-center justify-center gap-4 mb-6">
-          <div className="w-20 h-20 rounded-2xl flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 shadow-2xl">
-            <img 
-              src="/logo-p.png" 
-              alt="Pathfinders Logo" 
-              className="w-12 h-12 rounded-lg"
-            />
-          </div>
-          <div className="text-left">
+
+          <div className="text-center">
             <h1 className="text-5xl font-black gradient-text">
               Perspective
             </h1>
@@ -180,11 +174,9 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
         {/* Enhanced Form Section */}
         <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600">
-              <span className="text-white text-xl">📝</span>
-            </div>
-            <h3 className="text-xl font-bold text-white">
-              Step 2: Contact Information
+
+            <h3 className="text-lg font-bold text-white">
+              Step 2: Contact Info
             </h3>
           </div>
           
@@ -242,14 +234,7 @@ export default function Step2({ formData, updateFormData, nextStep, prevStep, sk
           >
             {isSubmitting ? 'Saving...' : 'Continue →'}
           </button>
-          <button
-            type="button"
-            onClick={handleSkip}
-            disabled={isSubmitting}
-            className="btn-muted flex-1 py-4 px-6 rounded-xl font-semibold focus:outline-none focus:ring-4 focus:ring-gray-400/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? 'Saving...' : 'Skip →'}
-          </button>
+          
         </div>
         
       {/* Enhanced Content Section */}
