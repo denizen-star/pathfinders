@@ -166,7 +166,7 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600">
               <span className="text-white text-xl">🗺️</span>
             </div>
-            <h3 className="text-xl font-bold text-white">
+            <h3 className="text-lg font-bold text-white">
               Step 1: Your Location
             </h3>
           </div>
@@ -174,7 +174,7 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
           <div className="space-y-4">
             <div>
               <label htmlFor="postalCode" className="block text-sm font-semibold text-gray-300 mb-3">
-                Enter 3 first digits of your Postal Code (FSA)
+                Home Postal Code First 3 Digits (FSA)
               </label>
               <input
                 type="text"
@@ -190,6 +190,9 @@ export default function Step1({ formData, updateFormData, nextStep, skipToSummar
               />
               <div className="flex items-center gap-2 mt-3">
                 <span className="text-sm text-gray-400">💡 Example:</span>
+                </div>
+                <div className="flex items-center gap-2 mt-3">
+
                 <span className="text-sm font-medium text-gray-300">33 Bloor St E, Toronto, ON M4W 3H1 → M4W</span>
               </div>
               {error && (
